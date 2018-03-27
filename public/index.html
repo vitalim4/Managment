@@ -96,13 +96,23 @@
                         <i class="entypo-monitor"></i>
                         <span class="title">ניהול פרוייקטים</span>
                     </a>
-                </li>
+                </li>          
                 <li class="active" ng-show="isStudent">
                     <a href="/#/account/student/" target="_self">
                         <i class="entypo-monitor"></i>
                         <span class="title">ראשי</span>
                     </a>
                 </li>
+
+                <li class="has-sub root-level" ng-show="isStudent" ng-class="{ active: isActive('/account/student')}">
+                    <a><i
+                        class="entypo-newspaper"></i><span class="title">ארכיון</span></a>
+                    <ul>
+                        <li><a href="/#/account/student/archive/allprojects"><span class="title">כל הפרוייקטים</span></a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li ng-class="{ active: isActive('/account/manager/projects')}">
                     <a href="/#/account/manager/projects" ng-show="isManager">
                         <i class="entypo-monitor"></i>
@@ -124,6 +134,17 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="has-sub root-level" ng-show="isLecturer" ng-class="{ active: isActive('/account/lecturer')}">
+                    <a><i
+                        class="entypo-newspaper"></i><span class="title">ארכיון</span></a>
+                    <ul>
+                        <li><a href="/#/account/lecturer/archive/"><span class="title">הפרוייקטים שלי</span></a></li>
+                        <li><a href="/#/account/lecturer/archive/allprojects"><span class="title">כל הפרוייקטים</span></a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li class="has-sub root-level" ng-show="isManager"
                 ng-class="{ active: isActive('/account/manager/users')}"><a><i
                     class="entypo-newspaper"></i><span class="title">ניהול משתמשים</span></a>
@@ -377,6 +398,9 @@
 <script src="js/app-core/controllers/controller.user.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.student.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.dashboard.clientside.js" type="text/javascript"></script>
+<script src="js/app-core/controllers/controller.dashboard.archive.js" type="text/javascript"></script>
+<script src="js/app-core/controllers/controller.dashboard.archive.allprojects.js" type="text/javascript"></script>
+<script src="js/app-core/controllers/controller.dashboard.archive.student.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.project.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.header.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.menu.clientside.js" type="text/javascript"></script>

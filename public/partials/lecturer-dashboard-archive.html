@@ -1,0 +1,71 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        setTimeout( function(){
+            $('#myTable').DataTable();
+        }, 100 );       
+    });
+
+</script>
+<style> 
+    .statuses tr td{
+      border: 1px solid grey;
+      text-align: center;
+      padding: 3px;
+      font-weight:normal;
+      width: 8%;
+      line-height: 16px;
+      color:#000;
+    }
+     tr td.project_header{
+        border:none;
+        text-align: center;
+        line-height: 25px;
+    }
+    .statuses th{
+        text-align: center;
+    }
+    .statuses tr {
+        margin-bottom: 7px;
+    }
+
+</style>
+
+<div class="row">
+    <div class="col-sm-6">
+        <a href="/#/account/lecturer/archive" target="_self">
+            <button type="button" class="btn btn-blue btn-icon" style="float:right; margin:5px;">
+                נקה סינון
+                <i class="entypo-ccw"></i></button>
+        </a>
+    </div>
+
+    <div class="col-sm-12">
+        <table datatable="ng" dt-options="dtOptions" id="myTable" class="row-border hover">
+            <thead>
+            <tr>
+                <th>שם הפרוייקט</th>
+                <th>מחלקה</th>
+                <th>הורד קובץ</th>
+                <th>העלאת קובץ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="project in archivedProjectsData">
+                    <td>{{ project.projectName }}</td>
+                    <td>{{ project.Department.Name }}</td>
+                <td><button  type="button" class="btn btn-outline-success"><a href="/#/account/lecturer/project/{{project.projectId}}"
+                       class="item-name primary-link">הורדת קובץ</a></button></td>
+                       <td><button  type="button" class="btn btn-outline-success"><a href="/#/account/lecturer/project/{{project.projectId}}"
+                        class="item-name primary-link">שליחת קובץ</a></button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<!--<div class="row" ng-if="!archivedProjectsData.length">
+    <div class="col-sm-12">
+        <div class="alert alert-info centered"><strong>לא קיימים פרוייקטים!</strong> <a
+                href="/#/account/lecturer/project" target="_self">צור פרויקט חדש בלחיצה עלי !</a></div>
+    </div>
+</div>-->

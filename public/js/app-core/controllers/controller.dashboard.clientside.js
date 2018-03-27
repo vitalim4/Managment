@@ -34,8 +34,9 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
         $scope.numOfArchives = data.length;
     });
 
-    var checkedProjects = [];
-    $http.get('/api/lecturer/projects/')
+    var checkedProjects = [];   
+    var lecturerProjects = function(){
+        $http.get('/api/lecturer/projects/')
         .success(function (data) {
             $scope.projectsData = data;
             allProjects = data;
@@ -53,29 +54,25 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
                 return proj.curState.curStatus == 'ניסוח הצעה';
             }).length;
         });
-
-    
-    $scope.checkedItems  = function(event,list,proj){
- 
-        if(event.currentTarget.checked == true)
-        {
-            console.log(list)
-            console.log(proj)
-            console.log(event)
-            /*for(var i=0;i<proj.flow.Stage.length;i++){
-                if (list.Name == proj.flow.Stage[i].Name) {
-                Projects.updateProjectsStatus(proj._id)
-                .success(function(data){
-                    toastr.success("הבקשה נשלחה בהצלחה", globalSettings.toastrOpts);
-                    event.currentTarget.disabled = true;
-                })
-                }
-            }*/
+    } 
+    lecturerProjects();
+   
+    $scope.checkedItems  = function(event,proj){
+        if(event.currentTarget.checked == true){
+            Projects.updateProjectsStatus(proj._id)
+            .success(function(data){
+                toastr.success("הבקשה נשלחה בהצלחה", globalSettings.toastrOpts);      
+            }).then(function(){
+                lecturerProjects();               
+            });
         }
         else{
-            console.log(list)
-            console.log(proj)
-            console.log(event)
+            Projects.uncheckProjectsStatus(proj._id)
+            .success(function(data){
+                toastr.success(" סטטוס עודכן בהצלחה", globalSettings.toastrOpts);      
+            }).then(function(){
+                lecturerProjects();               
+            });
         }
     }
 

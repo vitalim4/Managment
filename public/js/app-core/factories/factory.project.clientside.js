@@ -52,6 +52,9 @@ angular.module("FPM").factory('Projects', function ($http, localStorageService) 
         updateProjectsStatus: function (requestId) {
             return $http.post('/api/project/updatestage/'+requestId);
         },
+        uncheckProjectsStatus: function (requestId) {
+            return $http.post('/api/project/uncheckstage/'+requestId);
+        },
         sendComment: function (requestId, comment) {
             return $http.post('/api/manager/request/comment/'+requestId, {commentTxt: comment});
         }

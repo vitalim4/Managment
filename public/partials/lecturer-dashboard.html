@@ -5,8 +5,7 @@
 
 
 </script>
-<style>
-
+<style> 
     .statuses tr td{
       border: 1px solid grey;
       text-align: center;
@@ -16,18 +15,17 @@
       line-height: 16px;
       color:#000;
     }
-    .statuses th{
-        text-align: center;
-    }
      tr td.project_header{
         border:none;
         text-align: center;
         line-height: 25px;
     }
-    .statuses tr{
+    .statuses th{
+        text-align: center;
+    }
+    .statuses tr {
         margin-bottom: 7px;
     }
-
 
 </style>
 
@@ -87,7 +85,7 @@
 
     </div>
 
-    <div class="col-sm-3 col-xs-6" ng-click="filterArchive()">
+    <!-- <div class="col-sm-3 col-xs-6" ng-click="filterArchive()">
         <div class="tile-stats tile-brown">
             <div class="icon"><i class="entypo-archive"></i></div>
             <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500"
@@ -97,7 +95,7 @@
             <h3>ארכיון</h3>
         </div>
 
-    </div>
+    </div> -->
 </div>
 
 <div class="row">
@@ -137,17 +135,17 @@
             </tbody>
         </table>
 
-        <table border=1 class='statuses' ng-repeat="proj in projectsData">
-            <thead>
-                <tr>
-                    <th colspan="{{(proj.flow.Stage).length}}" scope="colgroup">{{proj.nameHeb}}</th>
-                </tr>
-            </thead>
+        <table  border=1 class='statuses' ng-repeat="proj in projectsData">
+                <thead>
+                        <tr>
+                          <th colspan= {{(proj.flow.Stage).length}} scope="colgroup">{{proj.nameHeb}}</th>
+                        </tr>
+                      </thead>
                 <tbody >
                   <tr >
                     <td ng-repeat="stage in proj.flow.Stage" ng-style="setStageColor($index,proj.curState.curOrder)">
-                        <input type="checkbox"  ng-disabled="disableStatus($index,proj.curState.curOrder)" ng-checked="setCheckedProjStatus($index,proj.curState.curOrder)" ng-model="checked" ng-true-value="'{{stage.Name}}'" ng-false-value="''"
-                         ng-click="checkedItems($event,stage, proj);">
+                        <input id="selectProj" type="checkbox"  ng-disabled="disableStatus($index,proj.curState.curOrder)" ng-checked="setCheckedProjStatus($index,proj.curState.curOrder)" ng-model="checked" ng-true-value="'{{stage.Name}}'" ng-false-value="''"
+                         ng-click="checkedItems($event, proj);">
                         {{stage.Name}}
                     </td>
                   </tr>

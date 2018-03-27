@@ -103,6 +103,7 @@ module.exports = function (app) {
      return projectRoute.getByEngName(req, res);
      });*/
     app.post('/api/project/updatestage/:requestid', authenticate, projectRoute.updateProjectsStatus);
+    app.post('/api/project/uncheckstage/:requestid', authenticate, projectRoute.uncheckProjectsStatus);
     app.get('/api/project/:id', authenticate, projectRoute.getSingle);
     app.post('/api/projects/save', authenticate, projectRoute.save);
     app.post('/api/projects/end-of-proj', authenticate, projectRoute.save_end_proj);
@@ -110,7 +111,7 @@ module.exports = function (app) {
     app.post('/api/project/removestudent', authenticate, projectRoute.removeStudent);
     app.post('/api/project/filter', authenticate, projectRoute.filterProjects);
     app.post('/api/project/advanced-filter', authenticate, projectRoute.advancedFilterProjects);
-    //app.get('/api/projects/get-stages', authenticate, projectRoute.getAllStages); //not used
+    app.get('/api/projects/get-stages', authenticate, projectRoute.getAllStages); 
     //app.get('/api/projects/get-statuses', authenticate, projectRoute.getAllStatuses); //not used
     app.post('/api/submission', authenticate, projectRoute.AddSubmission);
 
@@ -275,6 +276,7 @@ module.exports = function (app) {
                 var token = jwt.encode(user, config.jwtSecret);
                 // return the information including token as JSON
                 userDetails = {
+                    //id:user._id,
                     name: user.firstName + ' ' + user.lastName,
                     role: user.Role.Name,
                     roleslug: user.Role.Slug,

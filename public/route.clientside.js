@@ -13,6 +13,18 @@ app.config(function ($routeProvider, localStorageServiceProvider) {
                 templateUrl: 'partials/lecturer-project.html',
                 controller: 'projectController'
             })
+            .when('/account/lecturer/archive', {
+                templateUrl: 'partials/lecturer-dashboard-archive.html',
+                controller: 'dashboardArchiveController'
+            })
+            .when('/account/lecturer/archive/allprojects', {
+                templateUrl: 'partials/lecturer-dashboard-archive-allprojects.html',
+                controller: 'dashboardArchiveAllProjectsController'
+            })
+            .when('/account/student/archive/allprojects', {
+                templateUrl: 'partials/student-dashboard-archive-allprojects.html',
+                controller: 'dashboardArchiveAllStudentProjectsController'
+            })
             .when('/account/lecturer/project', {
                 templateUrl: 'partials/lecturer-project.html',
                 controller: 'projectController'

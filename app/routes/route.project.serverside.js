@@ -275,34 +275,7 @@ module.exports = {
 
     getRequestsByManager: function (req, res) {
         var user = req.user;
-        if (user.Role.Slug === "manager") {
-            /*ApproveRequest.aggregate({
-                    $project: {
-                        projectId: 1,
-                        lecturers: 1,
-                        Department: 1,
-                        Type: 1,
-                        College: 1,
-                        projectName: 1,
-                        shortDescription: 1,
-                        numOfStudents: 1,
-                        creationDate: 1,
-                        matches: {$eq: ['$creationDate', '$updateDate']}
-                    }
-                },
-                {
-                    $match: {
-                        matches: true,
-                        $and: [{"Department.Slug": user.Department.Slug}, {"College.Slug": user.College.Slug}]
-                    }
-                },
-                function (err, Requests) {
-                    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-                    if (err)
-                        return res.send(err)
-                    res.json(Requests);
-                }
-            );*/
+        if (user.Role.Slug === "manager") {     
             var approveReq = [];
             var cursor = ApproveRequest.aggregate(
                 {
@@ -335,36 +308,7 @@ module.exports = {
               });
         }
         else
-            {
-
-                /*ApproveRequest.aggregate({
-                        $project: {
-                            projectId: 1,
-                            lecturers: 1,
-                            Department: 1,
-                            Type: 1,
-                            College: 1,
-                            projectName: 1,
-                            shortDescription: 1,
-                            numOfStudents: 1,
-                            creationDate: 1,
-                            matches: {$eq: ['$creationDate', '$updateDate']}
-                        }
-                    },
-                    {
-                        $match: {
-                            matches: true,
-                            $and: [{"College.Slug": user.College.Slug}]
-                        }
-                    },
-                    function (err, Requests) {
-                        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-                        if (err)
-                            return res.send(err)
-                        res.json(Requests);
-                    }
-                );*/
-
+            {    
                 var approveReq = [];
                 var cursor = ApproveRequest.aggregate(
                     {
@@ -407,36 +351,6 @@ module.exports = {
 
         var userType = req.user.Role.Slug;
         if (userType === "manager") {
-            /*ApproveRequest.aggregate({
-                    $project: {
-                        projectId: 1,
-                        lecturers: 1,
-                        Department: 1,
-                        Type: 1,
-                        College: 1,
-                        projectName: 1,
-                        shortDescription: 1,
-                        numOfStudents: 1,
-                        creationDate: 1,
-                        matches: {$ne: ['$creationDate', '$updateDate']}
-                    }
-                },
-                {
-                    $match: {
-                        matches: true,
-                        $and: [{"Department.Slug": inDepartment}, {"College.Slug": inCollege}]
-                    }
-                },{
-                    $cursor: {}
-                },
-                function (err, Requests) {
-                    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-                    if (err)
-                        return res.send(err)
-
-                    res.json(Requests);
-                }
-            );*/
             var approveReq = [];
                 var cursor = ApproveRequest.aggregate(
                     {
@@ -470,29 +384,6 @@ module.exports = {
 
         }
         else {
-            /*ApproveRequest.aggregate({
-                    $project: {
-                        projectId: 1,
-                        lecturers: 1,
-                        Department: 1,
-                        Type: 1,
-                        College: 1,
-                        projectName: 1,
-                        shortDescription: 1,
-                        numOfStudents: 1,
-                        creationDate: 1,
-                        matches: {$ne: ['$creationDate', '$updateDate']}
-                    }
-                },
-                function (err, Requests) {
-                    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-                    if (err)
-                        return res.send(err)
-
-                    res.json(Requests);
-                }
-            );*/
-
             var approveReq = [];
             var cursor = ApproveRequest.aggregate(
                { $project: {
@@ -1039,6 +930,66 @@ module.exports = {
             });
     },
 
+    uncheckProjectsStatus:function(req,res)
+    {
+        var projId = req.params.requestid;
+        Project.findById(
+            {"_id": projId},
+            function (err, updatedProject) {
+                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                if (err)
+                    res.send(err);
+
+                    PreviousStage(updatedProject); 
+                res.send(updatedProject);
+                updatedProject.save(function (err, updatedProject2) {
+                    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                    if (err)
+                        return res.send(err);
+
+                    var StudentsInProject = updatedProject2.students;
+
+                    var usersIds = StudentsInProject.map(function (item) {
+                        var ObjectId = mongoose.Types.ObjectId;
+                        var result = new ObjectId(item.id);
+                        return result
+                    });
+
+
+                    User.update({
+                        "_id": {$in: usersIds}
+                    }, {$set: {'inProcess': true}}, function (error, resUsers) {
+                        if (error) {
+                            console.log('in user router error');
+                            return error;
+                        }
+                        else {
+                            if (!resUsers) {
+                                console.log('in user router empty');
+                                return fn(error);
+                            }
+                            else {
+
+                                updatedProject2.save(function (err, savedProject) {
+                                        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                                        if (err)
+                                            return res.send(err);
+
+                                        res.status(200);
+                                        var s = JSON.stringify(savedProject);
+                                        res.end(s);
+                                    }
+                                );
+
+                            }
+                        }
+                    });
+                });
+
+
+            });
+    },
+
     acceptApprovalRequest: function (req, res) {
         var inRequest = req.params.requestid;
 
@@ -1534,19 +1485,6 @@ module.exports = {
     getAllTagsWWeight: function (req, res) {
         var inDepartment = req.user.Department.Slug;
 
-        /*Project.aggregate([
-            {"$project": {"tags": 1}},
-            {"$unwind": "$tags"},
-            {"$group": {"_id": "$tags.text", "weight": {"$sum": 1}}}
-        ], function (err, tags) {
-
-            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-            if (err)
-                res.send(err)
-
-            res.json(tags);
-        });*/
-
         var approveReq = [];
         var cursor = Project.aggregate(
             [
@@ -1569,20 +1507,6 @@ module.exports = {
         var inDepartment = req.user.Department.Slug;
 
         var inCollege = req.user.College.Slug;
-
-        /*ProjectFlow.aggregate([
-            {$match: {$and: [{"Department.Slug": inDepartment}, {"College.Slug": inCollege}]}},
-            {"$project": {"Stage": 1}},
-            {"$unwind": "$Stage"},
-            {"$group": {"_id": "$Stage.Name"}}
-        ], function (err, stages) {
-
-            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-            if (err)
-                res.send(err)
-
-            res.json(stages);
-        });*/
         var approveReq = [];
         var cursor = ProjectFlow.aggregate(
             [
