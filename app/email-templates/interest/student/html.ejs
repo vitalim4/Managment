@@ -1,0 +1,136 @@
+<html xmlns="http://www.w3.org/1999/xhtml" lang="he" dir="rtl">
+<head>
+    <title>סמי שמעון - פרוייקטים הנדסייםprojs.nameHeb + '</title>
+</head>
+<body bgcolor="#FFFFFF" style="text-align:right; direction:rtl;">
+<!-- BODY -->
+<table class="body-wrap">
+    <tr>
+        <td/>
+        <td class="container" bgcolor="#FFFFFF">
+            <div class="content">
+                <table>
+                    <tr>
+                        <td>
+
+                            <h3>שלום, <%= studentName %></h3>
+                            <p class="lead">הגשת התעניינות בפרוייקט <%= projectName %> + '</p>
+
+
+                            <!-- Callout Panel -->
+                            <p class="callout">
+                                <strong>תוכן הבקשה:</strong>
+                                <br/><%= explanation %><br/>
+                                <br/>
+                                <strong>סטודנטים נוספים:</strong>
+                                <br/><%= additionalStudents %>
+                            </p>
+                            <!-- /Callout Panel -->
+
+                            <h3>צור קשר עם המנחה בהקדם על מנת לתאם פגישה</h3>
+                            <p>במידה ולא תיצור קשר עם המנחה, עלול פרוייקט זה להתפס על ידי סטודנטים אחרים.</p>
+
+                            <% lecturersDetailsForStudent.forEach(function(lecturer) { %>
+                            <p>
+                                <strong><%= lecturer.name %></strong>
+                            </p>
+                            <p>אי-מייל המנחה: <%= lecturer.email %> </p>
+                            <br/>
+                            <% }); %>
+                            <br/>
+                            <br/>
+
+                            <!-- social & contact -->
+                            <table class="social" width="100%">
+                                <tr>
+                                    <td>
+
+                                        <!--- column 1 -->
+                                        <table align="left" class="column">
+                                            <tr>
+                                                <td>
+
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!-- /column 1 -->
+
+                                        <!--- column 2 -->
+                                        <table align="left" class="column">
+                                            <tr>
+                                                <td>
+
+                                                    <h5 class="">SCE FPM צוות מערכת לניהול פרוייקטי גמר הנדסיים:</h5>
+                                                    <p>טלפון: <strong>08-6475804</strong>
+                                                        <br/>
+                                                        אי-מייל: <strong>
+                                                            <a href="emailto:sce.fpm@gmail.com">sce.fpm@gmail.com</a>
+                                                        </strong>
+                                                    </p>
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <!-- /column 2 -->
+
+                                        <span class="clear"/>
+
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- /social & contact -->
+
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </td>
+        <td/>
+    </tr>
+</table>
+<!-- /BODY -->
+
+<!-- FOOTER -->
+<table class="footer-wrap">
+    <tr>
+        <td/>
+        <td class="container">
+
+            <!-- content -->
+            <div class="content">
+                <table class="head-wrap" bgcolor="#999999">
+                    <tr>
+                        <td/>
+                        <td class="header container">
+
+                            <div class="content">
+                                <table bgcolor="#999999">
+                                    <tr>
+                                        <td>
+                                            <img src="http://www.massage-b7.co.il/sce.png"/>
+                                        </td>
+                                        <td align="right">
+                                            <h6 class="collapse"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </td>
+                        <td/>
+                    </tr>
+                </table>
+            </div>
+            <!-- /content -->
+
+        </td>
+        <td/>
+    </tr>
+</table>
+
+
+</body>
+</html>

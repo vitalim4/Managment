@@ -1,0 +1,15 @@
+<h1>סטודנט יקר, זהו התהליך אותו אתה צריך לעבור</h1>
+<h2>יש להמתין לאישור מנהל הפרויקטים</h2>
+
+<div class="timeline-centered">
+    <div ng-repeat="prjStage in projectData.flow.Stage">
+        <article class="timeline-entry" ng-class-even="'timeline-entry left-aligned'"
+                 ng-class-odd="'timeline-entry'">
+            <div class="timeline-entry-inner">
+                <div class="timeline-icon bg-success"><i class="entypo-feather"></i></div>
+                <div class="timeline-label">{{prjStage.Name}}</div>
+            </div>
+        </article>
+    </div>
+
+</div>

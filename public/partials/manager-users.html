@@ -1,0 +1,106 @@
+<div class="row">
+
+    <div class="col-sm-12">
+        <h1>ניהול משתמשים</h1>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-3 col-xs-6">
+
+        <div class="tile-stats tile-red" ng-click="filterKolKore()">
+            <div class="icon"><i class="entypo-users"></i></div>
+            <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500" data-delay="0">
+                {{numOfKolKore}}
+            </div>
+
+            <h3>קול קורא (ללא ציוות)</h3>
+        </div>
+
+    </div>
+
+    <div class="clear visible-xs"></div>
+
+    <div class="col-sm-3 col-xs-6" ng-click="filterWaiting()">
+
+        <div class="tile-stats tile-aqua">
+            <div class="icon"><i class="entypo-mail"></i></div>
+            <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500"
+                 data-delay="1200">{{numOfWaiting}}
+            </div>
+
+            <h3>ממתינים לאישור</h3>
+        </div>
+
+    </div>
+
+    <div class="col-sm-3 col-xs-6" ng-click="filterAction()">
+
+        <div class="tile-stats tile-blue">
+            <div class="icon"><i class="entypo-rss"></i></div>
+            <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500"
+                 data-delay="1800">{{numOfProccess}}
+            </div>
+
+            <h3>בפעולה</h3>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <button type="button" class="btn btn-blue btn-icon" style="float:right; margin:5px;" ng-click="clearFilter()">
+            נקה סינון
+            <i class="entypo-ccw"></i></button>
+
+    </div>
+    <div class="col-sm-6">
+        <a href="/#/account/manager/user/add" target="_self">
+            <button type="button" class="btn btn-blue btn-icon" style="float:left; margin:5px;">
+                הוסף
+                <i class="entypo-plus"></i></button>
+        </a>
+    </div>
+</div>
+<div class="row" ng-if="!usersDataList.length">
+
+    <div class="col-sm-12">
+
+        <div class="alert alert-info centered"><strong>לא קיימים משתמשים!</strong> <a
+                href="/#/account/manager/users/add" target="_self">צור משתמש חדש בלחיצה עלי !</a></div>
+    </div>
+
+</div>
+<div class="row">
+
+    <div class="col-sm-12">
+        <table datatable="ng" dt-options="dtOptionsManagerUsers" id="myTable" class="row-border hover">
+            <thead>
+            <tr>
+                <th>שם מלא</th>
+                <th>שם משתמש</th>
+                <th>תפקיד</th>
+                <th>אימייל</th>
+                <th>מחלקה</th>
+                <th>מכללה</th>
+                <th>פעולות</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="userRow in usersDataList">
+                <td><a href="/#/account/manager/users/{{userRow._id}}"
+                       class="item-name primary-link">{{ userRow.firstName }} {{ userRow.lastName }}</a></td>
+                <td>{{ userRow.Username}}</td>
+                <td>{{ userRow.Role.Name}}</td>
+                <td>{{ userRow.Email}}</td>
+                <td>{{ userRow.Department.Name}}</td>
+                <td>{{ userRow.College.Name}}</td>
+                <td><button type="button" class="btn btn-info" ng-click="resendPassword(userRow.Email)" alt="שלח סיסמא חדשה"> <i class="entypo-mail"></i> </button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

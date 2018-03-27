@@ -1,0 +1,67 @@
+<div class="row">
+    <div class="col-md-3">
+        <div class="panel panel-gradient" data-collapsed="0">
+
+            <!-- panel head -->
+            <div class="panel-heading">
+                <div class="panel-title">סינון מרצים</div>
+                <div class="panel-options">
+                    <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                </div>
+            </div>
+
+            <!-- panel body -->
+            <div class="panel-body">
+
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-8">
+                        <div class="checkbox" ng-repeat="lec in lecturers" ng-click="updateSelection($event,lec._id.id)"><label> <input type="checkbox" value=" {{lec._id.id}}">{{lec._id.name}}
+                        </label></div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="row equal">
+
+            <div class="col-sm-4" ng-repeat="project in projects">
+
+                <article class="album" style="border: 1px solid #ebebeb;margin-bottom: 30px;">
+
+                    <header style="text-align: center;">
+
+                        <a href="/#/account/student/project/{{project._id}}" class="item-name primary-link">
+                            <img src="{{project.picUrl}}" style="width: 150px;height: 150px;" />
+                        </a>
+                    </header>
+
+                    <section class="album-info">
+                        <h5> <a href="/#/account/student/project/{{project._id}}"
+                                                                     class="item-name primary-link">{{project.nameHeb}} / {{project.nameEng}}</a></h5>
+
+                        <p>{{project.shortDescription}} </p>
+                    </section>
+                    <footer>
+
+                        <div class="album-images-count">
+                            <div style="text-align: left">
+                                <i class="entypo-user"></i>
+                                <span ng-repeat="item in project.lecturers">
+                                    {{item.name}}
+                                </span>
+                            </div>
+                        </div>
+
+
+                    </footer>
+                </article>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>

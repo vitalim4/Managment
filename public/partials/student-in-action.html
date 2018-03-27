@@ -1,0 +1,63 @@
+<style>
+    table{
+        margin-top: 10px;
+        width:70%;
+    }
+        td  {
+          width: 25%;
+          border: 1px solid grey;
+          border-collapse: collapse;
+          padding: 5px;
+        }
+         th {
+          width: 25%;
+          border: 1px solid grey;
+          text-align: center;
+          padding: 3px;
+          font-weight:bold;
+        }
+        .statuses tr td{
+          border: 1px solid grey;
+          text-align: center;
+          padding: 3px;
+          font-weight:bold;
+          width: 8%;
+        }
+</style>
+<h1>ברוך הבא לפרוייקט הגמר !</h1>
+<h2>עשייה פורה והצלחה !</h2>
+<!--<div class="timeline-centered">
+    <div ng-repeat="prjStage in projectData.flow.Stage">
+        <article class="timeline-entry" ng-class-even="'timeline-entry left-aligned'"
+                 ng-class-odd="'timeline-entry'">
+            <div class="timeline-entry-inner">
+                <div class="timeline-icon bg-success"><i class="entypo-feather"></i></div>
+                <div class="timeline-label">{{prjStage.Name}}</div>
+            </div>
+        </article>
+    </div>-->
+    <table>
+            <tr>
+                    <th>שם</th>
+                    <th>שלב</th>
+                    <th>סטטוס</th>
+                    <th>תאור</th>
+            </tr>
+            <tr ng-repeat="prjStage in projectData">
+                <td>{{prjStage.nameEng}}</td>
+                <td>{{prjStage.curState.curStage}}</td> 
+                <td>{{prjStage.curState.curStatus}}</td>
+                <td>{{prjStage.projDescrip}}</td>
+            </tr>
+          
+        </table>
+
+        <h2>שלבים</h2>
+        <table border=1 class='statuses'>
+                <tbody ng-repeat="proj in projectData">
+                  <tr>
+                    <td ng-style="setStageColor($index,proj.curState.curOrder)" ng-repeat="stage in proj.flow.Stage">{{stage.Name}}</td>
+                  </tr>
+                </tbody>
+        </table>
+</div>

@@ -1,0 +1,153 @@
+<div class="col-md-8">
+    <div class="panel panel-primary" data-collapsed="0">
+
+        <div class="panel-heading">
+            <div class="panel-title">
+                {{projectData.nameHeb}}
+            </div>
+        </div>
+
+        <div class="panel-body">
+
+            <form role="form" class="form-horizontal form-groups-bordered">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">שם בעברית</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.nameHeb}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">שם באנגלית</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.nameEng}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">מנחה מקצועי</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.professionalGuide}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">תקציר</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.shortDescription}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">תיאור הפרוייקט</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.projDescrip}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">ידע נדרש\דרישות קדם</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.neededKnowledge}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">מקורות ספרות</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.literatureSources}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">סוג הפרויקט</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.flow.Type.Name}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">תמונה</label>
+
+                    <div class="col-sm-9">
+
+                        <img style="width:100px;" ng-show="!!curFile"
+                             ngf-thumbnail="projectData.picUrl"/>
+                    </div>
+                </div>
+
+        </form>
+        </div>
+
+    </div>
+
+</div>
+
+</div>
+<div class="col-md-4">
+    <div class="panel panel-gradient" data-collapsed="0">
+
+        <!-- panel head -->
+        <div class="panel-heading">
+            <div class="panel-title">מנחים</div>
+
+            <div class="panel-options">
+                <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+            </div>
+        </div>
+
+        <!-- panel body -->
+        <div class="panel-body">
+
+            <ul>
+                <li ng-repeat="item in projectData.lecturers">
+                    {{item.name}}
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+    <div class="panel panel-gradient" data-collapsed="0">
+
+        <!-- panel head -->
+        <div class="panel-heading">
+            <div class="panel-title">בקשת התעניינות</div>
+
+            <div class="panel-options">
+                <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+            </div>
+        </div>
+
+        <!-- panel body -->
+        <div class="panel-body">
+
+            <form role="form" class="form-horizontal form-groups-bordered"  ng-submit="sendInterest()">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">בקשת התעניינות</label>
+
+                    <div class="col-sm-9">
+                        <textarea ng-model="explain" placeholder="הסבר מדוע אתה מתעניין בפרוייקט" class="student-interest-textarea" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">סטודנטים נוספים</label>
+
+                    <div class="col-sm-9">
+                        <textarea ng-model="moreStudents" placeholder="ציין את שמות הסטודנטים איתך בקבוצה" class="student-interest-textarea" required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-green btn-icon" style="float:left;">
+                        שלח
+                        <i class="entypo-check"></i></button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>

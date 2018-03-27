@@ -1,0 +1,191 @@
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+
+
+</script>
+<style>
+
+    .statuses tr td{
+      border: 1px solid grey;
+      text-align: center;
+      padding: 3px;
+      font-weight:normal;
+      width: 8%;
+      line-height: 16px;
+      color:#000;
+    }
+    .statuses th{
+        text-align: center;
+    }
+     tr td.project_header{
+        border:none;
+        text-align: center;
+        line-height: 25px;
+    }
+    .statuses tr{
+        margin-bottom: 7px;
+    }
+
+
+</style>
+
+<div class="row">
+    <div class="col-sm-3 col-xs-6">
+
+        <div class="tile-stats tile-red" ng-click="filterKolKore()">
+            <div class="icon"><i class="entypo-users"></i></div>
+            <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500" data-delay="0">
+                {{numOfKolKore}}
+            </div>
+
+            <h3>קול קורא</h3>
+        </div>
+
+    </div>
+
+    <div class="col-sm-3 col-xs-6" ng-click="filterGrouped()">
+
+        <div class="tile-stats tile-green">
+            <div class="icon"><i class="entypo-chart-bar"></i></div>
+            <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500"
+                 data-delay="600">
+                {{numOfGrouped}}
+            </div>
+
+            <h3>מצוותים</h3>
+        </div>
+
+    </div>
+
+    <div class="clear visible-xs"></div>
+
+    <div class="col-sm-3 col-xs-6" ng-click="filterWaiting()">
+
+        <div class="tile-stats tile-aqua">
+            <div class="icon"><i class="entypo-mail"></i></div>
+            <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500"
+                 data-delay="1200">{{numOfWaiting}}
+            </div>
+
+            <h3>ממתינים לאישור</h3>
+        </div>
+
+    </div>
+
+    <div class="col-sm-3 col-xs-6" ng-click="filterAction()">
+
+        <div class="tile-stats tile-blue">
+            <div class="icon"><i class="entypo-rss"></i></div>
+            <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500"
+                 data-delay="1800">{{numOfProccess}}
+            </div>
+
+            <h3>בפעולה</h3>
+        </div>
+
+    </div>
+
+    <div class="col-sm-3 col-xs-6" ng-click="filterArchive()">
+        <div class="tile-stats tile-brown">
+            <div class="icon"><i class="entypo-archive"></i></div>
+            <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500"
+                 data-delay="1800">{{numOfArchives}}
+            </div>
+
+            <h3>ארכיון</h3>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <a href="/#/account/lecturer" target="_self">
+            <button type="button" class="btn btn-blue btn-icon" style="float:right; margin:5px;">
+                נקה סינון
+                <i class="entypo-ccw"></i></button>
+        </a>
+    </div>
+    <div class="col-sm-6">
+        <a href="/#/account/lecturer/project" target="_self">
+            <button type="button" class="btn btn-blue btn-icon" style="float:left; margin:5px;">
+                הוסף
+                <i class="entypo-plus"></i></button>
+        </a>
+    </div>
+</div>
+<div class="row">
+
+    <div ng-show="!isShowArchive" class="col-sm-12">
+        <table datatable="ng" dt-options="dtOptions" id="myTable" class="row-border hover">
+            <thead>
+            <tr>
+                <th>שם</th>
+                <th>סטטוס</th>
+                <th>שלב</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="project in projectsData">
+                <td><a href="/#/account/lecturer/project/{{project._id}}"
+                       class="item-name primary-link">{{ project.nameHeb }}</a></td>
+                <td>{{ project.curState.curStatus }}</td>
+                <td>{{ project.curState.curStage}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table border=1 class='statuses' ng-repeat="proj in projectsData">
+            <thead>
+                <tr>
+                    <th colspan="{{(proj.flow.Stage).length}}" scope="colgroup">{{proj.nameHeb}}</th>
+                </tr>
+            </thead>
+                <tbody >
+                  <tr >
+                    <td ng-repeat="stage in proj.flow.Stage" ng-style="setStageColor($index,proj.curState.curOrder)">
+                        <input type="checkbox"  ng-disabled="disableStatus($index,proj.curState.curOrder)" ng-checked="setCheckedProjStatus($index,proj.curState.curOrder)" ng-model="checked" ng-true-value="'{{stage.Name}}'" ng-false-value="''"
+                         ng-click="checkedItems($event,stage, proj);">
+                        {{stage.Name}}
+                    </td>
+                  </tr>
+                </tbody>
+        </table>
+    </div>
+
+    <div ng-if="isShowArchive" class="col-sm-12">
+
+        <table datatable="ng" dt-options="dtOptions" id="myTable" class="row-border hover">
+            <thead>
+            <tr>
+                <th>שם הפרוייקט</th>
+                <th>מחלקה</th>
+                <th>הורד קובץ</th>
+                <th>העלאת קובץ</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="project in archivedProjectsData">
+                    <td>{{ project.projectName }}</td>
+                    <td>{{ project.Department.Name }}</td>
+                <td><button  type="button" class="btn btn-outline-success"><a href="/#/account/lecturer/project/{{project.projectId}}"
+                       class="item-name primary-link">הורדת קובץ</a></button></td>
+                       <td><button  type="button" class="btn btn-outline-success"><a href="/#/account/lecturer/project/{{project.projectId}}"
+                        class="item-name primary-link">שליחת קובץ</a></button></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div class="row" ng-if="!projectsData.length">
+
+    <div class="col-sm-12">
+
+        <div class="alert alert-info centered"><strong>לא קיימים פרוייקטים!</strong> <a
+                href="/#/account/lecturer/project" target="_self">צור פרויקט חדש בלחיצה עלי !</a></div>
+    </div>
+
+</div>

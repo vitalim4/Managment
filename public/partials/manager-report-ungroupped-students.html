@@ -1,0 +1,46 @@
+<div class="row">
+
+    <div class="col-sm-12">
+        <h1>דו"ח סטודנטים ללא ציוות</h1>
+
+    </div>
+</div>
+
+<div class="row" ng-if="!usersDataList.length">
+
+    <div class="col-sm-12">
+
+        <div class="alert alert-info centered"><strong>לא קיימים משתמשים!</strong> <a
+                href="/#/account/manager/users/add" target="_self">צור משתמש חדש בלחיצה עלי !</a></div>
+    </div>
+
+</div>
+<div class="row">
+
+    <div class="col-sm-12">
+        <table datatable="ng" dt-options="dtOptionsManagerUsers" id="myTable" class="row-border hover">
+            <thead>
+            <tr>
+                <th>שם מלא</th>
+                <th>שם משתמש</th>
+                <th>תפקיד</th>
+                <th>אימייל</th>
+                <th>טלפון</th>
+                <th>מכללה</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="userRow in usersDataList">
+                <td><a href="/#/account/manager/user/{{userRow._id}}"
+                       class="item-name primary-link">{{ userRow.firstName }} {{ userRow.lastName }}</a></td>
+                <td>{{ userRow.Username}}</td>
+                <td>{{ userRow.Role.Name}}</td>
+                <td>{{ userRow.Email}}</td>
+                <td>{{ userRow.Phone}}</td>
+                <td>{{ userRow.College.Name}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

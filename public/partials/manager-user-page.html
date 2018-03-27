@@ -1,0 +1,148 @@
+<div class="col-md-12">
+    <div class="panel panel-primary" data-collapsed="0">
+
+        <div class="panel-heading">
+            <div class="panel-title">
+                {{userData.firstName}} {{userData.lastName}}
+            </div>
+        </div>
+
+        <div class="panel-body">
+
+            <form role="form" class="form-horizontal form-groups-bordered" ng-submit="saveUser()">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">שם פרטי<span>*</span></label>
+
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="firstName" placeholder="שם פרטי"
+                               ng-model="userData.firstName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">שם משפחה<span>*</span></label>
+
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="lastName" placeholder="שם משפחה"
+                               ng-model="userData.lastName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">אי-מייל<span>*</span></label>
+
+                    <div class="col-sm-9">
+                        <input type="email" class="form-control" id="Email" placeholder="אי-מייל"
+                               ng-model="userData.Email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">מחלקה<span>*</span></label>
+
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="userData.Department" ng-options="department as department.Name for department in departments" required></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">סמסטר<span>*</span></label>
+
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="userData.Semester" ng-options="semester as semester.Name for semester in semesters" required></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">שנה<span>*</span></label>
+
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="userData.Year" ng-options="year as year.Name for year in years" required></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">טלפון</label>
+
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="Phone" placeholder="טלפון"
+                               ng-model="userData.Phone">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span>*</span>תפקיד</label>
+
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="userData.Role" ng-options="role as role.Name for role in roles" required></select>
+
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">קמפוס<span>*</span></label>
+
+                    <div class="col-sm-9">
+                        <select class="form-control" ng-model="userData.College" ng-options="college as college.Name for college in colleges" required></select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">ת.הולדת</label>
+
+                    <div class="col-sm-9">
+                        <input type="date" class="form-control" id="Birthday" placeholder="תאריך הולדת"
+                               ng-model="userData.Birthday">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">שם משתמש<span>*</span></label>
+
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control" id="Username" placeholder="שם משתמש"
+                               ng-model="userData.Username" required>
+                        <div class="error-field" ng-model="userExistName" ng-init="false" ng-show="userExistName">שם משתמש זה קיים במערכת</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">תמונה</label>
+
+                    <div class="col-sm-9">
+
+                        <!--<img style="width:100px;" ng-show="!!curFile"
+                             ngf-thumbnail="userData.picUrl"/>-->
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <div class="col-sm-4 col-xs-4">
+
+                    </div>
+                    <div class="col-sm-4 col-xs-4">
+
+                    </div>
+                    <div class="col-sm-4 col-xs-4">
+                        <button type="submit" class="btn btn-blue btn-icon" style="float:left;">
+                            שמור
+                            <i class="entypo-floppy"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+                    trigger: 'click',
+                    placement: 'bottom',
+                    html: true,
+                    content: function () {
+                        return $('#popover-content').html();
+                    }
+                }
+        );
+    });
+</script>

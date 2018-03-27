@@ -1,0 +1,33 @@
+<div class="row">
+
+    <div class="col-sm-12">
+    <h1>ניהול בקשות אישור</h1>
+        <table datatable="ng" id="managerDashboard" class="row-border hover" dt-options="dtOptionsManagerRequests" >
+            <thead>
+            <tr>
+                <th>שם הפרויקט</th>
+                <th>מרצים</th>
+                <th>סוג הפרויקט</th>
+                <th>תיאור</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="request in requestsData">
+                <td><a href="/#/account/manager/request/{{request._id}}"
+                       class="item-name primary-link">{{ request.projectName }}</a></td>
+                <td>
+                    <ul>
+                        <li ng-repeat="item in request.lecturers">
+                            {{item.name}}
+                        </li>
+                    </ul>
+                </td>
+                <td>{{ request.Type.Name }}</td>
+
+                <td>{{ request.shortDescription}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

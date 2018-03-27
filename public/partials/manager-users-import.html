@@ -1,0 +1,26 @@
+<script src="../js/ready-libraries/papaparse/papaparse.min.js"></script>
+<script>
+
+</script>
+<div class="row">
+
+    <div class="col-sm-12">
+
+        <h1>יבוא משתמשים מקובץ CSV</h1>
+
+    </div>
+</div>
+<form name="uploadForm">
+    <div class="row">
+        <div class="col-sm-12 col-xs-12"><h3>
+            בחר קובץ להעלאה:</h3><br/><br/>
+
+            <input type="file" ngf-select ng-model="csvFile" accept="text/csv" name="files" required >
+            <button ng-disabled="!uploadForm.$valid" ng-click="uploadCSV()"> Submit</button>
+            <h4>* במידה והמשתמשים עולים בצורה לא תקינה, יש לשמור כמוצג בסרטון הבא: <a href="https://www.youtube.com/watch?v=FVFW-dcCseU" target="_blank">https://www.youtube.com/watch?v=FVFW-dcCseU</a> </h4>
+        </div>
+        <div>
+            <button ng-click="downloadTemplate()"> פורמט לקובץ</button>
+        </div>
+    </div>
+</form>

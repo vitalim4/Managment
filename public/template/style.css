@@ -1,0 +1,281 @@
+/*Templates designes override*/
+
+.page-header.navbar .page-logo .logo-default {
+     margin: 14px 0 0;
+ }
+
+.small-color-as-h3{
+    color:#8e9daa;
+}
+
+.student-interest-textarea{
+    width:100%;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 12px;
+    text-align: right;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    background-clip: padding-box;
+}
+
+.modal-backdrop.in {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+    z-index: 3 !important;
+}
+
+.centered{
+    text-align: center;
+}
+
+.alert-info a{
+    color: #2c7ea1;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.equal {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.equal > div[class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}
+
+.ltr-field{
+    direction:ltr;
+}
+.control-label span{
+    color:#7a1616;
+}
+
+.login-page .login-form .form-group .input-group{
+    background: #d4d4d4;
+    border: 1px solid #373e4a;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    -moz-transition: all 300ms ease-in-out;
+    -webkit-transition: all 300ms ease-in-out;
+    -o-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+    -webkit-background-clip: padding-box;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+
+.login-page .login-form .form-group .input-group .form-control {
+    color: #000;
+}
+
+.login-page .login-form .form-group .input-group .input-group-addon, .login-page .login-form .form-group .input-group .form-control {
+    background: #d4d4d4;
+    border: 0;
+}
+
+.form-horizontal .control-label {
+    text-align: right;
+}
+
+.error-field{
+    color: #7a1616;
+}
+
+#filter-users ul {
+    list-style-type: none;
+}
+
+#filter-users li {
+    cursor: pointer;
+}
+
+.users-counter{
+    display: inline-block;
+    cursor: pointer;
+}
+
+/*Spinner*/
+@-webkit-keyframes uil-default-anim  {
+    0%  {
+        opacity:  1;
+    }
+    100%  {
+        opacity:  0;
+    }
+}@keyframes uil-default-anim  {
+     0%  {
+         opacity:  1;
+     }
+     100%  {
+         opacity:  0;
+     }
+ }.uil-default-css > div:nth-of-type(1) {
+      -webkit-animation:  uil-default-anim 1s linear infinite;
+      animation:  uil-default-anim 1s linear infinite;
+      -webkit-animation-delay:  -0.5s;
+      animation-delay:  -0.5s;
+  }
+.uil-default-css  {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.uil-default-css > div:nth-of-type(2) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  -0.4166666666666667s;
+    animation-delay:  -0.4166666666666667s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}
+.uil-default-css > div:nth-of-type(3) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  -0.33333333333333337s;
+    animation-delay:  -0.33333333333333337s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}
+.uil-default-css > div:nth-of-type(4) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  -0.25s;
+    animation-delay:  -0.25s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}
+.uil-default-css > div:nth-of-type(5) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  -0.16666666666666669s;
+    animation-delay:  -0.16666666666666669s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}
+.uil-default-css > div:nth-of-type(6) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  -0.08333333333333331s;
+    animation-delay:  -0.08333333333333331s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}
+.uil-default-css > div:nth-of-type(7) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  0s;
+    animation-delay:  0s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}
+.uil-default-css > div:nth-of-type(8) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  0.08333333333333337s;
+    animation-delay:  0.08333333333333337s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}
+.uil-default-css > div:nth-of-type(9) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  0.16666666666666663s;
+    animation-delay:  0.16666666666666663s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}
+.uil-default-css > div:nth-of-type(10) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  0.25s;
+    animation-delay:  0.25s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}
+.uil-default-css > div:nth-of-type(11) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  0.33333333333333337s;
+    animation-delay:  0.33333333333333337s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}
+.uil-default-css > div:nth-of-type(12) {
+    -webkit-animation:  uil-default-anim 1s linear infinite;
+    animation:  uil-default-anim 1s linear infinite;
+    -webkit-animation-delay:  0.41666666666666663s;
+    animation-delay:  0.41666666666666663s;
+}
+.uil-default-css  {
+    position:  relative;
+    background: none;
+    width: 200px;
+    height: 200px;
+}

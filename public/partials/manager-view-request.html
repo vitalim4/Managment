@@ -1,0 +1,186 @@
+<div class="col-md-8">
+    <div class="panel panel-primary" data-collapsed="0">
+
+        <div class="panel-heading">
+            <div class="panel-title">
+                {{projectData.nameHeb}}
+            </div>
+        </div>
+
+        <div class="panel-body">
+
+            <form role="form" class="form-horizontal form-groups-bordered">
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">שם בעברית</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.nameHeb}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">שם באנגלית</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.nameEng}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">תקציר</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.shortDescription}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">תיאור הפרוייקט</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.projDescrip}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">ידע נדרש</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.neededKnowledge}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">מקורות ספרות</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.literatureSources}}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">סוג הפרויקט</label>
+
+                    <div class="col-sm-9">
+                        {{projectData.flow.Type.Name}}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">תמונה</label>
+
+                    <div class="col-sm-9">
+
+                        <img style="width:100px;" ng-show="!!curFile"
+                             ngf-thumbnail="projectData.picUrl"/>
+                    </div>
+                </div>
+        </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</div>
+<div class="col-md-4">
+    <div class="panel panel-gradient" data-collapsed="0">
+
+        <!-- panel head -->
+        <div class="panel-heading">
+            <div class="panel-title">מנחים</div>
+
+            <div class="panel-options">
+                <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+            </div>
+        </div>
+
+        <!-- panel body -->
+        <div class="panel-body">
+
+            <ul>
+                <li ng-repeat="item in projectData.lecturers">
+                    {{item.name}}
+                </li>
+            </ul>
+
+        </div>
+
+    </div>
+    <div class="panel panel-gradient" data-collapsed="0" ng-show="projectData._id">
+
+        <!-- panel head -->
+        <div class="panel-heading">
+            <div class="panel-title">תלמידים</div>
+
+            <div class="panel-options">
+                <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+            </div>
+        </div>
+
+        <!-- panel body -->
+        <div class="panel-body">
+
+            <ul>
+                <li ng-repeat="item in projectData.students">
+                    {{item.name}}
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <div class="panel panel-gradient" data-collapsed="0" ng-show="!isSent">
+
+        <!-- panel head -->
+        <div class="panel-heading">
+            <div class="panel-title">טיפול בבקשה</div>
+
+            <div class="panel-options">
+                <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+            </div>
+        </div>
+
+        <!-- panel body -->
+        <div class="panel-body">
+
+            <button type="button" class="btn btn-green btn-icon btn-block" ng-click="ApproveProject()">
+                אשר
+                <i class="entypo-check"></i></button>
+
+            <button type="button" class="btn btn-info btn-icon btn-block" ng-click="comm=true">
+
+                שלח הערה
+                <i class="entypo-mail"></i>
+
+            </button>
+            <div ng-show="comm">
+                <br/>הערה למנחים
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <div class="input-group"><input type="text" class="form-control" ng-model="commtxt"> <span
+                                class="input-group-btn"> <button class="btn btn-success"
+                                                                 type="button" ng-click="sendCommentUI()">שלח!</button> </span>
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-red btn-icon btn-block" ng-click="sendRejection()">
+                דחה
+                <i class="entypo-cancel"></i></button>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover({
+                    trigger: 'click',
+                    placement: 'bottom',
+                    html: true,
+                    content: function () {
+                        return $('#popover-content').html();
+                    }
+                }
+        );
+    });
+</script>

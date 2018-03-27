@@ -1,0 +1,341 @@
+<div class="row">
+
+    <div class="col-md-8">
+        <div class="panel panel-primary" data-collapsed="0">
+
+            <div class="panel-heading">
+                <div class="panel-title">
+                    {{userData.firstName}} {{userData.lastName}}
+                </div>
+                <div class="panel-options">
+                    <a href="" ng-click="saveUser()"><i class="entypo-floppy"></i></a>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <form role="form" class="form-horizontal form-groups-bordered" ng-submit="createProject()">
+
+                    <div class="form-group">
+                        <label for="nameHeb" class="col-sm-3 control-label"><span>*</span>שם בעברית</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="nameHeb" dir="auto"
+                                   placeholder="שם הפרויקט בעברית"
+                                   ng-model="projectData.nameHeb" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nameEng" class="col-sm-3 control-label"><span>*</span>שם באנגלית</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control ltr-field" id="nameEng"
+                                   placeholder="שם הפרויקט באנגלית"
+                                   ng-model="projectData.nameEng" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shortDescription" class="col-sm-3 control-label"><span>*</span>מנחה מקצועי</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="professionalGuide" placeholder="מנחה מקצועי"
+                                   ng-model="projectData.professionalGuide" dir="auto">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shortDescription" class="col-sm-3 control-label">תקציר<span>*</span></label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="shortDescription" placeholder="תקציר"
+                                   ng-model="projectData.shortDescription" dir="auto" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-sm-3 control-label"><span>*</span>תיאור הפרוייקט</label>
+
+                        <div class="col-sm-9">
+
+                        <textarea class="form-control" id="description" placeholder="הזן תיאור"
+
+                                  ng-model="projectData.projDescrip" dir="auto" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">סמסטר<span>*</span></label>
+
+                        <div class="col-sm-9">
+                            <select class="form-control" ng-model="projectData.Semester" ng-options="semester as semester.Name for semester in semesters" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">שנה<span>*</span></label>
+
+                        <div class="col-sm-9">
+                            <select class="form-control" ng-model="projectData.Year" ng-options="year as year.Name for year in years" required></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="neededKnowledge" class="col-sm-3 control-label"><span>*</span>ידע נדרש\דרישות
+                            קדם</label>
+
+                        <div class="col-sm-9">
+                        <textarea class="form-control" id="neededKnowledge" placeholder="הזן ידע נדרש"
+                                  ng-model="projectData.neededKnowledge" dir="auto" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="literatureSources" class="col-sm-3 control-label"><span>*</span>מקורות ספרות</label>
+
+                        <div class="col-sm-9">
+                        <textarea class="form-control" id="literatureSources" placeholder="הזן מקורות ספרות"
+                                  ng-model="projectData.literatureSources" dir="auto" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"><span>*</span>מנחים</label>
+
+                        <div class="col-sm-9">
+
+                            <div class="input-group">
+                                <select ng-model="selectedLecturer" id="selectedLecturer"
+                                        ng-options="item as item.firstName + ' ' + item.lastName  for item in lecturers"
+                                        class="form-control">
+                                    <option value="">בחר מרצה</option>
+                                </select>
+                                <span class="input-group-btn">
+											<button class="btn btn-success" type="button"
+                                                    ng-click="addLecturer()">הוסף!</button>
+										</span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">קמפוס נוכחי</label>
+
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control"
+                                   ng-model="data.currentCollege" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">שינוי קמפוס</label>
+
+                        <div class="col-sm-9">
+                            <select class="form-control">
+                                <option ng-repeat="college in colleges" required ng-model="data.currentCollege"
+
+                                        value="{{college._id.College.Slug}}">{{college._id.College.Name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"><span>*</span>סוג הפרויקט</label>
+
+                        <div class="col-sm-9">
+                            <select class="form-control">
+                                <option ng-repeat="type in types" value="{{type.Type.Slug}}"
+                                        ng-model="data.currentType">
+                                    {{type.Type.Name}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">תמונה</label>
+
+                        <div class="col-sm-9">
+                            <div>
+                                <input
+                                        type="file"
+                                        ngf-select
+                                        ng-model="curFile"
+                                        name="curFile"
+
+                                        ngf-max-size="2MB"
+                                        ngf-pattern="'image/*'"
+                                        accept="image/*"/>
+                                <span ng-show="isPreview">
+                             <img style="width:100px;" ng-show="!!curFile"
+                                  ngf-thumbnail="curFile"/></span>
+                                <span ng-show="!isPreview">
+<img style="width:100px;" ng-show="!!curFile"
+     ngf-thumbnail="projectData.picUrl"/></span>
+
+                                <p>{{progress}}</p>
+
+                                <i ng-show="curFile.$error.required">*required</i><br>
+                                <i ng-show="curFile.$error.maxSize">הקובץ גדול מדי
+                                    {{curFile.size / 1000000|number:1}}MB: max 2M</i>
+
+                                <button ng-click="submFile()" type="button" class="button">העלה</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+
+                        <div class="col-sm-4 col-xs-4">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-danger btn-icon"
+                                        onclick="jQuery('#modal-delete').modal('show');">
+                                    מחק <i class="entypo-cancel"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <div class="text-center">
+                                <button type="button" class="btn btn-info btn-ico"
+                                        onclick="jQuery('#modal-end').modal('show');">
+                                    סיים פרוייקט <i class="entypo-cancel"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <button type="submit" class="btn btn-blue btn-icon" style="float:left;">
+                                שמור
+                                <i class="entypo-floppy"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-4 col-xs-4">
+                            <button type="button" class="btn btn-info btn-icon"
+                                    onclick="jQuery('#modal-33').modal('show');"
+                                    ng-show="!projectData.isInProcess && projectData.isPaired && !projectData.waitingApproval">
+                                שלח לאישור
+                                <i class="entypo-share"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+    <div class="col-md-4">
+        <div class="panel panel-gradient" data-collapsed="0">
+
+            <!-- panel head -->
+            <div class="panel-heading">
+                <div class="panel-title">מנחים</div>
+
+                <div class="panel-options">
+                    <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                </div>
+            </div>
+
+            <!-- panel body -->
+            <div class="panel-body">
+
+                <ul>
+                    <li ng-repeat="item in projectData.lecturers">
+                        {{item.name}}
+                        <button type="button" class="btn btn-red btn-icon btn-xs" ng-click="removeLecturer(item)">הסר<i
+                                class="entypo-cancel"></i></button>
+                    </li>
+                </ul>
+
+            </div>
+
+        </div>
+        <div class="panel panel-gradient" data-collapsed="0" ng-show="projectData._id">
+
+            <!-- panel head -->
+            <div class="panel-heading">
+                <div class="panel-title">סטודנטים</div>
+
+                <div class="panel-options">
+                    <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                </div>
+            </div>
+
+            <!-- panel body -->
+            <div class="panel-body">
+
+                <ul>
+                    <li ng-repeat="item in projectData.students">
+                        {{item.name}}
+                        <button type="button" class="btn btn-red btn-icon btn-xs" ng-click="removeStudent(item)">הסר<i
+                                class="entypo-cancel"></i></button>
+                    </li>
+                </ul>
+
+                <div class="input-group" ng-show="projectData._id">
+                    <input name="currStudent" id="currStudent" type="text" placeholder="הזן שם סטודנט"
+                           ng-model="selectedStudent1"
+                           typeahead="stud as students.firstName + ' ' + students.lastName + ' - ' + students.Phone  for students in filterByName(students, $viewValue) | limitTo:8"
+                           class="form-control" typeahead-on-select="selectStudent($item)">
+
+                    <span class="input-group-btn">
+											<button class="btn btn-success" type="button"
+                                                    ng-click="addStudent()">הוסף!</button>
+										</span>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <div class="modal fade" id="modal-delete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">מחיקת פרוייקט</h4></div>
+                <div class="modal-body">
+                    האם אתה בטוח ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                    <button type="button" class="btn btn-danger" ng-click="deleteProject()">מחק</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-33">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">האם הפרוייקט מוכן לשליחה ?</h4></div>
+            <div class="modal-body">
+                אנא אשר
+
+                <div class="alert alert-danger" dismiss-on-timeout="2000" ng-if="nostudents" close="closeAlertStud()">
+                    <strong>אופס!</strong> כנראה ששכחת להוסיף סטודנטים, לא ניתן לשלוח פרויקט לאישור בלי סטודנטים.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                <button type="button" class="btn btn-info" ng-click="sendApproval()">שלח</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<div class="modal fade" id="modal-end">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">סיום פרוייקט</h4></div>
+            <div class="modal-body">
+                האם אתה בטוח ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                <button type="button" class="btn btn-danger" ng-click="save_end_proj()">סיים את הפרוייקט</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
