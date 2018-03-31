@@ -29,6 +29,17 @@ module.exports = {
             });
         }
 
+    },
+    getAllForArchive: function (req, res) {
+        var userType = req.user.Role.Slug;
+        var inDepartment = req.user.Department.Slug;
+            Department.find({},{_id:false},function (err, departments) {
+                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                if (err)
+                    res.send(err);
+
+                res.status(200).send(departments); // return all users in JSON format
+            });
     }
 
 

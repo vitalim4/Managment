@@ -52,6 +52,8 @@ module.exports = function (app) {
     app.post('/api/manager/request/comment/:requestid', authenticate, projectRoute.sendCommentToLecturers);
     app.get('/api/manager/projects/', authenticate, projectRoute.getProjectsByManager);
     app.get('/api/lecturer/projects/', authenticate, projectRoute.getByLecturer);
+    app.get('/api/archive/lecturer/projects/', authenticate, projectRoute.getArchivedProjectsByLecturer);
+    app.get('/api/projects/all/archive',authenticate,projectRoute.getAllArchivedProjects)
     app.get('/api/student/projects/', authenticate, projectRoute.getProjectsByStudent);
     app.post('/api/submit/grade', authenticate, projectRoute.submitGrade); //not implemented yet
     app.get('/api/getnotifications/byproject/:projectid', authenticate, projectRoute.getNotifications);
@@ -328,9 +330,12 @@ module.exports = function (app) {
         res.download(file); // Set disposition and send it.
     });
     app.get('/api/roles', authenticate, roleRoute.getAll);
+    app.get('/api/roles/archive', authenticate, roleRoute.getAllForArchive);
     app.get('/api/departments', authenticate, departmentRoute.getAll);
+    app.get('/api/departments/archive', authenticate, departmentRoute.getAllForArchive);
     app.get('/api/semesters', authenticate, semesterRoute.getAll);
     app.get('/api/years', authenticate, yearRoute.getAll);
     app.get('/api/colleges', authenticate, collegeRoute.getAll);
+    app.get('/api/colleges/archive', authenticate, collegeRoute.getAllForArchive);
 
 };

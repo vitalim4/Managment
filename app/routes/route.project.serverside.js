@@ -146,6 +146,39 @@ module.exports = {
             }
         );
     },
+    getArchivedProjectsByLecturer: function (req, res) {
+        var inLecturerID = req.user._id;
+        Project.find
+        (
+            { $and: [ { "lecturers.id": inLecturerID }, {"curState.curOrder": 10} ] } ,
+            //{ "lecturers.id": inLecturerID },
+            function (err, projs) {
+                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                if (err) {
+                    res.send(err);
+                    return;
+                }
+
+                res.json(projs); // return all projects in JSON format
+            }
+        );
+    },
+    getAllArchivedProjects: function (req, res) {
+        var inLecturerID = req.user._id;
+        Project.find
+        (
+            {"curState.curOrder": 10},
+            function (err, projs) {
+                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                if (err) {
+                    res.send(err);
+                    return;
+                }
+
+                res.json(projs); // return all projects in JSON format
+            }
+        );
+    },
     getProjectsByManager: function (req, res) {
         var inManagerID = req.user._id;
         var userType = req.user.Role.Slug;

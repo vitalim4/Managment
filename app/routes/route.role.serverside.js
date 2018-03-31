@@ -43,6 +43,21 @@ module.exports = {
                 res.status(200).send(roles); // return all users in JSON format
             });
         }
+    },
+
+
+    getAllForArchive: function (req, res) {
+        var userType = req.user.Role.Slug;
+        var inDepartment = req.user.Department.Slug;
+            // use mongoose to get all users in the database
+            Role.find({}, {_id: false}, function (err, roles) {
+
+                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                if (err)
+                    res.send(err);
+
+                res.status(200).send(roles); // return all users in JSON format
+            });
     }
 
 }
