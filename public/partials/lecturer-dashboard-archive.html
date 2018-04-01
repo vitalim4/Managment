@@ -254,7 +254,7 @@ div class="row">
 <div class="row" ng-if="projectsData.length && !isLoading">
 
     <div class="col-sm-12">
-        <table datatable="ng" dt-options="dtOptionsManagerProjects" dt-columns="dtColumns" id="myTable"
+        <table
                class="row-border hover" style="width: 100%; margin-right: 0;">
             <thead>
 
@@ -270,6 +270,17 @@ div class="row">
                 </td>
                 <td>{{ project.shortDescription}}</td>
                 <td>{{project.flow.Department.Name}}</td>
+                <td>
+                   
+                        <button class="btn btn-info" 
+                        type="file" 
+                        ngf-select="submFile($file, $invalidFiles)" 
+                        ngf-pattern="'.pdf'" 
+                        accept=".pdf" 
+                        ngf-max-height="1000" 
+                        ngf-max-size="1MB">העלה</button>>
+            </td>
+            <td><button ng-click="downloadPdf(project)">הורד</button></td>
             </tr>
             </tbody>
         </table>

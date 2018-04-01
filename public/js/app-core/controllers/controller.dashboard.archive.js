@@ -21,17 +21,58 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
         $location.url('/Login');
 
     }
-    /*$http.get('/api/archive/lecturer/projects/')
-    .success(function (data) {
-        console.log(data)
-    });*/
+
+    $scope.projectData={};
+    $scope.isPreview = true;
+    $scope.curFile = {};
+    $scope.downloadPdf = function(obj){
+        obj.documentation="file-1522618695706.pdf";
+        $http.get('api/download/archive/'+obj.documentation)
+        .success(function(){
+            window.open('api/download/archive/'+obj.documentation)
+        });
+    }
+  
+    $scope.upload = function (file) {
+
+        Upload.upload({
+            url: '/upload', //webAPI exposed to upload the file
+            data: {file: file} //pass file as data, should be user ng-model
+        }).then(function (resp) { //upload function returns a promise
+            if (resp.data.error_code === 0) { //validate success
+                var filePath = resp.data.data;
+                //filePath = filePath.replace('C:\\Users\\Administrator\\WebstormProjects\\FPM-AngularJS\\public\\', '');
+                filePath = filePath.replace('\\Users\\vitaly\\Desktop\\RonenMars-nodefpm-ace6640c93ef\\public\\', '');
+                console.log(filePath);
+                $scope.projectData.picUrl = filePath;
+                $scope.isPreview = false;
+
+                toastr.success("הקובץ עלה בהצלחה", globalSettings.toastrOpts);
+
+            } else {
+                $window.alert('an error occured');
+            }
+        }, function (resp) { //catch error
+            console.log('Error status: ' + resp.status);
+            //$window.alert('Error status: ' + resp.status);
+        }, function (evt) {
+            console.log(evt);
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            progress = 'העלאה: ' + progressPercentage + '% '; // capture upload progress
+        });
+    };
+    $scope.submFile = function (file, err) { 
+      //function to call on form submit
+      if(err.length > 0){
+        $window.alert('an error occured');
+      }
+      else{
+        $scope.upload(file);
+      }
     
-    /*Projects.getRequestsByManagerArchive()
-    .success(function (data) {       
-        archivedProjects = data;   
-        $scope.archivedProjectsData = archivedProjects;
-        $scope.requestsData = data;
-    });*/
+    };
+
     $scope.pieIsClicked = false;
 
     var curUserAuth = localStorageService.get('userRoleSlug');
