@@ -32,6 +32,7 @@ var crypto = require('crypto');
 var async = require('async');
 var path = require('path');
 var EmailTemplate = require('email-templates').EmailTemplate;
+var fs = require('fs');
 
 
 // expose the routes to our app with module.exports
@@ -116,6 +117,7 @@ module.exports = function (app) {
     app.get('/api/projects/get-stages', authenticate, projectRoute.getAllStages); 
     //app.get('/api/projects/get-statuses', authenticate, projectRoute.getAllStatuses); //not used
     app.post('/api/submission', authenticate, projectRoute.AddSubmission);
+    app.get('/api/project/archive/:projId/:doc', authenticate, projectRoute.uploadDocPdf);
 
     /******************************************************************/
     /************************Project Flow******************************/
@@ -300,7 +302,7 @@ module.exports = function (app) {
     var storage = multer.diskStorage({ //multers disk storage settings
         destination: function (req, file, cb) {
             //cb(null, 'C:/Users/Administrator/WebstormProjects/FPM-AngularJS/public/uploads');
-            cb(null, '/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/uploads');
+            cb(null, '/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/uploads/');
         },
         filename: function (req, file, cb) {
             var datetimestamp = Date.now();
@@ -330,10 +332,9 @@ module.exports = function (app) {
         var file =  path.join(__dirname, 'csv-template', 'csv-template.csv');
         res.download(file); // Set disposition and send it.
     });
-    app.get('/api/download/archive/:filename', function(req, res){
-        //res.download('public/uploads/'+req.params.filename,"report.pdf"); for windows
-        res.download('/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/uploads/'+req.params.filename,"report.pdf"); // Set disposition and send it.
-    });
+    app.get('/api/download/archive/:filename', function(req,res){
+        res.download("public/uploads/"+req.params.filename, req.params.filename);
+    })
     app.get('/api/roles', authenticate, roleRoute.getAll);
     app.get('/api/roles/archive', authenticate, roleRoute.getAllForArchive);
     app.get('/api/departments', authenticate, departmentRoute.getAll);
@@ -342,5 +343,4 @@ module.exports = function (app) {
     app.get('/api/years', authenticate, yearRoute.getAll);
     app.get('/api/colleges', authenticate, collegeRoute.getAll);
     app.get('/api/colleges/archive', authenticate, collegeRoute.getAllForArchive);
-
 };

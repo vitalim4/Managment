@@ -132,6 +132,10 @@ app.config(function ($routeProvider, localStorageServiceProvider) {
                 templateUrl: 'partials/manager-archive-requests.html',
                 controller: 'projectManagerRequestsArchive'
             })
+            .when('/account/admin/archive/allprojects', {
+                templateUrl: 'partials/admin-archive-projects.html',
+                controller: 'projectAdminAllArchive'
+            })
             .when('/account/admin', {
                 templateUrl: 'partials/manager-projects.html',
                 controller: 'managerProjectsController'

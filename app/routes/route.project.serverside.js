@@ -1696,8 +1696,28 @@ module.exports = {
                 });
             }
         }
-    }
-    ,
+    },
+    uploadDocPdf:function(req, res){
+
+        var projId = req.params.projId;
+        var docName = req.params.doc;
+        Project.findOneAndUpdate(
+                {_id:projId},
+                {
+                    $set: {'Documentation':docName}
+                },
+                {
+                    upsert: false
+                },
+                function (err, projectUpdated) {
+                    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                    if (err)
+                        return res.send(err);
+
+                    res.status(200);
+                    res.send(projectUpdated);
+                });
+    },
 
     save_end_proj: function (req, res) {
 

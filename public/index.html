@@ -174,11 +174,19 @@
                         <span class="title">ניהול פרוייקטים</span>
                     </a>
                 </li>
-                <li class="active" ng-show="isAdmin">
+         <!--<li class="active" ng-show="isAdmin">
                     <a href="/#/account/lecturer" target="_self">
                         <i class="entypo-monitor"></i>
                         <span class="title">הפרוייקטים שלי</span>
                     </a>
+                </li>-->
+                <li class="has-sub root-level" ng-show="isAdmin" >
+                    <a><i
+                        class="entypo-newspaper"></i><span class="title">ארכיון</span></a>
+                    <ul>
+                        <li><a href="/#/account/admin/archive/allprojects"><span class="title">כל הפרוייקטים</span></a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="has-sub root-level" ng-show="isAdmin" ng-class="{ active: isActive('/account/admin/')}">
                     <a><i
@@ -401,6 +409,7 @@
 <script src="js/app-core/controllers/controller.dashboard.archive.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.dashboard.archive.allprojects.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.dashboard.archive.student.js" type="text/javascript"></script>
+<script src="js/app-core/controllers/controller.admin.archive.allprojects.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.project.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.header.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.menu.clientside.js" type="text/javascript"></script>

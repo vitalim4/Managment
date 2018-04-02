@@ -129,6 +129,9 @@ var projectSchema = new Schema({
         Slug: {
             type: String
         }
+    },
+    Documentation:{
+        type: String
     }
 });
 

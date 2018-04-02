@@ -1,4 +1,4 @@
-angular.module("FPM").controller('dashboardArchiveController', function ($scope, $window, $http, localStorageService, DTOptionsBuilder,DTColumnBuilder,Projects,globalSettings,$timeout) {
+angular.module("FPM").controller('dashboardArchiveController', function ($scope, $window, $http, localStorageService, DTOptionsBuilder,DTColumnBuilder,Projects,globalSettings,$timeout,Upload,DataTablesOptions) {
 
 
     $scope.projectsData = [];
@@ -21,19 +21,20 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
         $location.url('/Login');
 
     }
+    $scope.dtOptionsManagerRequests = DataTablesOptions.GlobalOptionsManager();
 
     $scope.projectData={};
     $scope.isPreview = true;
     $scope.curFile = {};
-    $scope.downloadPdf = function(obj){
-        obj.documentation="file-1522618695706.pdf";
-        $http.get('api/download/archive/'+obj.documentation)
+    $scope.downloadPdf = function(obj){       
+        $http.get('api/download/archive/'+obj.Documentation)
         .success(function(){
-            window.open('api/download/archive/'+obj.documentation)
+            window.open('api/download/archive/'+obj.Documentation)
         });
     }
   
-    $scope.upload = function (file) {
+    var documentation = "";
+    $scope.upload = function (file, data) {
 
         Upload.upload({
             url: '/upload', //webAPI exposed to upload the file
@@ -41,14 +42,16 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
         }).then(function (resp) { //upload function returns a promise
             if (resp.data.error_code === 0) { //validate success
                 var filePath = resp.data.data;
-                //filePath = filePath.replace('C:\\Users\\Administrator\\WebstormProjects\\FPM-AngularJS\\public\\', '');
-                filePath = filePath.replace('\\Users\\vitaly\\Desktop\\RonenMars-nodefpm-ace6640c93ef\\public\\', '');
-                console.log(filePath);
-                $scope.projectData.picUrl = filePath;
-                $scope.isPreview = false;
+                //filePath = filePath.replace('C:\\Users\\Administrator\\WebstormProjects\\FPM-AngularJS\\public\\', ''); -wind
+                filePath = filePath.replace('/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/', '');
 
-                toastr.success("הקובץ עלה בהצלחה", globalSettings.toastrOpts);
-
+                //documentation = filePath.split("\\")[1]; wind
+                documentation = filePath.split("/")[1]; 
+                $http.get('/api/project/archive/'+data._id+'/'+documentation+'/')
+                .then(function (result) {
+                    toastr.success("הקובץ עלה בהצלחה", globalSettings.toastrOpts);
+                });
+            
             } else {
                 $window.alert('an error occured');
             }
@@ -62,16 +65,31 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
             progress = 'העלאה: ' + progressPercentage + '% '; // capture upload progress
         });
     };
-    $scope.submFile = function (file, err) { 
+    $scope.fileErr = false;
+    $scope.submFile = function (file, err, data) { 
+        $scope.fileErr = false;
+        if(file == null){
+            $scope.fileErr = true;
+            return
+        }
       //function to call on form submit
-      if(err.length > 0){
+     if(err.length > 0){
         $window.alert('an error occured');
       }
       else{
-        $scope.upload(file);
+        $scope.upload(file, data);
       }
     
     };
+
+    $scope.checkIfPdfExists = function(data){
+        if(data.Documentation  && data.Documentation != 'undefined'){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 
     $scope.pieIsClicked = false;
 
@@ -79,46 +97,6 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
 
     var translation = globalSettings.tableTranslation;
     $scope.disabled = true;
-
-    $scope.dtColumns = [
-        DTColumnBuilder.newColumn('projectName').withTitle('שם הפרויקט'),
-        DTColumnBuilder.newColumn('curStatus').withTitle('סטטוס'),
-        DTColumnBuilder.newColumn('shortDescription').withTitle('תיאור הפרויקט'),
-        DTColumnBuilder.newColumn('Department.Name').withTitle('מחלקה')
-    ];
-
-    $scope.dtArchiveColumns = [
-        DTColumnBuilder.newColumn('projectName').withTitle('שם הפרויקט'),
-        /*DTColumnBuilder.newColumn('curStatus').withTitle('סטטוס'),
-        DTColumnBuilder.newColumn('shortDescription').withTitle('תיאור הפרויקט'),*/
-        DTColumnBuilder.newColumn('Department.Name').withTitle('מחלקה'),
-        DTColumnBuilder.newColumn('Archive.File.Download').withTitle('הורד קובץ PDF'),
-        DTColumnBuilder.newColumn('Archive.File.Upload').withTitle('העלאת קובץ PDF')
-    ];
-
-
-    $scope.dtReportsCol = [
-        DTColumnBuilder.newColumn('index').withTitle('#'),
-        DTColumnBuilder.newColumn('projectName').withTitle('שם הפרויקט'),
-        DTColumnBuilder.newColumn('projDescrip').withTitle('תיאור הפרויקט'),
-        DTColumnBuilder.newColumn('shortDescription').withTitle('תקציר'),
-        DTColumnBuilder.newColumn('students.email').withTitle('שמות הסטודנטים'),
-        DTColumnBuilder.newColumn('students.name').withTitle('סטודנטים אימיילים'),
-        DTColumnBuilder.newColumn('literatureSources').withTitle('מקורות'),
-        DTColumnBuilder.newColumn('lecturers.name').withTitle('מנחים מקצועיים'),
-        DTColumnBuilder.newColumn('professionalGuide').withTitle('מרצים'),
-        DTColumnBuilder.newColumn('lecturers.email').withTitle('מנחים אימיילים'),
-        DTColumnBuilder.newColumn('isPaired').withTitle('מצוות'),
-        DTColumnBuilder.newColumn('curStatus').withTitle('סטטוס'),
-        DTColumnBuilder.newColumn('curState.curStage').withTitle('שלב'),
-        DTColumnBuilder.newColumn('curState.curOrder').withTitle('מס׳ שלב'),
-        DTColumnBuilder.newColumn('waitingApproval').withTitle('מחכה לאישור'),
-        DTColumnBuilder.newColumn('Semester.Name').withTitle('סמסטר'),
-        DTColumnBuilder.newColumn('Year.Name').withTitle('שנה'),
-        DTColumnBuilder.newColumn('College.Name').withTitle('קמפוס'),
-        DTColumnBuilder.newColumn('Department.Name').withTitle('מחלקה'),
-        DTColumnBuilder.newColumn('Type.Name').withTitle('סוג הפרויקט')
-    ];
 
     var projectsWOFilter = [];
 
@@ -129,13 +107,6 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
     $scope.modalState = "";
     $scope.isLoading = false;
     $scope.numOfMyProject = -1;
-
-    /*Projects.getRequestsByManagerArchive()
-    .success(function (data) {   
-        archivedProjects = data;
-        $scope.archivedProjectsData = archivedProjects;
-        $scope.requestsData = data;
-    });*/
 
     $http.get('/api/archive/lecturer/projects/')
         .success(function (data) {

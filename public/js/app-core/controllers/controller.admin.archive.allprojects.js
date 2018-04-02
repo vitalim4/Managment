@@ -1,18 +1,26 @@
-angular.module("FPM").controller('dashboardArchiveAllStudentProjectsController', function ($scope, $window, $http, localStorageService, DTColumnBuilder, DTOptionsBuilder, globalSettings,Projects, $timeout,DataTablesOptions) {
+angular.module("FPM").controller('projectAdminAllArchive', function ($scope, $window, $http, localStorageService, DTOptionsBuilder,DTColumnBuilder,Projects,globalSettings,$timeout,DataTablesOptions) {
 
-
-    console.log("dashboardArchiveAllStudentProjectsController entered")
     $scope.projectsData = [];
 
     var archivedProjects = [];
     $scope.archivedProjectsData = archivedProjects;
 
+    $scope.dtOptionsManagerRequests = DataTablesOptions.GlobalOptionsManager();
     /*
      * User details from session in order to use them in server queries
      */
 
     var curUserID = localStorageService.get('userId');
     var curUserAuth = localStorageService.get('userRoleSlug');
+
+    //check user permissions
+    if(curUserAuth === 'student'){
+
+        localStorageService.clearAll();
+        $http.get('/logout');
+        $location.url('/Login');
+
+    }
 
     $scope.checkIfPdfExists = function(data){
         if(data.Documentation  && data.Documentation != 'undefined'){
@@ -23,7 +31,6 @@ angular.module("FPM").controller('dashboardArchiveAllStudentProjectsController',
         }
     }
 
-    $scope.dtOptionsManagerRequests = DataTablesOptions.GlobalOptionsManager();
     $scope.pieIsClicked = false;
 
     var curUserAuth = localStorageService.get('userRoleSlug');
@@ -429,5 +436,4 @@ angular.module("FPM").controller('dashboardArchiveAllStudentProjectsController',
             }
         }
         , true);
-
 });

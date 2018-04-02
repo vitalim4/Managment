@@ -417,18 +417,9 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
 
     $scope.dtColumns = [
         DTColumnBuilder.newColumn('projectName').withTitle('שם הפרויקט'),
-        DTColumnBuilder.newColumn('curStatus').withTitle('סטטוס'),
+        DTColumnBuilder.newColumn('curStatus').withTitle('שלב'),
         DTColumnBuilder.newColumn('shortDescription').withTitle('תיאור הפרויקט'),
         DTColumnBuilder.newColumn('Department.Name').withTitle('מחלקה')
-    ];
-
-    $scope.dtArchiveColumns = [
-        DTColumnBuilder.newColumn('projectName').withTitle('שם הפרויקט'),
-        /*DTColumnBuilder.newColumn('curStatus').withTitle('סטטוס'),
-        DTColumnBuilder.newColumn('shortDescription').withTitle('תיאור הפרויקט'),*/
-        DTColumnBuilder.newColumn('Department.Name').withTitle('מחלקה'),
-        DTColumnBuilder.newColumn('Archive.File.Download').withTitle('הורד קובץ PDF'),
-        DTColumnBuilder.newColumn('Archive.File.Upload').withTitle('העלאת קובץ PDF')
     ];
 
 
@@ -444,7 +435,7 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
         DTColumnBuilder.newColumn('professionalGuide').withTitle('מרצים'),
         DTColumnBuilder.newColumn('lecturers.email').withTitle('מנחים אימיילים'),
         DTColumnBuilder.newColumn('isPaired').withTitle('מצוות'),
-        DTColumnBuilder.newColumn('curStatus').withTitle('סטטוס'),
+        DTColumnBuilder.newColumn('curStatus').withTitle('שלב'),
         DTColumnBuilder.newColumn('curState.curStage').withTitle('שלב'),
         DTColumnBuilder.newColumn('curState.curOrder').withTitle('מס׳ שלב'),
         DTColumnBuilder.newColumn('waitingApproval').withTitle('מחכה לאישור'),
@@ -526,34 +517,23 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
     };
 
     $scope.filterKolKore = function () {
-        $scope.isShowArchive = false;
         $scope.projectsData = projectsWOFilter.filter(function (proj) {
             return proj.curState.curStatus === 'קול קורא';
         });
     };
     $scope.filterGrouped = function () {
-        $scope.isShowArchive = false;
         $scope.projectsData = projectsWOFilter.filter(function (proj) {
             return proj.curState.curStatus === 'ניסוח הצעה';
         });
     };
     $scope.filterWaiting = function () {
-        $scope.isShowArchive = false;
         $scope.projectsData = projectsWOFilter.filter(function (proj) {
             return proj.curState.curStatus === 'ממתין לאישור';
         });
     };
     $scope.filterAction = function () {
-        $scope.isShowArchive = false;
         $scope.projectsData = projectsWOFilter.filter(function (proj) {
             return proj.curState.curStatus === 'בביצוע';
-        });
-    };
-
-    $scope.filterArchive = function () {
-        $scope.isShowArchive = true;
-        $scope.projectsData = projectsWOFilter.filter(function (proj) {
-            return proj.curState.curStatus === 'פרוייקט גמור';
         });
     };
 

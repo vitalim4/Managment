@@ -1,8 +1,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
-        setTimeout( function(){
-            $('#myTable').DataTable();
-        }, 100 );       
+        var table = $('#tblArchive').DataTable({
+            "bDestroy": true,
+		"dom": '<"row"<"col-md-6"l><"col-md-6 text-right"f>>>t<"panel-footer"<"row"<"col-md-6"i><"col-md-6 text-right"p>>>'
+    });  
     });
 
 </script>
@@ -28,9 +29,17 @@
         margin-bottom: 7px;
     }
 
+    .ng-button { background:green; color: white; text-decoration:none; padding:6px;
+            transition:1s; height: 25px; box-shadow: 1px 1px 1px 1px black; border: 1px solid black;
+            border-radius: 20px;
+    }
+    .ng-button:hover { background:black; color:white; text-decoration:none; border:1px solid;
+        border-radius: 0px;
+    }
+
 </style>
 
-div class="row">
+<div class="row">
     <div class="col-lg-12">
         <form id="convFilter" class="form-horizontal" action="/admin/conversations/filter">
             <div class="col-md-4">
@@ -255,14 +264,21 @@ div class="row">
 
     <div class="col-sm-12">
         <table
-               class="row-border hover" style="width: 100%; margin-right: 0;">
+        class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng" id="tblMyArchive" dt-options="dtOptionsManagerRequests">
             <thead>
-
+                <tr>
+                    <th>שם</th>
+                    <th>סטטוס</th>
+                    <th>תאור</th>
+                    <th>מחלקה</th>
+                    <th>העלה (PDF)</th>
+                    <th>הורד (PDF)</th>
+                 </tr>
             </thead>
             <tbody>
             <tr ng-repeat="project in projectsData">
                 <td>
-                      {{ project.nameHeb }}/td>
+                      {{ project.nameHeb }}</td>
                 <td>
                     <div ng-class="{'label label-secondary':project.curState.curStatus==='קול קורא' ,'label label-warning':project.curState.curStatus==='ממתין לאישור' , 'label label-info':project.curState.curStatus==='ניסוח הצעה' , 'label label-success':project.curState.curStatus==='בביצוע'}">
                         {{ project.curState.curStatus }}
@@ -270,17 +286,21 @@ div class="row">
                 </td>
                 <td>{{ project.shortDescription}}</td>
                 <td>{{project.flow.Department.Name}}</td>
-                <td>
+                <td style="text-align:center;">
                    
-                        <button class="btn btn-info" 
+                        <button type="button" class="ng-button" 
                         type="file" 
-                        ngf-select="submFile($file, $invalidFiles)" 
+                        ngf-select="submFile($file, $invalidFiles,project)" 
                         ngf-pattern="'.pdf'" 
                         accept=".pdf" 
-                        ngf-max-height="1000" 
-                        ngf-max-size="1MB">העלה</button>>
-            </td>
-            <td><button ng-click="downloadPdf(project)">הורד</button></td>
+                        ngf-max-height="5000" 
+                        ngf-max-size="5MB"> העלה קובץ</button>
+                        <i ng-if="fileErr">Invalid size 
+                          max 5M or format</i>
+                </td>
+                <td style="text-align:center;">
+                    <button type="button" ng-show="checkIfPdfExists(project)" class="ng-button" ng-click="downloadPdf(project)">הורד קובץ</button>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -304,43 +324,3 @@ div class="row">
         </div>
     </div>
 </div>
-
-<!--<div class="row">
-    <div class="col-sm-6">
-        <a href="/#/account/lecturer/archive" target="_self">
-            <button type="button" class="btn btn-blue btn-icon" style="float:right; margin:5px;">
-                נקה סינון
-                <i class="entypo-ccw"></i></button>
-        </a>
-    </div>
-
-    <div class="col-sm-12">
-        <table datatable="ng" dt-options="dtOptions" id="myTable" class="row-border hover">
-            <thead>
-            <tr>
-                <th>שם הפרוייקט</th>
-                <th>מחלקה</th>
-                <th>הורד קובץ</th>
-                <th>העלאת קובץ</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="project in archivedProjectsData">
-                    <td>{{ project.projectName }}</td>
-                    <td>{{ project.Department.Name }}</td>
-                <td><button  type="button" class="btn btn-outline-success"><a href="/#/account/lecturer/project/{{project.projectId}}"
-                       class="item-name primary-link">הורדת קובץ</a></button></td>
-                       <td><button  type="button" class="btn btn-outline-success"><a href="/#/account/lecturer/project/{{project.projectId}}"
-                        class="item-name primary-link">שליחת קובץ</a></button></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-</div>-->
-<!--<div class="row" ng-if="!archivedProjectsData.length">
-    <div class="col-sm-12">
-        <div class="alert alert-info centered"><strong>לא קיימים פרוייקטים!</strong> <a
-                href="/#/account/lecturer/project" target="_self">צור פרויקט חדש בלחיצה עלי !</a></div>
-    </div>
-</div>-->

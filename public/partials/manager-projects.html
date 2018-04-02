@@ -61,30 +61,12 @@
         </div>
 
     </div>
-    <div class="col-sm-3 col-xs-6" ng-click="filterArchive()">
-        <div class="tile-stats tile-brown">
-            <div class="icon"><i class="entypo-archive"></i></div>
-            <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500"
-                 data-delay="1800">{{numOfArchives}}
-            </div>
-
-            <h3>ארכיון</h3>
-        </div>
-
-    </div>
 
 </div>
 <div class="row">
     <div class="col-lg-12">
         <form id="convFilter" class="form-horizontal" action="/admin/conversations/filter">
             <div class="col-md-4">
-                <!--<div class="form-group">-->
-                    <!--<label class="col-sm-4 control-label" for="projectName">שם הפרויקט</label>-->
-                    <!--<div class="col-sm-8">-->
-                        <!--<input type="text" class="form-control" name="projectName" id="projectName"-->
-                               <!--placeholder="שם הפרויקט או חלק ממנו" ng-model="filterApply.projectName">-->
-                    <!--</div>-->
-                <!--</div>-->
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="filterApply.projectColleges">קמפוס</label>
                     <div class="col-sm-8">
@@ -121,10 +103,10 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="filterApply.projectStatus">סטטוס</label>
+                    <label class="col-sm-4 control-label" for="filterApply.projectStatus">שלב</label>
                     <div class="col-sm-8">
                         <select class="form-control" ng-model="filterApply.projectStatus" id="filterApply.projectStatus">
-                            <option value="">בחר סטאטוס</option>
+                            <option value="">בחר שלב</option>
                             <option ng-repeat="status in filtersSet.statuses"
                                     value="{{status.Name}}">{{status.Name}}
                             </option>
@@ -340,7 +322,7 @@
 </div>
 <div class="row" ng-if="projectsData.length && !isLoading">
 
-    <div ng-if="!isShowArchive" class="col-sm-12">
+    <div class="col-sm-12">
         <table datatable="ng" dt-options="dtOptionsManagerProjects" dt-columns="dtColumns" id="myTable"
                class="row-border hover" style="width: 100%; margin-right: 0;">
             <thead>
@@ -357,36 +339,6 @@
                 </td>
                 <td>{{ project.curState.curStage}}</td>
                 <td>{{project.flow.Department.Name}}</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-
-    <div ng-if="isShowArchive" class="col-sm-12">
-        <table datatable="ng" dt-options="dtOptionsManagerProjects" dt-columns="dtArchiveColumns" id="myTable"
-               class="row-border hover" style="width: 100%; margin-right: 0;">
-            <thead>
-
-            </thead>
-            <tbody>
-            <tr ng-repeat="project in archivedProjectsData">
-                    <td>{{ project.projectName }}</td>
-                <!--<td><a href="/#/account/manager/project/{{project._id}}"
-                       class="item-name primary-link">{{ project.nameHeb }}</a></td>-->
-                <!--<td>
-                    <div ng-class="{'label label-secondary':project.curState.curStatus==='קול קורא' ,'label label-warning':project.curState.curStatus==='ממתין לאישור' , 'label label-info':project.curState.curStatus==='ניסוח הצעה' , 'label label-success':project.curState.curStatus==='בביצוע'}">
-                        {{ project.curState.curStatus }}
-                    </div>
-                </td>-->
-                <!--<td>{{ project.curState.curStage}}</td>-->
-                <td>{{project.Department.Name}}</td>
-                <td><button  type="button" class="btn btn-outline-success"><a href="/#/account/manager/project/{{project.projectId}}"
-                    class="item-name primary-link">הורדת קובץ</a></button></td>
-                <td><button type="button" class="btn btn-outline-success"><a href="/#/account/manager/project/{{project.projectId}}"
-                    class="item-name primary-link">שליחת קובץ</a></button></td>
-
-
             </tr>
             </tbody>
         </table>
