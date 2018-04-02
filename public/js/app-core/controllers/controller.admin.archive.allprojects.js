@@ -59,6 +59,55 @@ angular.module("FPM").controller('projectAdminAllArchive', function ($scope, $wi
         });
     }
 
+    var documentation = "";
+    $scope.upload = function (file, data) {
+
+        Upload.upload({
+            url: '/upload', //webAPI exposed to upload the file
+            data: {file: file} //pass file as data, should be user ng-model
+        }).then(function (resp) { //upload function returns a promise
+            if (resp.data.error_code === 0) { //validate success
+                var filePath = resp.data.data;
+                filePath = filePath.replace('C:\\Users\\Administrator\\WebstormProjects\\FPM-AngularJS\\public\\', ''); -wind
+                //filePath = filePath.replace('/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/', '');
+
+                documentation = filePath.split("\\")[1]; wind
+                //documentation = filePath.split("/")[1]; 
+                $http.get('/api/project/archive/'+data._id+'/'+documentation+'/')
+                .then(function (result) {
+                    toastr.success("הקובץ עלה בהצלחה", globalSettings.toastrOpts);
+                });
+            
+            } else {
+                $window.alert('an error occured');
+            }
+        }, function (resp) { //catch error
+            console.log('Error status: ' + resp.status);
+            //$window.alert('Error status: ' + resp.status);
+        }, function (evt) {
+            console.log(evt);
+            var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+            console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
+            progress = 'העלאה: ' + progressPercentage + '% '; // capture upload progress
+        });
+    };
+    $scope.fileErr = false;
+    $scope.submFile = function (file, err, data) { 
+        $scope.fileErr = false;
+        if(file == null){
+            $scope.fileErr = true;
+            return
+        }
+      //function to call on form submit
+     if(err.length > 0){
+        $window.alert('an error occured');
+      }
+      else{
+        $scope.upload(file, data);
+      }
+    
+    };
+
     $http.get('api/projects/all/archive/')
         .success(function (data) {
             sortedProjects = data;

@@ -42,11 +42,11 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
         }).then(function (resp) { //upload function returns a promise
             if (resp.data.error_code === 0) { //validate success
                 var filePath = resp.data.data;
-                //filePath = filePath.replace('C:\\Users\\Administrator\\WebstormProjects\\FPM-AngularJS\\public\\', ''); -wind
-                filePath = filePath.replace('/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/', '');
+                filePath = filePath.replace('C:\\Users\\Administrator\\WebstormProjects\\FPM-AngularJS\\public\\', ''); -wind
+                //filePath = filePath.replace('/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/', '');
 
-                //documentation = filePath.split("\\")[1]; wind
-                documentation = filePath.split("/")[1]; 
+                documentation = filePath.split("\\")[1]; wind
+                //documentation = filePath.split("/")[1]; 
                 $http.get('/api/project/archive/'+data._id+'/'+documentation+'/')
                 .then(function (result) {
                     toastr.success("הקובץ עלה בהצלחה", globalSettings.toastrOpts);
