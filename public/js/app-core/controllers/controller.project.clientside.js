@@ -249,6 +249,7 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
                 url: 'api/user/get-current'
             }).success(function (resultUser) {
 
+                console.log(resultUser)
                 /*
                  * Adding lecturer who opened the page to project
                  */
@@ -265,14 +266,12 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
                     $scope.projectData.lecturers.push(addedLecturer);
 
                     var addedLec = $filter('filter')($scope.lecturers, {_id: addedLecturer.id})[0];
-
-                    curUserID = addedLecturer.id;
                     $scope.lecturers.splice($scope.lecturers.indexOf(addedLec), 1);
                 }
             });
 
         });
-        var curUserID = null;
+      
 
 
         /*
@@ -475,7 +474,7 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
         if (typeof addedLecturer.id != 'undefined') {
             $scope.projectData.lecturers.push(addedLecturer);
             $scope.lecturers.splice($scope.lecturers.indexOf($scope.selectedLecturer), 1);
-            $scope.createProject();
+            //?not sure about this use $scope.createProject();
 
 
             toastr.success("המנחה נוסף", globalSettings.toastrOpts);
@@ -522,23 +521,31 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
      * Adds new lecturer to the project's data
      */
     $scope.removeLecturer = function (lecturer) {
+        var curUserID;
+        $http({
+            method: 'GET',
+            url: 'api/user/get-current'
+        }).success(function (resultUser) {
+            var curUserID = resultUser._id;
+            if (lecturer.id != curUserID) {
+                $scope.projectData.lecturers.splice($scope.projectData.lecturers.indexOf(lecturer), 1);
+    
+                $http.post('/api/projects/save', $scope.projectData)
+                    .success(function (data) {
+                        toastr.success("המנחה הוסר", globalSettings.toastrOpts);
+    
+                    })
+                    .error(function (data) {
+                        console.log('Error: ' + data);
+                    });
+            }
+            else {
+                alert('לא ניתן להסיר את עצמך');
+    
+            }
+        });
 
-        if (lecturer.id != curUserID) {
-            $scope.projectData.lecturers.splice($scope.projectData.lecturers.indexOf(lecturer), 1);
-
-            $http.post('/api/projects/save', $scope.projectData)
-                .success(function (data) {
-                    toastr.success("המנחה הוסר", globalSettings.toastrOpts);
-
-                })
-                .error(function (data) {
-                    console.log('Error: ' + data);
-                });
-        }
-        else {
-            alert('לא ניתן להסיר את עצמך');
-
-        }
+    
     };
 
     /*
