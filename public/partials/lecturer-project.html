@@ -88,6 +88,17 @@
                         </div>
                     </div>
                     <div class="form-group">
+                            <label class="col-sm-3 control-label"><span></span>מחלקה</label>
+                            <div class="col-sm-9">
+                                    <select class="form-control" ng-change="chooseDepartment()" ng-model="selectedDepartment"  id="selectedDepartment">
+                                        <option ng-repeat="department in departments" 
+                                                    value="{{department.Name}}">{{department.Name}}
+                                            </option>
+                                           
+                                    </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label class="col-sm-3 control-label"><span>*</span>מנחים</label>
 
                         <div class="col-sm-9">
@@ -162,8 +173,8 @@
                              <img style="width:100px;" ng-show="!!curFile"
                                   ngf-thumbnail="curFile"/></span>
                                 <span ng-show="!isPreview">
-<img style="width:100px;" ng-show="!!curFile"
-     ngf-thumbnail="projectData.picUrl"/></span>
+                                <img style="width:100px;" ng-show="!!curFile"
+                                ngf-thumbnail="projectData.picUrl"/></span>
 
                                 <p>{{progress}}</p>
 

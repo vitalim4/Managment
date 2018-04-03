@@ -74,6 +74,7 @@ module.exports = function (app) {
     app.post('/forgot', userRoute.resendPasswordToken);
     app.get('/api/user/get-current', authenticate, userRoute.getCurrentUser);
     app.get('/api/users/for-project/:role', authenticate, userRoute.getByDepartmentRole);
+    app.get('/api/users/for-project/:role/:depname', authenticate, userRoute.getLecturersByDepartment);
 
     app.route('/api/users')
     // get all users

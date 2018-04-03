@@ -125,6 +125,28 @@ module.exports = {
     },
 
 
+    getLecturersByDepartment:function(req,res){
+        var inDepartment = req.user.Department.Slug;
+        var departmentName = req.params.depname;
+        var inRole = req.params.role;
+
+        if (inRole === 'lecturer') {
+            User.find({
+                $and: [{"Department.Name": departmentName}, {
+                    "Role.Slug": inRole
+                }]
+            }, function (err, users) {
+
+                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                if (err)
+                    res.send(err);
+                res.json(users); // return all users in JSON format
+            });
+        }
+        else{
+            res.status(401).send({error: 'Not authorized user.'});
+        }
+    },
     getByDepartmentRole: function (req, res) {
         var inDepartment = req.user.Department.Slug;
         var inRole = req.params.role;

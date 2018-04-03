@@ -21,6 +21,7 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
 
     $scope.lecturers = [];
     $scope.selectedLecturer = [];
+    $scope.selectedDepartment = [];
     $scope.selectedStudent1 = "";
     $scope.colleges = [];
     $scope.myFiles = [];
@@ -36,6 +37,7 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
      */
     $scope.projectData = {};
     $scope.newProject = {};
+    $scope.projectData.departmenrs = [];
     $scope.projectData.lecturers = [];
     $scope.projectData.literatureSources = [];
     $scope.types = [];
@@ -135,6 +137,26 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
         url: '/api/years'
     }).success(function (result) {
         $scope.years = result;
+    });
+    /*
+     * Loading all existing departments to form 
+     */
+    $http({
+        method: 'GET',
+        url: '/api/departments'
+    }).success(function (result) {
+        if (curUserAuth === 'lecturer' || curUserAuth==='manager')
+        {
+
+            $scope.departments = result;
+        }
+        else if(curUserAuth ==='admin'){
+
+            $scope.departments = result;
+            //console.log(userDep)
+        }
+
+        $scope.departments = result;
     });
 
     /*
@@ -244,11 +266,13 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
 
                     var addedLec = $filter('filter')($scope.lecturers, {_id: addedLecturer.id})[0];
 
+                    curUserID = addedLecturer.id;
                     $scope.lecturers.splice($scope.lecturers.indexOf(addedLec), 1);
                 }
             });
 
         });
+        var curUserID = null;
 
 
         /*
@@ -457,6 +481,40 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
             toastr.success("המנחה נוסף", globalSettings.toastrOpts);
 
         }
+    };
+
+    /*
+     * Adds new department to the project's data
+     */
+    $scope.chooseDepartment = function () {
+        var selectedDep = $scope.selectedDepartment;
+         /*
+         * Get lecturers from specific department.
+         */
+        $http({
+            method: 'GET',
+            url: 'api/users/for-project/lecturer/'+selectedDep
+        }).success(function (result) {
+            $scope.lecturers = result;
+        });
+
+
+        /*var addedDepartment = {
+            id: $scope.selectedDepartment._id,
+            name: $scope.selectedDepartment.firstName + " " + $scope.selectedDepartment.lastName,
+            email: $scope.selectedDepartment.Email
+        };
+
+
+        if (typeof addedDepartment.id != 'undefined') {
+            $scope.projectData.departments.push(addedDepartment);
+            $scope.departments.splice($scope.departments.indexOf($scope.selectedDepartment), 1);
+            $scope.createProject();
+
+
+            toastr.success("המנחה נוסף", globalSettings.toastrOpts);
+
+        }*/
     };
 
 
