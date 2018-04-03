@@ -188,6 +188,14 @@
                         </li>
                     </ul>
                 </li>
+                <li class="has-sub root-level" ng-show="isManager" >
+                    <a><i
+                        class="entypo-newspaper"></i><span class="title">ארכיון</span></a>
+                    <ul>
+                        <li><a href="/#/account/manager/archive/allprojects"><span class="title">כל הפרוייקטים</span></a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="has-sub root-level" ng-show="isAdmin" ng-class="{ active: isActive('/account/admin/')}">
                     <a><i
                             class="entypo-newspaper"></i><span class="title">ניהול בקשות</span></a>
@@ -410,6 +418,7 @@
 <script src="js/app-core/controllers/controller.dashboard.archive.allprojects.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.dashboard.archive.student.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.admin.archive.allprojects.js" type="text/javascript"></script>
+<script src="js/app-core/controllers/controller.manager.archive.allprojects.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.project.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.header.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.menu.clientside.js" type="text/javascript"></script>

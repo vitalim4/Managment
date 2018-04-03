@@ -36,8 +36,9 @@
     .ng-button:hover { background:black; color:white; text-decoration:none; border:1px solid;
         border-radius: 0px;
     }
-    .dataTables_wrapper .row{
-        display: none;
+    #tblArchive th
+    {
+        border-bottom: 1px solid black !important;
     }
 
 </style>
@@ -260,11 +261,11 @@
 
     <div class="col-sm-12">
         <table 
-        class="table table-striped table-bordered" cellspacing="0" width="100%" datatable="ng" dt-options="dtOptionsManagerRequests" id="tblArchive">
+        class="cell-border" cellspacing="0" width="100%" datatable="ng" dt-options="dtOptionsManagerRequests" id="tblArchive">
             <thead>
                     <tr>
                             <th width="15%">שם</th>
-                            <th width="15%">סטטוס</th>
+                            <th width="15%">שלב</th>
                             <th width="40%">תאור</th>
                             <th width="15%">מחלקה</th>
                             <th width="15%">הורד PDF</th>

@@ -1,4 +1,4 @@
-angular.module("FPM").controller('projectAdminAllArchive', function ($scope, $window, $http, localStorageService, DTOptionsBuilder,DTColumnBuilder,Projects,globalSettings,$timeout,DataTablesOptions,Upload) {
+angular.module("FPM").controller('projectManagerAllArchive', function ($scope, $window, $http, localStorageService, DTOptionsBuilder,DTColumnBuilder,Projects,globalSettings,$timeout,DataTablesOptions,Upload) {
 
     $scope.projectsData = [];
 

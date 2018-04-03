@@ -42,11 +42,8 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
         }).then(function (resp) { //upload function returns a promise
             if (resp.data.error_code === 0) { //validate success
                 var filePath = resp.data.data;
-                filePath = filePath.replace('C:\\Users\\Administrator\\WebstormProjects\\FPM-AngularJS\\public\\', ''); -wind
-                //filePath = filePath.replace('/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/', '');
-
-                documentation = filePath.split("\\")[1]; wind
-                //documentation = filePath.split("/")[1]; 
+                var regex = /[ \w-]+?(?=\.)/;
+                documentation = filePath.match(regex)[0]+'.pdf';
                 $http.get('/api/project/archive/'+data._id+'/'+documentation+'/')
                 .then(function (result) {
                     toastr.success("הקובץ עלה בהצלחה", globalSettings.toastrOpts);
@@ -66,7 +63,9 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
         });
     };
     $scope.fileErr = false;
-    $scope.submFile = function (file, err, data) { 
+    $scope.activeElem;
+    $scope.submFile = function (file, err, data,index) { 
+        $scope.activeElem = index;
         $scope.fileErr = false;
         if(file == null){
             $scope.fileErr = true;
@@ -81,6 +80,10 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
       }
     
     };
+    $scope.Show = function(index){
+        return $scope.activeElem == index && $scope.fileErr;
+    }
+
 
     $scope.checkIfPdfExists = function(data){
         if(data.Documentation  && data.Documentation != 'undefined'){
