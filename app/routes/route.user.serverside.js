@@ -127,7 +127,6 @@ module.exports = {
 
         var inDepartment = req.user.Department.Slug;
         var typeProj = req.params.projtype;
-        console.log(inDepartment)
 
         //lecturers
         User.find({
@@ -162,7 +161,6 @@ module.exports = {
                         res.send(err);
 
                     var stages = resStages[0].Stage;
-                    console.log(stages)
 
                     //statuses
                     Status.find({
