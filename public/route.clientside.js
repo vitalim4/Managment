@@ -124,6 +124,10 @@ app.config(function ($routeProvider, localStorageServiceProvider) {
                 templateUrl: 'partials/manager-projects-reports.html',
                 controller: 'managerProjectsController'
             })
+            .when('/account/lecturer/reports/projects', {
+                templateUrl: 'partials/lecturer-projects-reports.html',
+                controller: 'lecturerReportController'
+            })
             .when('/account/manager/reports', {
                 templateUrl: 'partials/manager-user-page.html',
                 controller: 'managerSingleUserController'

@@ -52,6 +52,7 @@ module.exports = function (app) {
     app.post('/api/manager/request/accept/:requestid', authenticate, projectRoute.acceptApprovalRequest);
     app.post('/api/manager/request/comment/:requestid', authenticate, projectRoute.sendCommentToLecturers);
     app.get('/api/manager/projects/', authenticate, projectRoute.getProjectsByManager);
+    app.get('/api/lecturer/reports/projects/', authenticate, projectRoute.getProjectsByLecturer);
     app.get('/api/lecturer/projects/', authenticate, projectRoute.getByLecturer);
     app.get('/api/archive/lecturer/projects/', authenticate, projectRoute.getArchivedProjectsByLecturer);
     app.get('/api/projects/all/archive',authenticate,projectRoute.getAllArchivedProjects)
@@ -119,6 +120,7 @@ module.exports = function (app) {
     //app.get('/api/projects/get-statuses', authenticate, projectRoute.getAllStatuses); //not used
     app.post('/api/submission', authenticate, projectRoute.AddSubmission);
     app.get('/api/project/archive/:projId/:doc', authenticate, projectRoute.uploadDocPdf);
+    app.get('/api/manager/project-filters/:projtype', authenticate, userRoute.getFiltersBymangerAndProjType);
 
     /******************************************************************/
     /************************Project Flow******************************/
@@ -302,8 +304,8 @@ module.exports = function (app) {
 
     var storage = multer.diskStorage({ //multers disk storage settings
         destination: function (req, file, cb) {
-            //cb(null, 'C:/Users/Administrator/WebstormProjects/FPM-AngularJS/public/uploads');
-            cb(null, '/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/uploads/');
+            cb(null, 'C:/Users/Administrator/WebstormProjects/FPM-AngularJS/public/uploads');
+            //cb(null, '/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/uploads/');
         },
         filename: function (req, file, cb) {
             var datetimestamp = Date.now();

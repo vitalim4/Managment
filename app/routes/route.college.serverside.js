@@ -19,6 +19,16 @@ module.exports = {
                 res.status(200).send(colleges); // return all users in JSON format
             });
         }
+        else if(userType==='lecturer'){
+            College.find({},{_id:false},function (err, colleges) {
+
+                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                if (err)
+                    res.send(err);
+
+                res.status(200).send(colleges); // return all users in JSON format
+            });
+        }
         else
         {
             College.find({Slug:inCollege},{},function (err, departments) {

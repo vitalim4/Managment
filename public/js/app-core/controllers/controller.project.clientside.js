@@ -248,8 +248,6 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
                 method: 'GET',
                 url: 'api/user/get-current'
             }).success(function (resultUser) {
-
-                console.log(resultUser)
                 /*
                  * Adding lecturer who opened the page to project
                  */
