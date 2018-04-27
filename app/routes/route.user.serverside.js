@@ -39,7 +39,6 @@ var resendPasswordToken = function (req, res) {
             });
         },
         function (token, done) {
-            var EmailAddress = "";
             if (typeof req.body.data !== 'undefined' && req.body.data) {
                 if (typeof req.body.data.Email !== 'undefined' && req.body.data.Email) {
                     EmailAddress = req.body.data.Email;
@@ -72,6 +71,8 @@ var resendPasswordToken = function (req, res) {
         },
         function (token, user, done) {
 
+            console.log("reqhost")
+            console.log(req.headers.host)
             var mailOptions = {
                 to: user.Email,
                 from: '"SCE ניהול פרוייקטים הנדסיים" <sce.fpm@gmail.com>', // sender address
@@ -79,7 +80,7 @@ var resendPasswordToken = function (req, res) {
                 text: 'שלום,\n' +
                 'הנך מקבל אי-מייל זה מכיוון שאתה (או מישהו אחר) שלח בקשה לשחזור הסיסמא של חשבונך\n\n' +
                 'בכדי לשחזר את הסיסמא עלייך ללחוץ על הלינק הבא וא לחילופין להעתיק אותו לכתובת הדפדפן, על מנת לסיים את התהליך:' +
-                'http://' + '147.235.162.50/'/*req.headers.host*/ + '/#/reset/' + token + '\n\n' +
+                'http://' + req.headers.host /*'147.235.162.50/'*//*req.headers.host*/ + '/#/reset/' + token + '\n\n' +
                 'במידה ולא שלחת בקשה לשחזור סיסמא, אנא התעלם מהמייל וסיסמתך לא תשתנה.'
             };
             // send mail with defined transport object
