@@ -53,6 +53,7 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
     $scope.lecturers = {};
     $scope.students = {};
     $scope.curFile = {};
+    $scope.departments = {};
 
     var initProcess = false;
 
@@ -153,7 +154,6 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
         else if(curUserAuth ==='admin'){
 
             $scope.departments = result;
-            //console.log(userDep)
         }
 
         $scope.departments = result;
@@ -374,8 +374,6 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
                 if (angular.isDefined($scope.data.currentCollege) && angular.isDefined($scope.data.currentType))
                 if ($scope.data.currentCollege != -1 && $scope.data.currentType != -1) {
                     var typesURL = '/api/projectsflow/getflow/colleges/' + $scope.data.currentCollege + '/' + curUserDepartment + '/' + $scope.data.currentType;
-
-
                     $http(
                         {
                             method: 'GET',
@@ -404,7 +402,6 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
      * Sends new or edit project to the nodejs server
      */
     $scope.createProject = function () {
-
         $http.post('/api/projects/save', $scope.projectData)
             .success(function (data) {
                 $scope.newProject = data;
@@ -414,8 +411,19 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
 
 
                     toastr.success("הפרויקט נוצר בהצלחה", globalSettings.toastrOpts);
-                    $location.path("account/lecturer/project/" + data._id);
-
+                    //$location.path("account/lecturer/project/" + data._id);
+                    $timeout(function() {
+                        if(curUserAuth == "manager"){
+                            $location.path("/account/manager");
+                        }
+                        else if(curUserAuth == "admin"){
+                            $location.path("/account/admin");
+                        }
+                        else{
+                            $location.path("/account/lecturer");
+                        }
+                        
+                    }, 2000);
 
                 }
                 else {
@@ -437,12 +445,20 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
             .success(function (data) {
                 $scope.newProject = data;
                 //$scope.projectData = {}; // clear the form so our project is ready to enter another
-                //console.log(data)
                 if ($scope.projectData._id != $scope.newProject._id) {
 
 
                     toastr.success("הפרויקט נוצר בהצלחה", globalSettings.toastrOpts);
-                    $location.path("account/lecturer/project/" + data._id);
+                    //$location.path("account/lecturer/project/" + data._id);
+                    $timeout(function() {
+                        if(curUserAuth == "manager"){
+                            $location.path("/account/manager");
+                        }
+                        else{
+                            $location.path("/account/lecturer");
+                        }
+                        
+                    }, 2000);
 
 
                 }
@@ -494,6 +510,28 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
         }).success(function (result) {
             $scope.lecturers = result;
         });
+
+        if (!initProcess)
+                if (angular.isDefined($scope.data.currentCollege) && angular.isDefined($scope.data.currentType))
+                if ($scope.data.currentCollege != -1 && $scope.data.currentType != -1) {
+                    curUserDepartment = selectedDep;
+                    var typesURL = '/api/projectsflow/getflow/colleges/' + $scope.data.currentCollege + '/' + curUserDepartment + '/' + $scope.data.currentType;
+                    $http(
+                        {
+                            method: 'GET',
+                            url: typesURL
+                        }
+                    ).success(
+                        function (resFlow) {
+                            $scope.projectData.flow = resFlow[0];
+                            $scope.projectData.curState = {
+                                curStatus: resFlow[0].Stage[0].Status.Name,
+                                curStage: resFlow[0].Stage[0].Name, //TODO
+                                curOrder: 0
+                            }
+                        }, true
+                    )
+                }
 
 
         /*var addedDepartment = {

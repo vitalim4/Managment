@@ -228,38 +228,74 @@ module.exports = {
         var userType = req.user.Role.Slug;
 
         if (userType === "manager" || userType ==="admin") {
-            User.findOne({
-                "_id": inManagerID,
-            }, function (error, managerUser) {
-                if (error) {
-                    console.log('in user router error');
-                    return error;
-                }
-                else {
-                    if (!managerUser) {
-                        console.log('in user router empty');
+            if(userType ==="admin"){
+                User.findOne({
+                    "_id": inManagerID,
+                }, function (error, managerUser) {
+                    if (error) {
+                        console.log('in user router error');
                         return error;
                     }
                     else {
-
-                        var userDep = managerUser.Department.Slug;
-                        Project.find
-                        (
-                            {"flow.Department.Slug": userDep},
-                            function (err, projs) {
-                                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-                                if (err) {
-                                    res.send(err);
-                                    return;
+                        if (!managerUser) {
+                            console.log('in user router empty');
+                            return error;
+                        }
+                        else {
+    
+                            var userDep = managerUser.Department.Slug;
+                            Project.find
+                            (
+                                //{"flow.Department.Slug": userDep},
+                                function (err, projs) {
+                                    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                                    if (err) {
+                                        res.send(err);
+                                        return;
+                                    }
+    
+                                    res.json(projs); // return all projects in JSON format
                                 }
-
-                                res.json(projs); // return all projects in JSON format
-                            }
-                        );
+                            );
+                        }
+    
                     }
-
-                }
-            });
+                });
+            }
+            else if(userType === "manager"){
+                User.findOne({
+                    "_id": inManagerID,
+                }, function (error, managerUser) {
+                    if (error) {
+                        console.log('in user router error');
+                        return error;
+                    }
+                    else {
+                        if (!managerUser) {
+                            console.log('in user router empty');
+                            return error;
+                        }
+                        else {
+    
+                            var userDep = managerUser.Department.Slug;
+                            Project.find
+                            (
+                                {"flow.Department.Slug": userDep},
+                                function (err, projs) {
+                                    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                                    if (err) {
+                                        res.send(err);
+                                        return;
+                                    }
+    
+                                    res.json(projs); // return all projects in JSON format
+                                }
+                            );
+                        }
+    
+                    }
+                });
+            }
         }
         else{
             User.findOne({
@@ -1679,10 +1715,10 @@ module.exports = {
 
         if (req.body) {
             var inProject = new Project(req.body);
-
             if (req.body._id != null) {
                 var lastModifiedX = new Date();
 
+                console.log("1")
                 var projID = inProject._id;
                 Project.findOneAndUpdate(
                     {_id: projID},

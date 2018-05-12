@@ -242,7 +242,19 @@ $http({
                 if (angular.isDefined($scope.userData._id)) {
                     if ($scope.userData._id !== $scope.newUser._id) {
                         toastr.success("המשתמש נוצר בהצלחה", globalSettings.toastrOpts);
-                        $location.path("account/manager/users/" + dataDB._id);
+                        //$location.path("account/manager/users/" + dataDB._id);
+                        $timeout(function() {
+                            if(curUserAuth == "manager"){
+                                $location.path("/account/manager");
+                            }
+                            else if(curUserAuth == "admin"){
+                                $location.path("/account/admin");
+                            }
+                            else{
+                                $location.path("account/manager/users/");
+                            }
+                            
+                        }, 2000);
                     }
                     else {
                         toastr.success("המשתמש עודכן בהצלחה", globalSettings.toastrOpts);
@@ -250,9 +262,20 @@ $http({
                 }
                 else {
                     toastr.success("המשתמש נוצר בהצלחה", globalSettings.toastrOpts);
-                    $timeout(function() {
-                        $location.path("account/manager/users/" + dataDB._id);
-                    }, 3000);
+                   
+                        //$location.path("account/manager/users/" + dataDB._id);
+                        $timeout(function() {
+                            if(curUserAuth == "manager"){
+                                $location.path("/account/manager");
+                            }
+                            else if(curUserAuth == "admin"){
+                                $location.path("/account/admin");
+                            }
+                            else{
+                                $location.path("account/manager/users/");
+                            }
+                            
+                        }, 2000);
 
                 }
             })
@@ -399,7 +422,7 @@ angular.module("FPM").controller('requestsManager', function ($scope, $routePara
 
 });
 
-angular.module("FPM").controller('managerProjectsController', function ($scope, $window, $http, localStorageService, DTColumnBuilder, DTOptionsBuilder, globalSettings,Projects, $timeout) {
+angular.module("FPM").controller('managerProjectsController', function ($scope, $window, $http, localStorageService, DTColumnBuilder, DTOptionsBuilder, globalSettings,Projects, $timeout,$location) {
 
     $scope.pieIsClicked = false;
 
@@ -492,9 +515,7 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
     var resetFilters = function () {
         $http.get('/api/manager/project-filters/')
             .success(function (data) {
-                //console.log(data);
                 $scope.filtersSet = data;
-                //console.log($scope.filtersSet);
                 $scope.filterApply = {};
                 $scope.filterApply.students = [];
                 $scope.filterApply.lecturers = [];
@@ -544,7 +565,6 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
 
     $scope.filterByName = function filterByName(usersArr, typedValue) {
         var result = usersArr.filter(function (user) {
-
             var matches_phone = false;
             matches_first_name = user.firstName.indexOf(typedValue) !== -1;
             matches_last_name = user.lastName.indexOf(typedValue) !== -1;
@@ -630,6 +650,8 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
             case "משולב":            
                 typeFlow = "combined"
             break;
+            default:
+            typeFlow = "development"
 
         }
 
@@ -1502,11 +1524,14 @@ angular.module("FPM").controller('lecturerReportController', function ($scope, $
             case "משולב":            
                 typeFlow = "combined"
             break;
+            default:
+            typeFlow = "development"
 
         }
 
         $http.get('/api/manager/project-filters/'+typeFlow)
             .success(function (data) {
+                console.log(data)
                 $scope.filtersSet = data;
             });
     }
@@ -1556,7 +1581,6 @@ angular.module("FPM").controller('lecturerReportController', function ($scope, $
         else if(curUserAuth ==='admin'){
 
             $scope.departments = result;
-            //console.log(userDep)
         }
 
         $scope.departments = result;

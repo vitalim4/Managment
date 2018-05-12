@@ -98,24 +98,291 @@
     </div> -->
 </div>
 
-<div class="row">
-    <div class="col-sm-6">
-        <a href="/#/account/lecturer" target="_self">
-            <button type="button" class="btn btn-blue btn-icon" style="float:right; margin:5px;">
-                נקה סינון
-                <i class="entypo-ccw"></i></button>
-        </a>
-    </div>
-    <div class="col-sm-6">
-        <a href="/#/account/lecturer/project" target="_self">
-            <button type="button" class="btn btn-blue btn-icon" style="float:left; margin:5px;">
-                הוסף
-                <i class="entypo-plus"></i></button>
-        </a>
-    </div>
-</div>
-<div class="row">
 
+<div class="row">
+        <div class="col-lg-12">
+                <form id="convFilter" class="form-horizontal" action="/admin/conversations/filter">
+                    <div class="col-md-4">
+                        <!--<div class="form-group">-->
+                            <!--<label class="col-sm-4 control-label" for="projectName">שם הפרויקט</label>-->
+                            <!--<div class="col-sm-8">-->
+                                <!--<input type="text" class="form-control" name="projectName" id="projectName"-->
+                                       <!--placeholder="שם הפרויקט או חלק ממנו" ng-model="filterApply.projectName">-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="filterApply.projectColleges">קמפוס</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="filterApply.projectColleges" id="filterApply.projectColleges">
+                                    <option value="">בחר קמפוס</option>
+                                    <option ng-repeat="college in colleges"
+                                            value="{{college.Name}}">{{college.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--<div class="form-group">
+                            <label class="col-sm-4 control-label" for="filterApply.projectFlows">סוג הפרויקט</label>
+                            <div class="col-sm-8">
+                                <select class="form-control"  ng-change="changedFlowType(filterApply.projectFlows)" ng-model="filterApply.projectFlows" id="filterApply.projectFlows">
+                                    <option value="">בחר סוג</option>
+                                    <option ng-repeat="flow in filtersSet.projectflows"
+                                            value="{{flow.Type.Name}}">{{flow.Type.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="filterApply.projectSemesters">סמסטר</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="filterApply.projectSemesters" id="filterApply.projectSemesters">
+                                    <option value="">בחר סמסטר</option>
+                                    <option ng-repeat="semester in filtersSet.semesters"
+                                            value="{{semester.Name}}">{{semester.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="filterApply.waitForApp">מחכה לאישור</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="filterApply.waitForApp" id="filterApply.waitForApp">
+                                    <option value="">האם מחכים לאישור? (true = כן, false = לא)</option>
+                                    <option ng-repeat="approvalOpts in filtersSet.approvalOpts"
+                                            value="{{approvalOpts}}">{{approvalOpts}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="filterApply.projectStatus">שלב</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-change="checkInProccessStatus(filterApply.projectStatus)" ng-model="filterApply.projectStatus" id="filterApply.projectStatus">
+                                    <option value="">בחר שלב</option>
+                                    <option ng-repeat="status in filtersSet.statuses"
+                                            value="{{status.Name}}">{{status.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" >
+                            <label class="col-sm-4 control-label" for="filterApply.projectStage">סטטוס</label>
+                            <div class="col-sm-8">
+                                <select ng-disabled="disabled" class="form-control" ng-model="filterApply.projectStage" id="filterApply.projectStage">
+                                    <option value="">בחר סטטוס</option>
+                                    <option ng-repeat="stage in filtersSet.stages"
+                                                value="{{stage.Name}}"  ng-hide="hideNotInProccess(stage.Name)">{{stage.Name}}
+                                        </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="filterApply.isPaired">מצוותים</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="filterApply.isPaired" id="filterApply.isPaired">
+                                    <option value="">האם מצוותים? (true = כן, false = לא)</option>
+                                    <option ng-repeat="pairedOpts in filtersSet.pairedOpts"
+                                            value="{{pairedOpts}}">{{pairedOpts}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+        
+                    </div>
+                    <div class="col-md-4">
+                        <!--<div class="form-group">
+                            <label class="col-sm-4 control-label" for="filterApply.projectDepartments">מחלקה</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="filterApply.projectDepartments" id="filterApply.projectDepartments">
+                                    <option value="">בחר מחלקה</option>
+                                    <option ng-repeat="department in departments"
+                                            value="{{department.Name}}">{{department.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="filterApply.projectYears">שנה</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" ng-model="filterApply.projectYears" id="filterApply.projectYears">
+                                    <option value="">בחר שנה</option>
+                                    <option ng-repeat="year in filtersSet.years"
+                                            value="{{year.Name}}">{{year.Name}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--<form name="lecturerAddFilter">
+                            <div class="form-group ">
+                                <label class="col-sm-4 control-label" for="projectLecturers">מרצים </label><div ng-show="filterApply.lecturers.length > 0" onclick="jQuery('#filter-users').modal('show');" ng-click="modalState='lecturer'" class="users-counter">({{filterApply.lecturers.length}})</div>
+                                <div class="col-sm-8">
+                                    <div class="input-group">
+                                        <input name="projectLecturers" id="projectLecturers" type="text" placeholder="הזן שם מרצה"
+                                               ng-model="filterLecturer"
+                                               typeahead="lect as lecturers.firstName + ' ' + lecturers.lastName + ' - ' + lecturers.Phone for lecturers in filterByName(filtersSet.lecturers, $viewValue) | limitTo:8" class="form-control" typeahead-on-select="pickFilter($item, 'lecturer')" ng-required="true">
+        
+                                        <span class="input-group-btn" ng-disabled="all">
+                                            <button class="btn btn-success" type="button" ng-click="addFilter('lecturer')" ng-show="filterLecturer">הוסף!</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>-->
+                        <div class="form-group">
+                            <label class="col-sm-4 control-label" for="currStudent">סטודנטים</label><div ng-show="filterApply.students.length > 0" onclick="jQuery('#filter-users').modal('show');" ng-click="modalState='student'" class="users-counter">({{filterApply.students.length}})</div>
+                            <div class="col-sm-8">
+                                <div class="input-group">
+                                    <input name="currStudent" id="currStudent" type="text" placeholder="הזן שם סטודנט"
+                                           ng-model="filterStudent"
+                                           typeahead="stud as students.firstName + ' ' + students.lastName + ' - ' + students.Phone  for students  in filterByName(filtersSet.students, $viewValue) | limitTo:8" class="form-control" typeahead-on-select="pickFilter($item, 'student')" ng-required="true">
+        
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" ng-click="addFilter('student')" ng-show="filterStudent">הוסף!</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <a href="/#/account/lecturer" target="_self">
+                    <button type="button" class="btn btn-blue btn-icon" style="float:right; margin:5px;">
+                        נקה סינון
+                        <i class="entypo-ccw"></i></button>
+                </a>
+            </div>
+            <div class="col-sm-6">
+                <a href="/#/account/lecturer/project" target="_self">
+                    <button type="button" class="btn btn-blue btn-icon" style="float:left; margin:5px;">
+                        הוסף
+                        <i class="entypo-plus"></i></button>
+                </a>
+            </div>
+        </div>
+
+        <div class="row" ng-show="isLoading">
+
+            <div class="col-sm-12">
+        
+                <div class='uil-default-css' style='transform:scale(0.5);
+            '><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(0deg) translate(0, -60px);
+            transform: rotate(0deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(30deg) translate(0, -60px);
+            transform: rotate(30deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(60deg) translate(0, -60px);
+            transform: rotate(60deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(90deg) translate(0, -60px);
+            transform: rotate(90deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(120deg) translate(0, -60px);
+            transform: rotate(120deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(150deg) translate(0, -60px);
+            transform: rotate(150deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(180deg) translate(0, -60px);
+            transform: rotate(180deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(210deg) translate(0, -60px);
+            transform: rotate(210deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(240deg) translate(0, -60px);
+            transform: rotate(240deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(270deg) translate(0, -60px);
+            transform: rotate(270deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(300deg) translate(0, -60px);
+            transform: rotate(300deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div><div style='top: 80px;
+            left: 93px;
+            width: 14px;
+            height: 40px;
+            background: #00b2ff;
+            -webkit-transform: rotate(330deg) translate(0, -60px);
+            transform: rotate(330deg) translate(0, -60px);
+            border-radius: 10px;
+            position: absolute;
+            '></div></div>
+            </div>
+        
+        </div>
     <div ng-show="!isShowArchive" class="col-sm-12">
         <table datatable="ng" dt-options="dtOptions" id="myTable" class="row-border hover">
             <thead>
@@ -178,7 +445,7 @@
     </div>
 
 </div>
-<div class="row" ng-if="!projectsData.length">
+<div class="row" ng-if="!projectsData.length && !c">
 
     <div class="col-sm-12">
 
