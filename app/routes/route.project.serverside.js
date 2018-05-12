@@ -1717,8 +1717,6 @@ module.exports = {
             var inProject = new Project(req.body);
             if (req.body._id != null) {
                 var lastModifiedX = new Date();
-
-                console.log("1")
                 var projID = inProject._id;
                 Project.findOneAndUpdate(
                     {_id: projID},
