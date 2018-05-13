@@ -191,7 +191,8 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
         $scope.requestsData = data;
     });
 
-    $http.get('/api/lecturer/reports/projects/')
+    //$http.get('/api/lecturer/reports/projects/')
+    $http.get('/api/lecturer/reports/projects/active/')
         .success(function (data) {
             sortedProjects = data;
             $scope.projectsData = sortedProjects;

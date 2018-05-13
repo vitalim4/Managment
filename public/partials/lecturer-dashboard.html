@@ -445,6 +445,25 @@
     </div>
 
 </div>
+<div class="modal fade" id="filter-users">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">סינון</h4></div>
+            <div class="modal-body">
+                לחץ על שם כדי להסירו מהסינון
+                <ul>
+                    <li ng-repeat="lecturer in filterApply.lecturers" ng-show="modalState=='lecturer'" ng-click="removeUserFilter(lecturer,'lecturer')"><b> &times; {{lecturer.firstName}} {{lecturer.lastName}}</b></li>
+                    <li ng-repeat="student in filterApply.students" ng-show="modalState=='student'" ng-click="removeUserFilter(student,'student')"><b> &times; {{student.firstName}} {{student.lastName}}</b></li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row" ng-if="!projectsData.length && !c">
 
     <div class="col-sm-12">

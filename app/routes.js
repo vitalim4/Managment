@@ -53,6 +53,7 @@ module.exports = function (app) {
     app.post('/api/manager/request/comment/:requestid', authenticate, projectRoute.sendCommentToLecturers);
     app.get('/api/manager/projects/', authenticate, projectRoute.getProjectsByManager);
     app.get('/api/lecturer/reports/projects/', authenticate, projectRoute.getProjectsByLecturer);
+    app.get('/api/lecturer/reports/projects/active/', authenticate, projectRoute.getActiveProjectsByLecturer);
     app.get('/api/lecturer/projects/', authenticate, projectRoute.getByLecturer);
     app.get('/api/archive/lecturer/projects/', authenticate, projectRoute.getArchivedProjectsByLecturer);
     app.get('/api/projects/all/archive',authenticate,projectRoute.getAllArchivedProjects)

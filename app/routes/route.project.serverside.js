@@ -150,7 +150,7 @@ module.exports = {
         var inLecturerID = req.user._id;
         Project.find
         (
-            { $and: [ { "lecturers.id": inLecturerID }, {"curState.curOrder": 10} ] } ,
+            { $and: [ { "lecturers.id": inLecturerID }, {"curState.curStage": "פרוייקט שהוצג ועבר בהצלחה"} ] } ,
             //{ "lecturers.id": inLecturerID },
             function (err, projs) {
                 // if there is an error retrieving, send the error. nothing after res.send(err) will execute
@@ -167,7 +167,7 @@ module.exports = {
         var inLecturerID = req.user._id;
         Project.find
         (
-            {"curState.curOrder": 10},
+            {"curState.curStage": "פרוייקט שהוצג ועבר בהצלחה"},
             function (err, projs) {
                 // if there is an error retrieving, send the error. nothing after res.send(err) will execute
                 if (err) {
@@ -179,6 +179,51 @@ module.exports = {
             }
         );
     },
+    getActiveProjectsByLecturer:function(req,res){
+        var inManagerID = req.user._id;
+        var userType = req.user.Role.Slug;
+
+        if (userType === "lecturer") {
+            User.findOne({
+                "_id": inManagerID,
+            }, function (error, managerUser) {
+                if (error) {
+                    console.log('in user router error');
+                    return error;
+                }
+                else {
+                    if (!managerUser) {
+                        console.log('in user router empty');
+                        return error;
+                    }
+                    else {
+
+                        var userDep = managerUser.Department.Slug;
+                        Project.find
+                        (
+                            //{"flow.Department.Slug": userDep},
+                            { $and: [ { "lecturers.id": inManagerID }, {"flow.Department.Slug": userDep} ] },
+                            function (err, projs) {
+                                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                                if (err) {
+                                    res.send(err);
+                                    return;
+                                }
+
+                                res.json(projs); // return all projects in JSON format
+                            }
+                        );
+                    }
+
+                }
+            });
+        }
+        else{
+            res.status(401);
+            res.end();
+        }
+    },
+
     getProjectsByLecturer:function(req, res){
 
         var inManagerID = req.user._id;
