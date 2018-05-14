@@ -59,7 +59,7 @@ app.all('/api/v1/*', [require('./app/middleware/middleware.validaterequest.serve
 
 
 // listen (start app with node server.js) ======================================
+//app.listen(80);
+//console.log("App listening on port 80");
 app.listen(3000);
 console.log("App listening on port 3000");
-//app.listen(3000);
-//console.log("App listening on port 3000");

@@ -82,20 +82,7 @@
 
             <h3>בפעולה</h3>
         </div>
-
     </div>
-
-    <!-- <div class="col-sm-3 col-xs-6" ng-click="filterArchive()">
-        <div class="tile-stats tile-brown">
-            <div class="icon"><i class="entypo-archive"></i></div>
-            <div class="num" data-start="0" data-end="" data-postfix="" data-duration="1500"
-                 data-delay="1800">{{numOfArchives}}
-            </div>
-
-            <h3>ארכיון</h3>
-        </div>
-
-    </div> -->
 </div>
 
 
@@ -103,13 +90,6 @@
         <div class="col-lg-12">
                 <form id="convFilter" class="form-horizontal" action="/admin/conversations/filter">
                     <div class="col-md-4">
-                        <!--<div class="form-group">-->
-                            <!--<label class="col-sm-4 control-label" for="projectName">שם הפרויקט</label>-->
-                            <!--<div class="col-sm-8">-->
-                                <!--<input type="text" class="form-control" name="projectName" id="projectName"-->
-                                       <!--placeholder="שם הפרויקט או חלק ממנו" ng-model="filterApply.projectName">-->
-                            <!--</div>-->
-                        <!--</div>-->
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="filterApply.projectColleges">קמפוס</label>
                             <div class="col-sm-8">
@@ -121,7 +101,7 @@
                                 </select>
                             </div>
                         </div>
-                        <!--<div class="form-group">
+                        <div class="form-group">
                             <label class="col-sm-4 control-label" for="filterApply.projectFlows">סוג הפרויקט</label>
                             <div class="col-sm-8">
                                 <select class="form-control"  ng-change="changedFlowType(filterApply.projectFlows)" ng-model="filterApply.projectFlows" id="filterApply.projectFlows">
@@ -131,7 +111,7 @@
                                     </option>
                                 </select>
                             </div>
-                        </div>-->
+                        </div>
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="filterApply.projectSemesters">סמסטר</label>
                             <div class="col-sm-8">
@@ -192,17 +172,6 @@
         
                     </div>
                     <div class="col-md-4">
-                        <!--<div class="form-group">
-                            <label class="col-sm-4 control-label" for="filterApply.projectDepartments">מחלקה</label>
-                            <div class="col-sm-8">
-                                <select class="form-control" ng-model="filterApply.projectDepartments" id="filterApply.projectDepartments">
-                                    <option value="">בחר מחלקה</option>
-                                    <option ng-repeat="department in departments"
-                                            value="{{department.Name}}">{{department.Name}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>-->
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="filterApply.projectYears">שנה</label>
                             <div class="col-sm-8">
@@ -214,22 +183,6 @@
                                 </select>
                             </div>
                         </div>
-                        <!--<form name="lecturerAddFilter">
-                            <div class="form-group ">
-                                <label class="col-sm-4 control-label" for="projectLecturers">מרצים </label><div ng-show="filterApply.lecturers.length > 0" onclick="jQuery('#filter-users').modal('show');" ng-click="modalState='lecturer'" class="users-counter">({{filterApply.lecturers.length}})</div>
-                                <div class="col-sm-8">
-                                    <div class="input-group">
-                                        <input name="projectLecturers" id="projectLecturers" type="text" placeholder="הזן שם מרצה"
-                                               ng-model="filterLecturer"
-                                               typeahead="lect as lecturers.firstName + ' ' + lecturers.lastName + ' - ' + lecturers.Phone for lecturers in filterByName(filtersSet.lecturers, $viewValue) | limitTo:8" class="form-control" typeahead-on-select="pickFilter($item, 'lecturer')" ng-required="true">
-        
-                                        <span class="input-group-btn" ng-disabled="all">
-                                            <button class="btn btn-success" type="button" ng-click="addFilter('lecturer')" ng-show="filterLecturer">הוסף!</button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>-->
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="currStudent">סטודנטים</label><div ng-show="filterApply.students.length > 0" onclick="jQuery('#filter-users').modal('show');" ng-click="modalState='student'" class="users-counter">({{filterApply.students.length}})</div>
                             <div class="col-sm-8">

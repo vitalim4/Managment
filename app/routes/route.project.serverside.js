@@ -183,7 +183,7 @@ module.exports = {
         var inManagerID = req.user._id;
         var userType = req.user.Role.Slug;
 
-        if (userType === "lecturer") {
+        if (userType !== "student") {
             User.findOne({
                 "_id": inManagerID,
             }, function (error, managerUser) {
