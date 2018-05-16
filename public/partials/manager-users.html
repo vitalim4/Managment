@@ -86,6 +86,7 @@
                 <th>מחלקה</th>
                 <th>מכללה</th>
                 <th>פעולות</th>
+                <th>מחיקה</th>
             </tr>
             </thead>
             <tbody>
@@ -98,6 +99,7 @@
                 <td>{{ userRow.Department.Name}}</td>
                 <td>{{ userRow.College.Name}}</td>
                 <td><button type="button" class="btn btn-info" ng-click="resendPassword(userRow.Email)" alt="שלח סיסמא חדשה"> <i class="entypo-mail"></i> </button></td>
+                <td><button type="button" class="btn btn-info" ng-click="" alt="שלח סיסמא חדשה"> <i class="entypo-trash"></i> </button></td>
             </tr>
             </tbody>
         </table>

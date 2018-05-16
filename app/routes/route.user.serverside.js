@@ -124,6 +124,127 @@ module.exports = {
             }
         });
     },
+    getFiltersBymangerAndProjTypeAndDep:function (req, res) {
+
+        var inDepartment = req.user.Department.Slug;
+        var typeProj = req.params.projtype;
+        var depSlug = req.params.dep;
+        var collegeSlug = req.params.collegeSlug;
+
+        //lecturers
+        User.find({
+            $and: [{"Department.Slug": inDepartment}, {
+                "Role.Slug": 'lecturer'
+            }]
+        }, function (err, resLecturers) {
+            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
+
+            var lecturers = resLecturers;
+
+            //students
+            User.find({
+                $and: [{"Department.Slug": inDepartment}, {
+                    "Role.Slug": 'student'
+                }]
+            }, function (err, resStudents) {
+                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                if (err)
+                    res.send(err);
+
+                var students = resStudents;
+
+                //stages
+                ProjectFlow.find({
+                    $and: [{"Type.Slug": typeProj},{"Department.Slug":depSlug},{"College.Slug":collegeSlug}]
+                }, function (err, resStages) {
+                    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                    if (err)
+                        res.send(err);
+                    var stages = resStages[0].Stage;
+
+                    //statuses
+                    Status.find({
+                        $and: [{"Department": inDepartment}]
+                    }, function (err, resStatuses) {
+                        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                        if (err)
+                            res.send(err);
+
+                        var statuses = resStatuses;
+
+                        // use mongoose to get all users in the database
+                        var inCollege = req.user.College.Slug;
+                        var inDepartment = req.user.Department.Slug;
+
+                        //flows
+                        ProjectFlow.find
+                        (
+                            {"College.Slug": inCollege, "Department.Slug": inDepartment},
+                            {'Type':1},
+                            {},
+                            function (err, deps) {
+                                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                                if (err)
+                                    res.send(err);
+
+                                //res.json(deps); // return all departments in JSON format                          
+                                var projectflows = deps;
+
+                                //semesters
+                                Semester.find({},{_id:false},function (err, semesters) {
+
+                                    // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                                    if (err)
+                                        res.send(err);
+
+                                    //departments
+                                    Department.find({},{_id:false},function (err, departments) {
+
+                                        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                                        if (err)
+                                            res.send(err);
+
+                                        //colleges
+                                        College.find({},{_id:false},function (err, colleges) {
+
+                                            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                                            if (err)
+                                                res.send(err);
+
+                                            //years
+                                            Year.find({},{_id:false},function (err, years) {
+
+                                                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                                                if (err)
+                                                    res.send(err);
+
+                                                var allFilters = {
+                                                    lecturers: lecturers,
+                                                    students: students,
+                                                    stages: stages,
+                                                    statuses: statuses,
+                                                    projectflows: projectflows,
+                                                    semesters: semesters,
+                                                    pairedOpts: ["true", "false"],
+                                                    approvalOpts: ["true", "false"],
+                                                    departments: departments,
+                                                    colleges: colleges,
+                                                    years: years
+                                                };
+
+                                                res.status(200).send(allFilters);
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                    });
+                });
+            });
+        });
+    },
     getFiltersBymangerAndProjType:function (req, res) {
 
         var inDepartment = req.user.Department.Slug;

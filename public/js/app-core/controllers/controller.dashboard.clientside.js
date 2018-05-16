@@ -308,24 +308,43 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
         $scope.barIsClicked = false;
     };
     $scope.changedFlowType = function(data){
+        var dataFlow = document.getElementById("filterApply.projectFlows").value;
         var typeFlow;
-        switch (data)
+        switch (dataFlow)
         {
             case "מחקר":
-                typeFlow = "research"
+                typeFlow = "research";
             break;
             case "פיתוח":
-                typeFlow = "development"
+                typeFlow = "development";
             break;
             case "משולב":            
-                typeFlow = "combined"
+                typeFlow = "combined";
             break;
             default:
-            typeFlow = "development"
+                typeFlow = "research";
 
         }
 
-        $http.get('/api/manager/project-filters/'+typeFlow)
+        var department  = localStorageService.get('userDepartmentSlug');
+        
+        var collegeSlug = document.getElementById("filterApply.projectColleges").value;
+
+        var college = "default"
+        switch (collegeSlug)
+        {
+            case "SCE באר שבע":
+                collegeSlug = "sce-b7";
+            break;
+            case "SCE אשדוד":
+                collegeSlug = "sce-ashdod";
+            break;
+            default:
+                collegeSlug = "sce-b7";
+
+        }
+
+        $http.get('/api/manager/project-filters/'+typeFlow+"/"+department+"/"+collegeSlug)
             .success(function (data) {
                 $scope.filtersSet = data;
             });

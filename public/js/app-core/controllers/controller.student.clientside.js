@@ -240,6 +240,9 @@ angular.module("FPM").controller('studentViewProjectController', function ($scop
 angular.module("FPM").controller('studentWaitingController', function ($scope, localStorageService, $http) {
 
     var curUserID = localStorageService.get('userId');
+    var a = document.getElementById('isShowStudent'); //or grab it by tagname etc
+
+    a.href = "/#/account/student/waiting";
 
     $scope.projectData = {}
     /*

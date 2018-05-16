@@ -20,7 +20,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="filterApply.projectColleges">קמפוס</label>
                     <div class="col-sm-8">
-                        <select class="form-control" ng-model="filterApply.projectColleges" id="filterApply.projectColleges">
+                        <select class="form-control" ng-change="changedFlowType(filterApply.projectColleges)" ng-model="filterApply.projectColleges" id="filterApply.projectColleges">
                             <option value="">בחר קמפוס</option>
                             <option ng-repeat="college in colleges"
                                     value="{{college.Name}}">{{college.Name}}
@@ -102,7 +102,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="filterApply.projectDepartments">מחלקה</label>
                     <div class="col-sm-8">
-                        <select class="form-control" ng-model="filterApply.projectDepartments" id="filterApply.projectDepartments">
+                        <select class="form-control" ng-change="changedFlowType(filterApply.projectDepartments)" ng-model="filterApply.projectDepartments" id="filterApply.projectDepartments">
                             <option value="">בחר מחלקה</option>
                             <option ng-repeat="department in departments"
                                     value="{{department.Name}}">{{department.Name}}

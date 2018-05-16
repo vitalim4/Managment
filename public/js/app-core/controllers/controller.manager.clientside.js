@@ -425,6 +425,7 @@ angular.module("FPM").controller('requestsManager', function ($scope, $routePara
 angular.module("FPM").controller('managerProjectsController', function ($scope, $window, $http, localStorageService, DTColumnBuilder, DTOptionsBuilder, globalSettings,Projects, $timeout,$location) {
 
     $scope.pieIsClicked = false;
+    console.log("managerProjectsController entered")
 
     var curUserAuth = localStorageService.get('userRoleSlug');
     if(curUserAuth === 'lecturer' || curUserAuth === 'student'){
@@ -638,28 +639,69 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
         $scope.barIsClicked = false;
     };
     $scope.changedFlowType = function(data){
+        var dataFlow = document.getElementById("filterApply.projectFlows").value;
         var typeFlow;
-        switch (data)
+        switch (dataFlow)
         {
             case "מחקר":
-                typeFlow = "research"
+                typeFlow = "research";
             break;
             case "פיתוח":
-                typeFlow = "development"
+                typeFlow = "development";
             break;
             case "משולב":            
-                typeFlow = "combined"
+                typeFlow = "combined";
             break;
             default:
-            typeFlow = "development"
+                typeFlow = "research";
+
+        }
+        var dep = document.getElementById("filterApply.projectDepartments").value;
+
+        var department = "software"
+        switch (dep)
+        {
+            case "הנדסת תוכנה":
+                department = "software";
+            break;
+            case "הנדסת כימיה":
+                department = "chemical";
+            break;
+            case "הנדסת מכונות":            
+                department = "mechanical";
+            break;
+            case "הנדסת חשמל":
+                department = "Electrical";
+            break;
+            case "הנדסת תעשיה וניהול":            
+                department = "industrial";
+            break;
+            default:
+                department = localStorageService.get('userDepartmentSlug');
+
+        }
+        var collegeSlug = document.getElementById("filterApply.projectColleges").value;
+
+        var college = "default"
+        switch (collegeSlug)
+        {
+            case "SCE באר שבע":
+                collegeSlug = "sce-b7";
+            break;
+            case "SCE אשדוד":
+                collegeSlug = "sce-ashdod";
+            break;
+            default:
+                collegeSlug = "sce-b7";
 
         }
 
-        $http.get('/api/manager/project-filters/'+typeFlow)
+        $http.get('/api/manager/project-filters/'+typeFlow+"/"+department+"/"+collegeSlug)
             .success(function (data) {
                 $scope.filtersSet = data;
             });
     }
+	
 	
 	 var excludeStatus = ["קול קורא","ניסוח הצעת פרוייקט למנהל פרוייקטים",
                         "ממתין לאישור מנהל פרוייקטים", "הגשת הפרויקט","פרוייקט שהוצג ועבר בהצלחה",
@@ -1512,29 +1554,47 @@ angular.module("FPM").controller('lecturerReportController', function ($scope, $
         $scope.barIsClicked = false;
     };
     $scope.changedFlowType = function(data){
+        var dataFlow = document.getElementById("filterApply.projectFlows").value;
         var typeFlow;
-        switch (data)
+        switch (dataFlow)
         {
             case "מחקר":
-                typeFlow = "research"
+                typeFlow = "research";
             break;
             case "פיתוח":
-                typeFlow = "development"
+                typeFlow = "development";
             break;
             case "משולב":            
-                typeFlow = "combined"
+                typeFlow = "combined";
             break;
             default:
-            typeFlow = "development"
+                typeFlow = "research";
+
+        }
+        var department = localStorageService.get('userDepartmentSlug');
+        
+        var collegeSlug = document.getElementById("filterApply.projectColleges").value;
+
+        var college = "default"
+        switch (collegeSlug)
+        {
+            case "SCE באר שבע":
+                collegeSlug = "sce-b7";
+            break;
+            case "SCE אשדוד":
+                collegeSlug = "sce-ashdod";
+            break;
+            default:
+                collegeSlug = "sce-b7";
 
         }
 
-        $http.get('/api/manager/project-filters/'+typeFlow)
+        $http.get('/api/manager/project-filters/'+typeFlow+"/"+department+"/"+collegeSlug)
             .success(function (data) {
-                console.log(data)
                 $scope.filtersSet = data;
             });
     }
+	
 	
 	 var excludeStatus = ["קול קורא","ניסוח הצעת פרוייקט למנהל פרוייקטים",
                         "ממתין לאישור מנהל פרוייקטים", "הגשת הפרויקט","פרוייקט שהוצג ועבר בהצלחה",
@@ -2185,6 +2245,7 @@ angular.module("FPM").controller('lecturerReportController', function ($scope, $
 angular.module("FPM").controller('managerUsersController', function ($scope, $window, $http, Users, localStorageService, DataTablesOptions, globalSettings) {
 
 
+    console.log("managerUsersController entered")
     var curUserAuth = localStorageService.get('userRoleSlug');
     if(curUserAuth === 'lecturer' || curUserAuth === 'student'){
 

@@ -63,6 +63,7 @@ module.exports = function (app) {
     app.get('/api/manager/request/:requestId', authenticate, projectRoute.getRequestById);
     app.get('/api/manager/archive/', authenticate, projectRoute.getRequestsArchiveByManager);
     app.delete('/api/manager/project/:projectId', authenticate, projectRoute.deleteProjectByManager);
+    //app.delete('/api/manager/user/:userId', authenticate, projectRoute.deleteUserByManager);
     app.get('/api/manager/approve/ask-for-approval/:project', authenticate, projectRoute.sendApprovalRequest);
     app.get('/api/manager/users/:role/:reporttype', authenticate, userRoute.getUsersReportsByManager);
     app.get('/api/manager/users/', authenticate, userRoute.getUsersByManager);
@@ -122,6 +123,7 @@ module.exports = function (app) {
     app.post('/api/submission', authenticate, projectRoute.AddSubmission);
     app.get('/api/project/archive/:projId/:doc', authenticate, projectRoute.uploadDocPdf);
     app.get('/api/manager/project-filters/:projtype', authenticate, userRoute.getFiltersBymangerAndProjType);
+    app.get('/api/manager/project-filters/:projtype/:dep/:collegeSlug', authenticate, userRoute.getFiltersBymangerAndProjTypeAndDep);
 
     /******************************************************************/
     /************************Project Flow******************************/

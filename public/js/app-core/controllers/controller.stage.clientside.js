@@ -16,6 +16,9 @@ angular.module("FPM").controller('stageController', function ($scope, localStora
     $http.get('/api/student/projects/').success(function (userProject) {
         $scope.projectData = userProject;
     });
+    var a = document.getElementById('isShowStudent'); //or grab it by tagname etc
+
+    a.href = "/#/account/student/in-process/";
 
     $scope.setStageColor = function(index, curOrder){     
         if(index == curOrder){            

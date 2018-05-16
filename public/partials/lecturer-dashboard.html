@@ -1,10 +1,4 @@
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#myTable').DataTable();
-    });
 
-
-</script>
 <style> 
     .statuses tr td{
       border: 1px solid grey;
@@ -93,7 +87,7 @@
                         <div class="form-group">
                             <label class="col-sm-4 control-label" for="filterApply.projectColleges">קמפוס</label>
                             <div class="col-sm-8">
-                                <select class="form-control" ng-model="filterApply.projectColleges" id="filterApply.projectColleges">
+                                <select class="form-control" ng-change="changedFlowType(filterApply.projectColleges)" ng-model="filterApply.projectColleges" id="filterApply.projectColleges">
                                     <option value="">בחר קמפוס</option>
                                     <option ng-repeat="college in colleges"
                                             value="{{college.Name}}">{{college.Name}}
@@ -336,7 +330,7 @@
             </div>
         
         </div>
-    <div ng-show="!isShowArchive" class="col-sm-12">
+    <div  class="col-sm-12">
         <table datatable="ng" dt-options="dtOptions" id="myTable" class="row-border hover">
             <thead>
             <tr>
@@ -358,7 +352,7 @@
         <table  border=1 class='statuses' ng-repeat="proj in projectsData">
                 <thead>
                         <tr>
-                          <th colspan= {{(proj.flow.Stage).length}} scope="colgroup">{{proj.nameHeb}}</th>
+                          <th colspan= {{(proj.flow.Stage).length}} scope="colgroup">{{proj.nameHeb}}<span ng-repeat="student in proj.students">&nbsp;-&nbsp;{{student.name}}</span></th>
                         </tr>
                       </thead>
                 <tbody >
@@ -370,30 +364,6 @@
                     </td>
                   </tr>
                 </tbody>
-        </table>
-    </div>
-
-    <div ng-if="isShowArchive" class="col-sm-12">
-
-        <table datatable="ng" dt-options="dtOptions" id="myTable" class="row-border hover">
-            <thead>
-            <tr>
-                <th>שם הפרוייקט</th>
-                <th>מחלקה</th>
-                <th>הורד קובץ</th>
-                <th>העלאת קובץ</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr ng-repeat="project in archivedProjectsData">
-                    <td>{{ project.projectName }}</td>
-                    <td>{{ project.Department.Name }}</td>
-                <td><button  type="button" class="btn btn-outline-success"><a href="/#/account/lecturer/project/{{project.projectId}}"
-                       class="item-name primary-link">הורדת קובץ</a></button></td>
-                       <td><button  type="button" class="btn btn-outline-success"><a href="/#/account/lecturer/project/{{project.projectId}}"
-                        class="item-name primary-link">שליחת קובץ</a></button></td>
-            </tr>
-            </tbody>
         </table>
     </div>
 
@@ -426,3 +396,10 @@
     </div>
 
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+       setTimeout(function () {
+           $('#myTable').DataTable();  }, 3000);
+       });
+
+</script>
