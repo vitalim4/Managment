@@ -330,6 +330,7 @@
             </div>
         
         </div>
+        <div class="row" ng-if="projectsData.length && !isLoading">
     <div  class="col-sm-12">
         <table datatable="ng" dt-options="dtOptions" id="myTable" class="row-border hover">
             <thead>
@@ -366,7 +367,7 @@
                 </tbody>
         </table>
     </div>
-
+</div>
 </div>
 <div class="modal fade" id="filter-users">
     <div class="modal-dialog">

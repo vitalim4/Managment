@@ -454,6 +454,9 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
                         if(curUserAuth == "manager"){
                             $location.path("/account/manager");
                         }
+                        else if(curUserAuth == "admin"){
+                            $location.path("/account/admin");
+                        }
                         else{
                             $location.path("/account/lecturer");
                         }
@@ -723,11 +726,21 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
             Projects.deleteProject($scope.projectData._id).success(function () {
                 toastr.success("הפרוייקט נמחק, אתם מועברים לניהול פרויקטים", globalSettings.toastrOptss);
                 jQuery('#modal-delete').modal('hide');
-
-
-                $timeout(function () {
+                /*$timeout(function () {
                     $location.path('/account/lecturer');
-                }, 3000);
+                }, 3000);*/
+                $timeout(function() {
+                    if(curUserAuth == "manager"){
+                        $location.path("/account/manager");
+                    }
+                    else if(curUserAuth == "admin"){
+                        $location.path("/account/admin");
+                    }
+                    else{
+                        $location.path("/account/lecturer");
+                    }
+                    
+                }, 2000);
             });
         }
     };
