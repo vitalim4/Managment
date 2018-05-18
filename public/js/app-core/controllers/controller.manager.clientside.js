@@ -2242,7 +2242,7 @@ angular.module("FPM").controller('lecturerReportController', function ($scope, $
 
 });
 
-angular.module("FPM").controller('managerUsersController', function ($scope, $window, $http, Users, localStorageService, DataTablesOptions, globalSettings) {
+angular.module("FPM").controller('managerUsersController', function ($scope, $window, $http, Users, localStorageService, DataTablesOptions, globalSettings,$timeout,$location) {
 
 
     console.log("managerUsersController entered")
@@ -2308,6 +2308,36 @@ angular.module("FPM").controller('managerUsersController', function ($scope, $wi
 
         });
     }
+    var _userId;
+    $scope.showDeleteModal = function(userId){
+        jQuery('#modal-delete-user').modal('show');
+        _userId = userId;
+    }
+    $scope.deleteUserByManager = function(){
+        $http.get('/api/manager/delete/user/'+_userId)
+        .success(function (data) {
+            jQuery('#modal-delete-user').modal('hide');
+            if(typeof data.lecturer !== "undefined"){
+                jQuery('#modal-cannot-delete-lecturer').modal('show');
+            }
+            else if(typeof data.student !== "undefined")
+            {
+                jQuery('#modal-cannot-delete-student').modal('show');
+            }
+            else{
+                toastr.success("משתמש נמחק בהצלחה", globalSettings.toastrOpts);
+                $timeout(function() {
+                    if(curUserAuth == "manager"){
+                        $location.path("/account/manager");
+                    }
+                    else {
+                        $location.path("/account/admin");
+                    }
+                    
+                }, 2000);
+            }
+        });
+    };
 
 });
 angular.module("FPM").controller('managerReportUngroupedStudentsController', function ($scope, $window, $http, localStorageService, DataTablesOptions) {

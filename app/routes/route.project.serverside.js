@@ -376,6 +376,38 @@ module.exports = {
             });
         }
     },
+    deleteUserByManager:function(req, res){
+        var inUserId = req.params.userId;
+        if(inUserId){
+            Project.find({"lecturers.id":inUserId},function(err,lecturer){
+                if(err){
+                    res.send(err)
+                }
+                if(lecturer.length > 0){
+                    res.send({"lecturer":lecturer});
+                }
+                else{
+                    Project.find({"students.id":inUserId},function(err,student){
+                        if(err){
+                            res.send(err)
+                        }
+                        if(student.length > 0){
+                            res.send({"student":student});
+                        }
+                        else{
+                            User.remove({"_id":inUserId},function(err){
+                                if(err){
+                                    return res.send(err)
+                                }
+                                res.status(200);
+                                res.end();
+                            });
+                        }
+                    })
+                }
+            })
+        }
+    },
     deleteProjectByManager: function (req, res) {
         var inProjectId = req.params.projectId;
         if (inProjectId) {

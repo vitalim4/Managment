@@ -99,10 +99,60 @@
                 <td>{{ userRow.Department.Name}}</td>
                 <td>{{ userRow.College.Name}}</td>
                 <td><button type="button" class="btn btn-info" ng-click="resendPassword(userRow.Email)" alt="שלח סיסמא חדשה"> <i class="entypo-mail"></i> </button></td>
-                <td><button type="button" class="btn btn-info" ng-click="" alt="שלח סיסמא חדשה"> <i class="entypo-trash"></i> </button></td>
+                <td><button type="button" class="btn btn-danger" ng-click="showDeleteModal(userRow._id)">
+                    מחק <i class="entypo-trash"></i>
+                </button></td>
             </tr>
             </tbody>
         </table>
     </div>
 
+</div>
+<div class="modal fade" id="modal-delete-user">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">מחיקת  משתמש</h4></div>
+            <div class="modal-body">
+                האם אתה בטוח ?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+                <button type="button" class="btn btn-danger" ng-click="deleteUserByManager()">מחק</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-cannot-delete-lecturer">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">מחיקת  משתמש</h4></div>
+            <div class="modal-body">
+              לא ניתן למחוק את המשתמש כי הוא מנחה אחד או יותר פרוייקטים .
+               קודם יש להסיר אותו 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-cannot-delete-student">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">מחיקת  משתמש</h4></div>
+            <div class="modal-body">
+              לא ניתן למחוק את הסטודנט  כי הוא מצוות לפרוייקט.
+               קודם יש להסיר אותו 
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">סגור</button>
+            </div>
+        </div>
+    </div>
 </div>
