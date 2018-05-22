@@ -554,7 +554,7 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
                     $scope.filterApply.isPaired = retrievedObject.isPaired;
                     $scope.projectsData = retrievedObject.projectsData;
                     if($scope.filterApply.projectStatus == "בביצוע"){
-                        $scope.checkInProccessStatus("בביצוע")
+                        $scope.checkInProccessStatus("בביצוע");
                     }
                 }
 
