@@ -535,8 +535,56 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
                 $scope.filterApply.projectDepartments = "";
                 $scope.filterApply.projectColleges = "";
                 $scope.filterApply.projectYears = "";
+
+                var localObject = localStorage.getItem('filters');
+                var retrievedObject = JSON.parse(localObject);
+                if(typeof (retrievedObject) !== undefined && retrievedObject != null){
+                    $scope.filterApply.students = retrievedObject.students;
+                    $scope.filterApply.lecturers = retrievedObject.lecturers;
+                    $scope.filterApply.stages = retrievedObject.stages;
+                    $scope.filterApply.statuses = retrievedObject.statuses;
+                    $scope.filterApply.projectName = retrievedObject.projectName;
+                    $scope.filterApply.projectStage = retrievedObject.projectStage;
+                    $scope.filterApply.projectStatus = retrievedObject.projectStatus;
+                    $scope.filterApply.projectFlows = retrievedObject.projectFlows;
+                    $scope.filterApply.projectSemesters = retrievedObject.projectSemesters;
+                    $scope.filterApply.projectDepartments = retrievedObject.projectDepartments;
+                    $scope.filterApply.projectColleges = retrievedObject.projectColleges;
+                    $scope.filterApply.projectYears = retrievedObject.projectYears;
+                    $scope.filterApply.isPaired = retrievedObject.isPaired;
+                    $scope.projectsData = retrievedObject.projectsData;
+                    if($scope.filterApply.projectStatus == "בביצוע"){
+                        $scope.checkInProccessStatus("בביצוע")
+                    }
+                }
+
             });
     };
+
+    $scope.$on('$routeChangeStart', function($event, next, current) {          
+        if(next.$$route.templateUrl == "partials/manager-single-project.html"){
+            $scope.localfilters = {
+                "students":$scope.filterApply.students,
+                "lecturers":$scope.filterApply.lecturers,
+                "stages":$scope.filterApply.stages,
+                "statuses":$scope.filterApply.statuses,
+                "projectName":$scope.filterApply.projectName,
+                "projectStage":$scope.filterApply.projectStage,
+                "projectStatus":$scope.filterApply.projectStatus,
+                "projectFlows":$scope.filterApply.projectFlows,
+                "projectSemesters":$scope.filterApply.projectSemesters,
+                "projectDepartments":$scope.filterApply.projectDepartments,
+                "projectColleges":$scope.filterApply.projectColleges,
+                "projectYears":$scope.filterApply.projectYears,
+                "isPaired":$scope.filterApply.isPaired,
+                "projectsData":$scope.projectsData
+            };     
+            localStorage.setItem("filters",JSON.stringify( $scope.localfilters));
+        }
+        else{
+            localStorage.removeItem("filters");
+        }                
+    });
 
     $scope.filterKolKore = function () {
         $scope.projectsData = projectsWOFilter.filter(function (proj) {
@@ -561,6 +609,7 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
 
     $scope.clearFilter = function () {
         $scope.projectsData = projectsWOFilter;
+        localStorage.removeItem("filters");
         resetFilters();
     };
 
