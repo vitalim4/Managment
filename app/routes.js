@@ -333,6 +333,38 @@ module.exports = function (app) {
             res.json({error_code: 0, err_desc: null, data: resFile});
         });
     });
+
+    //-----------------------upload for archive----
+
+    var storageArchive = multer.diskStorage({ //multers disk storage settings
+        destination: function (req, file, cb) {
+            cb(null, 'C:/Users/Administrator/WebstormProjects/FPM-AngularJS/public/uploads');
+            //cb(null, '/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/uploads/');
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname);
+        }
+    });
+    var uploadArchive = multer({ //multer settings
+        storage: storageArchive
+    }).single('file');
+
+    /** API path that will upload the files */
+    app.post('/uploadarchive', function (req, res) {
+
+        uploadArchive(req, res, function (err) {
+            if (err) {
+                console.log(err);
+                res.json({error_code: 1, err_desc: err});
+                return;
+            }
+
+            var resFile = req.file.path;
+            res.json({error_code: 0, err_desc: null, data: resFile});
+        });
+    });
+
+    //---------------------------------------------
     app.post('/api/users/import', authenticate, userRoute.importUsersCSV);
     app.get('/api/users/import/download', function(req, res){
         var file =  path.join(__dirname, 'csv-template', 'csv-template.csv');
@@ -340,6 +372,7 @@ module.exports = function (app) {
     });
     app.get('/api/download/archive/:filename', function(req,res){
         res.download("public/uploads/"+req.params.filename, req.params.filename);
+        //res.download('/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/uploads/'+req.params.filename,req.params.filename);
     })
     app.get('/api/roles', authenticate, roleRoute.getAll);
     app.get('/api/roles/archive', authenticate, roleRoute.getAllForArchive);

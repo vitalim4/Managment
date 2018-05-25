@@ -64,7 +64,7 @@ angular.module("FPM").controller('projectAdminAllArchive', function ($scope, $wi
     $scope.upload = function (file, data) {
 
         Upload.upload({
-            url: '/upload', //webAPI exposed to upload the file
+            url: '/uploadarchive', //webAPI exposed to upload the file
             data: {file: file} //pass file as data, should be user ng-model
         }).then(function (resp) { //upload function returns a promise
             if (resp.data.error_code === 0) { //validate success
@@ -74,6 +74,7 @@ angular.module("FPM").controller('projectAdminAllArchive', function ($scope, $wi
                 $http.get('/api/project/archive/'+data._id+'/'+documentation+'/')
                 .then(function (result) {
                     toastr.success("הקובץ עלה בהצלחה", globalSettings.toastrOpts);
+                    $timeout(function() {  location.reload();}, 2000); 
                 });
             
             } else {
