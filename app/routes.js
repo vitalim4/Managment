@@ -308,7 +308,6 @@ module.exports = function (app) {
     var storage = multer.diskStorage({ //multers disk storage settings
         destination: function (req, file, cb) {
             cb(null, 'C:/Users/Administrator/WebstormProjects/FPM-AngularJS/public/uploads');
-            //cb(null, '/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/uploads/');
         },
         filename: function (req, file, cb) {
             var datetimestamp = Date.now();
@@ -339,7 +338,6 @@ module.exports = function (app) {
     var storageArchive = multer.diskStorage({ //multers disk storage settings
         destination: function (req, file, cb) {
             cb(null, 'C:/Users/Administrator/WebstormProjects/FPM-AngularJS/public/uploads');
-            //cb(null, '/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/uploads/');
         },
         filename: function (req, file, cb) {
             cb(null, file.originalname);
@@ -372,7 +370,6 @@ module.exports = function (app) {
     });
     app.get('/api/download/archive/:filename', function(req,res){
         res.download("public/uploads/"+req.params.filename, req.params.filename);
-        //res.download('/Users/vitaly/Desktop/RonenMars-nodefpm-ace6640c93ef/public/uploads/'+req.params.filename,req.params.filename);
     })
     app.get('/api/roles', authenticate, roleRoute.getAll);
     app.get('/api/roles/archive', authenticate, roleRoute.getAllForArchive);
