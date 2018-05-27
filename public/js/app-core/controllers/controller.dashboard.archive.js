@@ -43,13 +43,21 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
         }).then(function (resp) { //upload function returns a promise
             if (resp.data.error_code === 0) { //validate success
                 var filePath = resp.data.data;
-                var regex = /[ \w-]+?(?=\.)/;
-                documentation = filePath.match(regex)[0]+'.pdf';
-                $http.get('/api/project/archive/'+data._id+'/'+documentation+'/')
-                .then(function (result) {
-                    toastr.success("הקובץ עלה בהצלחה", globalSettings.toastrOpts);
-                    $timeout(function() {  location.reload();}, 2000); 
-                });
+                if (filePath) {
+                    var startIndex = (filePath.indexOf('\\') >= 0 ? filePath.lastIndexOf('\\') : filePath.lastIndexOf('/'));
+                    var filename = filePath.substring(startIndex);
+                    if (filename.indexOf('\\') === 0 || filename.indexOf('/') === 0) {
+                        filename = filename.substring(1);
+                    }
+                    documentation = filename;
+                    $http.get('/api/project/archive/'+data._id+'/'+documentation+'/')
+                        .then(function (result) {
+                            toastr.success("הקובץ עלה בהצלחה", globalSettings.toastrOpts);
+                            $timeout(function() {  location.reload();}, 2000); 
+                    });
+                }
+
+
             
             } else {
                 $window.alert('an error occured');

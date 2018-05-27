@@ -491,8 +491,7 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
         if (typeof addedLecturer.id != 'undefined') {
             $scope.projectData.lecturers.push(addedLecturer);
             $scope.lecturers.splice($scope.lecturers.indexOf($scope.selectedLecturer), 1);
-            //?not sure about this use $scope.createProject();
-
+            $scope.createProject(); 
 
             toastr.success("המנחה נוסף", globalSettings.toastrOpts);
 

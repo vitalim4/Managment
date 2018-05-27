@@ -10,6 +10,12 @@ module.exports = {
         years.push(currentTime.getFullYear()+3759);
         years.push(currentTime.getFullYear()+3760);
         years.push(currentTime.getFullYear()+3761);
+        years.push(currentTime.getFullYear()+3762);
+        years.push(currentTime.getFullYear()+3763);
+        years.push(currentTime.getFullYear()+3764);
+        years.push(currentTime.getFullYear()+3765);
+        years.push(currentTime.getFullYear()+3765);
+        years.push(currentTime.getFullYear()+3766);
         //console.log(years);
         Year.find({Slug:{$in:years}},{},function (err, years) {
 

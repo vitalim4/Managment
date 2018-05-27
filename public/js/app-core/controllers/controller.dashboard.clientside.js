@@ -418,6 +418,7 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
         else
         {
             $scope.disabled = true;
+            $scope.filterApply.projectStage = "";
         }
     }
     $http({

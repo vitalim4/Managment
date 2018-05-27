@@ -39,6 +39,7 @@ angular.module("FPM").controller('managerSingleUserController', function ($scope
      * Local variables
      */
 
+     console.log("managerSingleUserController entered")
     //check user permissions
     var curUserAuth = localStorageService.get('userRoleSlug');
     var userDep =localStorageService.get('userDepartment')
@@ -160,6 +161,7 @@ $http({
      * Also we loading user types out of another
      * collection in case we will need to change users type.
      * */
+    var localUserName;
     $scope.userData.creation = false;
     if ($scope.userData._id !== null && typeof($scope.userData._id) !== "undefined") {
         $scope.userData.creation = false;
@@ -169,6 +171,7 @@ $http({
                 initProcess = true;
 
                 $scope.userData = userDataDB;
+                localUserName = $scope.userData.Username;
                 $scope.userData.Birthday = new Date(userDataDB.Birthday);
                 $scope.userData.Role = $scope.roles.filter(function (role) {
                     return role.Slug === userDataDB.Role.Slug;
@@ -215,18 +218,19 @@ $http({
      * College watcher - in case we will need to change project's college
      * If so, we need to load that college project types.
      */
-    $scope.$watch('userData.Username', function (newValue) {
-            if (typeof newValue !== 'undefined' && typeof $scope.data !== 'undefiend') {
-                if (userNames.indexOf(newValue) !== -1) {
+    $scope.$watch('userData.Username', function (newValue, oldValue) { 
+        if (typeof newValue !== 'undefined' && /*typeof $scope.data !== 'undefined'*/ typeof oldValue !== 'undefined') {
+            if (userNames.indexOf(newValue) !== -1) {
+                if(localUserName !== newValue){
                     $scope.userExistName = true;
-                }
-                else if ($scope.userExistName) {
-                    $scope.userExistName = false;
-                }
+                }                   
             }
-
+            else if ($scope.userExistName) {
+                $scope.userExistName = false;
+            }
         }
-        , true);
+    }
+    , true);
 
 
     /******************************************************************/
@@ -773,6 +777,7 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
         else
         {
             $scope.disabled = true;
+            $scope.filterApply.projectStage = "";
         }
     }
 
@@ -1666,6 +1671,7 @@ angular.module("FPM").controller('lecturerReportController', function ($scope, $
         else
         {
             $scope.disabled = true;
+            $scope.filterApply.projectStage = "";
         }
     }
 
