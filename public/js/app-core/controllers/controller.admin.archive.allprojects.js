@@ -1,5 +1,6 @@
 angular.module("FPM").controller('projectAdminAllArchive', function ($scope, $window, $http, localStorageService, DTOptionsBuilder,DTColumnBuilder,Projects,globalSettings,$timeout,DataTablesOptions,Upload) {
 
+    console.log("projectAdminAllArchive entered");
     $scope.projectsData = [];
 
     var archivedProjects = [];
@@ -52,11 +53,48 @@ angular.module("FPM").controller('projectAdminAllArchive', function ($scope, $wi
     $scope.projectData={};
     $scope.isPreview = true;
     $scope.curFile = {};
+    
     $scope.downloadPdf = function(obj){
         $http.get('api/download/archive/'+obj.Documentation)
-        .success(function(){
-            window.open('api/download/archive/'+obj.Documentation)
+        .success(function(data){
+            window.open('api/download/archive/'+obj.Documentation)           
         });
+    }
+    $scope.downloadAllPdfs = function(project){
+        var arrProj = [];
+        for(var i in project){
+           if(project[i].selected=='Y'){
+               if(typeof project[i].Documentation !== 'undefined' && project[i].Documentation !== null){
+                arrProj.push(project[i].Documentation)
+               }           
+           }
+        }
+        if(arrProj.length > 0){
+            $http.get('api/import/archive/all/'+arrProj)
+            .then(function(data){   
+                if(data.status == 200){
+                    $timeout(function() { window.open('/api/users/download/archives');}, 500); 
+                }
+               else{
+                alert("אירעה שגיאה ביצירת קובץ זיפ");
+               }               
+            });
+        }
+    }
+    $scope.checkall = false;
+    $scope.toggleAll = function() {
+      $scope.checkall = !$scope.checkall;
+      for(var key in $scope.projectsData) {
+          if($scope.checkall == true){
+            $scope.projectsData[key].selected = true;
+            $scope.projectsData[key].selected = 'Y';
+          }
+          else{
+            $scope.projectsData[key].selected = false;
+            $scope.projectsData[key].selected = 'N'; 
+          }
+       
+      }
     }
 
     var documentation = "";

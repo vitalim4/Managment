@@ -885,32 +885,34 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
                                     isInProcess: "",
                                     curState: "",
                                     createdDate: "",
-                                    creationYear: ""
+                                    creationYear: "",
+                                    semester:""
 
                                 };
 
-                                exportProject.nameHeb = sortedProjects[projectObj].nameHeb;
-                                exportProject.nameEng = sortedProjects[projectObj].nameEng;
-                                exportProject.shortDescription = sortedProjects[projectObj].shortDescription;
-                                exportProject.projDescrip = sortedProjects[projectObj].projDescrip;
-                                exportProject.neededKnowledge = sortedProjects[projectObj].neededKnowledge;
-                                exportProject.literatureSources = sortedProjects[projectObj].literatureSources;
-                                exportProject.professionalGuide = sortedProjects[projectObj].professionalGuide;
-                                exportProject.isPaired = sortedProjects[projectObj].isPaired;
-                                exportProject.waitingApproval = sortedProjects[projectObj].waitingApproval;
-                                exportProject.isInProcess = sortedProjects[projectObj].isInProcess;
-                                exportProject.curState = sortedProjects[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
-                                exportProject.type = sortedProjects[projectObj].flow.Type.Name;
-                                exportProject.college = sortedProjects[projectObj].flow.College.Name;
-                                exportProject.createdDate = sortedProjects[projectObj].createdDate;
-                                exportProject.creationYear = sortedProjects[projectObj].Year.Name;
-                                for (var index in  sortedProjects[projectObj].lecturers) {
-                                    exportProject.lecturers += sortedProjects[projectObj].lecturers[index].name + ' ,';
+                                exportProject.nameHeb = $scope.projectsData[projectObj].nameHeb;
+                                exportProject.nameEng = $scope.projectsData[projectObj].nameEng;
+                                exportProject.shortDescription = $scope.projectsData[projectObj].shortDescription;
+                                exportProject.projDescrip = $scope.projectsData[projectObj].projDescrip;
+                                exportProject.neededKnowledge = $scope.projectsData[projectObj].neededKnowledge;
+                                exportProject.literatureSources = $scope.projectsData[projectObj].literatureSources;
+                                exportProject.professionalGuide = $scope.projectsData[projectObj].professionalGuide;
+                                exportProject.isPaired = $scope.projectsData[projectObj].isPaired== true ? "כן" : "לא";
+                                exportProject.waitingApproval = $scope.projectsData[projectObj].waitingApproval== true ? "כן" : "לא";
+                                exportProject.isInProcess = $scope.projectsData[projectObj].isInProcess== true ? "כן" : "לא";
+                                exportProject.curState = $scope.projectsData[projectObj].curState.curStage + ' ' + $scope.projectsData[projectObj].curState.curStatus;
+                                exportProject.type = $scope.projectsData[projectObj].flow.Type.Name;
+                                exportProject.college = $scope.projectsData[projectObj].flow.College.Name;
+                                exportProject.createdDate = $scope.projectsData[projectObj].createdDate;
+                                exportProject.creationYear = $scope.projectsData[projectObj].Year.Name;
+                                exportProject.semester = $scope.projectsData[projectObj].Semester.Name;
+                                for (var index in  $scope.projectsData[projectObj].lecturers) {
+                                    exportProject.lecturers += $scope.projectsData[projectObj].lecturers[index].name + ' ,';
                                 }
                                 exportProject.lecturers = exportProject.lecturers.substring(0, exportProject.lecturers.length - 1);
 
-                                for (var index in  sortedProjects[projectObj].students) {
-                                    exportProject.students += sortedProjects[projectObj].students[index].name + ' ,';
+                                for (var index in  $scope.projectsData[projectObj].students) {
+                                    exportProject.students += $scope.projectsData[projectObj].students[index].name + ' ,';
                                 }
                                 exportProject.students = exportProject.students.substring(0, exportProject.students.length - 1);
 
@@ -935,6 +937,7 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
                             data = data.replace("creationYear", "שנה אקדמאית");
                             data = data.replace("lecturers", "מרצים");
                             data = data.replace("students", "סטודנטים");
+                            data = data.replace("semester", "סמסטר");
 
                             var today = new Date();
                             var dd = today.getDate();
@@ -985,32 +988,34 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
                                     isInProcess: "",
                                     curState: "",
                                     createdDate: "",
-                                    creationYear: ""
+                                    creationYear: "",
+                                    semester:""
 
                                 };
 
-                                exportProject.nameHeb = sortedProjects[projectObj].nameHeb;
-                                exportProject.nameEng = sortedProjects[projectObj].nameEng;
-                                exportProject.shortDescription = sortedProjects[projectObj].shortDescription;
-                                exportProject.projDescrip = sortedProjects[projectObj].projDescrip;
-                                exportProject.neededKnowledge = sortedProjects[projectObj].neededKnowledge;
-                                exportProject.literatureSources = sortedProjects[projectObj].literatureSources;
-                                exportProject.professionalGuide = sortedProjects[projectObj].professionalGuide;
-                                exportProject.isPaired = sortedProjects[projectObj].isPaired;
-                                exportProject.waitingApproval = sortedProjects[projectObj].waitingApproval;
-                                exportProject.isInProcess = sortedProjects[projectObj].isInProcess;
-                                exportProject.curState = sortedProjects[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
-                                exportProject.type = sortedProjects[projectObj].flow.Type.Name;
-                                exportProject.college = sortedProjects[projectObj].flow.College.Name;
-                                exportProject.createdDate = sortedProjects[projectObj].createdDate;
-                                exportProject.creationYear = sortedProjects[projectObj].Year.Name;
-                                for (var index in  sortedProjects[projectObj].lecturers) {
-                                    exportProject.lecturers += sortedProjects[projectObj].lecturers[index].name + ' ,';
+                                exportProject.nameHeb = $scope.projectsData[projectObj].nameHeb;
+                                exportProject.nameEng = $scope.projectsData[projectObj].nameEng;
+                                exportProject.shortDescription = $scope.projectsData[projectObj].shortDescription;
+                                exportProject.projDescrip = $scope.projectsData[projectObj].projDescrip;
+                                exportProject.neededKnowledge = $scope.projectsData[projectObj].neededKnowledge;
+                                exportProject.literatureSources = $scope.projectsData[projectObj].literatureSources;
+                                exportProject.professionalGuide = $scope.projectsData[projectObj].professionalGuide;
+                                exportProject.isPaired = $scope.projectsData[projectObj].isPaired == true ? "כן" : "לא";
+                                exportProject.waitingApproval = $scope.projectsData[projectObj].waitingApproval== true ? "כן" : "לא";
+                                exportProject.isInProcess = $scope.projectsData[projectObj].isInProcess== true ? "כן" : "לא";
+                                exportProject.curState = $scope.projectsData[projectObj].curState.curStage + ' ' + $scope.projectsData[projectObj].curState.curStatus;
+                                exportProject.type = $scope.projectsData[projectObj].flow.Type.Name;
+                                exportProject.college = $scope.projectsData[projectObj].flow.College.Name;
+                                exportProject.createdDate = $scope.projectsData[projectObj].createdDate;
+                                exportProject.creationYear = $scope.projectsData[projectObj].Year.Name;
+                                exportProject.semester = $scope.projectsData[projectObj].Semester.Name;
+                                for (var index in  $scope.projectsData[projectObj].lecturers) {
+                                    exportProject.lecturers += $scope.projectsData[projectObj].lecturers[index].name + ' ,';
                                 }
                                 exportProject.lecturers = exportProject.lecturers.substring(0, exportProject.lecturers.length - 1);
 
-                                for (var index in  sortedProjects[projectObj].students) {
-                                    exportProject.students += sortedProjects[projectObj].students[index].name + ' ,';
+                                for (var index in  $scope.projectsData[projectObj].students) {
+                                    exportProject.students += $scope.projectsData[projectObj].students[index].name + ' ,';
                                 }
                                 exportProject.students = exportProject.students.substring(0, exportProject.students.length - 1);
 
@@ -1035,6 +1040,7 @@ angular.module("FPM").controller('managerProjectsController', function ($scope, 
                             data = data.replace("creationYear", "שנה אקדמאית");
                             data = data.replace("lecturers", "מרצים");
                             data = data.replace("students", "סטודנטים");
+                            data = data.replace("semester", "סמסטר");
 
                             var today = new Date();
                             var dd = today.getDate();
@@ -1778,32 +1784,34 @@ angular.module("FPM").controller('lecturerReportController', function ($scope, $
                                     isInProcess: "",
                                     curState: "",
                                     createdDate: "",
-                                    creationYear: ""
+                                    creationYear: "",
+                                    semester:""
 
                                 };
 
-                                exportProject.nameHeb = sortedProjects[projectObj].nameHeb;
-                                exportProject.nameEng = sortedProjects[projectObj].nameEng;
-                                exportProject.shortDescription = sortedProjects[projectObj].shortDescription;
-                                exportProject.projDescrip = sortedProjects[projectObj].projDescrip;
-                                exportProject.neededKnowledge = sortedProjects[projectObj].neededKnowledge;
-                                exportProject.literatureSources = sortedProjects[projectObj].literatureSources;
-                                exportProject.professionalGuide = sortedProjects[projectObj].professionalGuide;
-                                exportProject.isPaired = sortedProjects[projectObj].isPaired;
-                                exportProject.waitingApproval = sortedProjects[projectObj].waitingApproval;
-                                exportProject.isInProcess = sortedProjects[projectObj].isInProcess;
-                                exportProject.curState = sortedProjects[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
-                                exportProject.type = sortedProjects[projectObj].flow.Type.Name;
-                                exportProject.college = sortedProjects[projectObj].flow.College.Name;
-                                exportProject.createdDate = sortedProjects[projectObj].createdDate;
-                                exportProject.creationYear = sortedProjects[projectObj].Year.Name;
-                                for (var index in  sortedProjects[projectObj].lecturers) {
-                                    exportProject.lecturers += sortedProjects[projectObj].lecturers[index].name + ' ,';
+                                exportProject.nameHeb = $scope.projectsData[projectObj].nameHeb;
+                                exportProject.nameEng = $scope.projectsData[projectObj].nameEng;
+                                exportProject.shortDescription = $scope.projectsData[projectObj].shortDescription;
+                                exportProject.projDescrip = $scope.projectsData[projectObj].projDescrip;
+                                exportProject.neededKnowledge = $scope.projectsData[projectObj].neededKnowledge;
+                                exportProject.literatureSources = $scope.projectsData[projectObj].literatureSources;
+                                exportProject.professionalGuide = $scope.projectsData[projectObj].professionalGuide;
+                                exportProject.isPaired = $scope.projectsData[projectObj].isPaired== true ? "כן" : "לא";;
+                                exportProject.waitingApproval = $scope.projectsData[projectObj].waitingApproval== true ? "כן" : "לא";;
+                                exportProject.isInProcess = $scope.projectsData[projectObj].isInProcess== true ? "כן" : "לא";;
+                                exportProject.curState = $scope.projectsData[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
+                                exportProject.type = $scope.projectsData[projectObj].flow.Type.Name;
+                                exportProject.college = $scope.projectsData[projectObj].flow.College.Name;
+                                exportProject.createdDate = $scope.projectsData[projectObj].createdDate;
+                                exportProject.creationYear = $scope.projectsData[projectObj].Year.Name;
+                                exportProject.semester = $scope.projectsData[projectObj].Semester.Name;
+                                for (var index in  $scope.projectsData[projectObj].lecturers) {
+                                    exportProject.lecturers += $scope.projectsData[projectObj].lecturers[index].name + ' ,';
                                 }
                                 exportProject.lecturers = exportProject.lecturers.substring(0, exportProject.lecturers.length - 1);
 
-                                for (var index in  sortedProjects[projectObj].students) {
-                                    exportProject.students += sortedProjects[projectObj].students[index].name + ' ,';
+                                for (var index in  $scope.projectsData[projectObj].students) {
+                                    exportProject.students += $scope.projectsData[projectObj].students[index].name + ' ,';
                                 }
                                 exportProject.students = exportProject.students.substring(0, exportProject.students.length - 1);
 
@@ -1828,6 +1836,7 @@ angular.module("FPM").controller('lecturerReportController', function ($scope, $
                             data = data.replace("creationYear", "שנה אקדמאית");
                             data = data.replace("lecturers", "מרצים");
                             data = data.replace("students", "סטודנטים");
+                            data = data.replace("semester", "סמסטר");
 
                             var today = new Date();
                             var dd = today.getDate();
@@ -1878,32 +1887,33 @@ angular.module("FPM").controller('lecturerReportController', function ($scope, $
                                     isInProcess: "",
                                     curState: "",
                                     createdDate: "",
-                                    creationYear: ""
+                                    creationYear: "",
+                                    semester:""
 
                                 };
 
-                                exportProject.nameHeb = sortedProjects[projectObj].nameHeb;
-                                exportProject.nameEng = sortedProjects[projectObj].nameEng;
-                                exportProject.shortDescription = sortedProjects[projectObj].shortDescription;
-                                exportProject.projDescrip = sortedProjects[projectObj].projDescrip;
-                                exportProject.neededKnowledge = sortedProjects[projectObj].neededKnowledge;
-                                exportProject.literatureSources = sortedProjects[projectObj].literatureSources;
-                                exportProject.professionalGuide = sortedProjects[projectObj].professionalGuide;
-                                exportProject.isPaired = sortedProjects[projectObj].isPaired;
-                                exportProject.waitingApproval = sortedProjects[projectObj].waitingApproval;
-                                exportProject.isInProcess = sortedProjects[projectObj].isInProcess;
-                                exportProject.curState = sortedProjects[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
-                                exportProject.type = sortedProjects[projectObj].flow.Type.Name;
-                                exportProject.college = sortedProjects[projectObj].flow.College.Name;
-                                exportProject.createdDate = sortedProjects[projectObj].createdDate;
-                                exportProject.creationYear = sortedProjects[projectObj].Year.Name;
-                                for (var index in  sortedProjects[projectObj].lecturers) {
-                                    exportProject.lecturers += sortedProjects[projectObj].lecturers[index].name + ' ,';
+                                exportProject.nameHeb = projectsData[projectObj].nameHeb;
+                                exportProject.nameEng = projectsData[projectObj].nameEng;
+                                exportProject.shortDescription = projectsData[projectObj].shortDescription;
+                                exportProject.projDescrip = projectsData[projectObj].projDescrip;
+                                exportProject.neededKnowledge = projectsData[projectObj].neededKnowledge;
+                                exportProject.literatureSources = projectsData[projectObj].literatureSources;
+                                exportProject.professionalGuide = projectsData[projectObj].professionalGuide;
+                                exportProject.isPaired = projectsData[projectObj].isPaired;
+                                exportProject.waitingApproval = projectsData[projectObj].waitingApproval;
+                                exportProject.isInProcess = projectsData[projectObj].isInProcess;
+                                exportProject.curState = projectsData[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
+                                exportProject.type = projectsData[projectObj].flow.Type.Name;
+                                exportProject.college = projectsData[projectObj].flow.College.Name;
+                                exportProject.createdDate = projectsData[projectObj].createdDate;
+                                exportProject.creationYear = projectsData[projectObj].Year.Name;
+                                for (var index in  projectsData[projectObj].lecturers) {
+                                    exportProject.lecturers += projectsData[projectObj].lecturers[index].name + ' ,';
                                 }
                                 exportProject.lecturers = exportProject.lecturers.substring(0, exportProject.lecturers.length - 1);
 
-                                for (var index in  sortedProjects[projectObj].students) {
-                                    exportProject.students += sortedProjects[projectObj].students[index].name + ' ,';
+                                for (var index in  projectsData[projectObj].students) {
+                                    exportProject.students += projectsData[projectObj].students[index].name + ' ,';
                                 }
                                 exportProject.students = exportProject.students.substring(0, exportProject.students.length - 1);
 
@@ -1928,6 +1938,7 @@ angular.module("FPM").controller('lecturerReportController', function ($scope, $
                             data = data.replace("creationYear", "שנה אקדמאית");
                             data = data.replace("lecturers", "מרצים");
                             data = data.replace("students", "סטודנטים");
+                            data = data.replace("semester", "סמסטר");
 
                             var today = new Date();
                             var dd = today.getDate();

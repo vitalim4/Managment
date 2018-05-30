@@ -40,6 +40,9 @@
     {
         border-bottom: 1px solid black !important;
     }
+    .selectall{
+        width:60px;     
+    }
 
 </style>
 
@@ -261,9 +264,12 @@
 
     <div class="col-sm-12">
         <table 
-        class="cell-border" cellspacing="0" width="100%" datatable="ng" dt-options="dtOptionsManagerRequests" id="tblArchive">
+        class="cell-border" cellspacing="0" width="100%" datatable="ng" dt-options="dtOptionsArchiveProjects" id="tblArchive">
             <thead>
                     <tr>
+                            <th><div class="selectall">סמן הכל  <input type="checkbox" ng-model="checkall" ng-click="toggleAll()">
+                            </div>   
+                            </th>
                             <th width="15%">שם</th>
                             <th width="15%">שלב</th>
                             <th width="40%">תאור</th>
@@ -273,6 +279,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="project in projectsData">
+                    <td><input type="checkbox" ng-if="checkIfPdfExists(project)" ng-model="project.selected"  ng-true-value="'Y'" ng-false-value="'N'"/></td>
                 <td>
                       {{ project.nameHeb }}</td>
                 <td>
@@ -296,6 +303,7 @@
             </tr>
             </tbody>
         </table>
+        <button class="btn-success" ng-click="downloadAllPdfs(projectsData)">הורד את כל הקבצים</button>
     </div>
 </div>
 <div class="modal fade" id="filter-users">
