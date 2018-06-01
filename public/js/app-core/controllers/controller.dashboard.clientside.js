@@ -527,28 +527,28 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
 
                             };
 
-                            exportProject.nameHeb = sortedProjects[projectObj].nameHeb;
-                            exportProject.nameEng = sortedProjects[projectObj].nameEng;
-                            exportProject.shortDescription = sortedProjects[projectObj].shortDescription;
-                            exportProject.projDescrip = sortedProjects[projectObj].projDescrip;
-                            exportProject.neededKnowledge = sortedProjects[projectObj].neededKnowledge;
-                            exportProject.literatureSources = sortedProjects[projectObj].literatureSources;
-                            exportProject.professionalGuide = sortedProjects[projectObj].professionalGuide;
-                            exportProject.isPaired = sortedProjects[projectObj].isPaired;
-                            exportProject.waitingApproval = sortedProjects[projectObj].waitingApproval;
-                            exportProject.isInProcess = sortedProjects[projectObj].isInProcess;
-                            exportProject.curState = sortedProjects[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
-                            exportProject.type = sortedProjects[projectObj].flow.Type.Name;
-                            exportProject.college = sortedProjects[projectObj].flow.College.Name;
-                            exportProject.createdDate = sortedProjects[projectObj].createdDate;
-                            exportProject.creationYear = sortedProjects[projectObj].Year.Name;
-                            for (var index in  sortedProjects[projectObj].lecturers) {
-                                exportProject.lecturers += sortedProjects[projectObj].lecturers[index].name + ' ,';
+                            exportProject.nameHeb = $scope.projectsData[projectObj].nameHeb;
+                            exportProject.nameEng = $scope.projectsData[projectObj].nameEng;
+                            exportProject.shortDescription = $scope.projectsData[projectObj].shortDescription;
+                            exportProject.projDescrip = $scope.projectsData[projectObj].projDescrip;
+                            exportProject.neededKnowledge = $scope.projectsData[projectObj].neededKnowledge;
+                            exportProject.literatureSources = $scope.projectsData[projectObj].literatureSources;
+                            exportProject.professionalGuide = $scope.projectsData[projectObj].professionalGuide;
+                            exportProject.isPaired = $scope.projectsData[projectObj].isPaired;
+                            exportProject.waitingApproval = $scope.projectsData[projectObj].waitingApproval;
+                            exportProject.isInProcess = $scope.projectsData[projectObj].isInProcess;
+                            exportProject.curState = $scope.projectsData[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
+                            exportProject.type = $scope.projectsData[projectObj].flow.Type.Name;
+                            exportProject.college = $scope.projectsData[projectObj].flow.College.Name;
+                            exportProject.createdDate = $scope.projectsData[projectObj].createdDate;
+                            exportProject.creationYear = $scope.projectsData[projectObj].Year.Name;
+                            for (var index in  $scope.projectsData[projectObj].lecturers) {
+                                exportProject.lecturers += $scope.projectsData[projectObj].lecturers[index].name + ' ,';
                             }
                             exportProject.lecturers = exportProject.lecturers.substring(0, exportProject.lecturers.length - 1);
 
-                            for (var index in  sortedProjects[projectObj].students) {
-                                exportProject.students += sortedProjects[projectObj].students[index].name + ' ,';
+                            for (var index in  $scope.projectsData[projectObj].students) {
+                                exportProject.students += $scope.projectsData[projectObj].students[index].name + ' ,';
                             }
                             exportProject.students = exportProject.students.substring(0, exportProject.students.length - 1);
 

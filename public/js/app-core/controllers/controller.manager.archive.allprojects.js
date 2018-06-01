@@ -335,12 +335,220 @@ angular.module("FPM").controller('projectManagerAllArchive', function ($scope, $
 
     $scope.$watch('filterApply', function (newValue) {
 
-            options = DTOptionsBuilder.newOptions()
-                .withPaginationType('full_numbers')
-                // Active Buttons extension
-              
-                .withLanguage(translation)
-                .withOption('scrollX', '100%');
+        $scope.checkall = true;
+        $scope.toggleAll();
+
+        options = DTOptionsBuilder.newOptions()
+        .withPaginationType('full_numbers')
+        // Active Buttons extension
+        .withButtons([
+            'colvis', 'copy', 'excel', 'print', 'colvisRestore',
+            {
+                text: 'יצא הכל (CSV)',
+                key: '1',
+                action: function (e, dt, node, config) {
+
+                    var exportCSV = [];
+
+                    for (var projectObj in $scope.projectsData) {
+                        var exportProject = {
+                            nameHeb: "",
+                            nameEng: "",
+                            shortDescription: "",
+                            projDescrip: "",
+                            professionalGuide: "",
+                            neededKnowledge: "",
+                            literatureSources: "",
+                            lecturers: "",
+                            students: "",
+                            type: "",
+                            college: "",
+                            isPaired: "",
+                            waitingApproval: "",
+                            isInProcess: "",
+                            curState: "",
+                            createdDate: "",
+                            creationYear: "",
+                            semester:""
+
+                        };
+
+                        exportProject.nameHeb = $scope.projectsData[projectObj].nameHeb;
+                        exportProject.nameEng = $scope.projectsData[projectObj].nameEng;
+                        exportProject.shortDescription = $scope.projectsData[projectObj].shortDescription;
+                        exportProject.projDescrip = $scope.projectsData[projectObj].projDescrip;
+                        exportProject.neededKnowledge = $scope.projectsData[projectObj].neededKnowledge;
+                        exportProject.literatureSources = $scope.projectsData[projectObj].literatureSources;
+                        exportProject.professionalGuide = $scope.projectsData[projectObj].professionalGuide;
+                        exportProject.isPaired = $scope.projectsData[projectObj].isPaired== true ? "כן" : "לא";;
+                        exportProject.waitingApproval = $scope.projectsData[projectObj].waitingApproval== true ? "כן" : "לא";;
+                        exportProject.isInProcess = $scope.projectsData[projectObj].isInProcess== true ? "כן" : "לא";;
+                        exportProject.curState = $scope.projectsData[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
+                        exportProject.type = $scope.projectsData[projectObj].flow.Type.Name;
+                        exportProject.college = $scope.projectsData[projectObj].flow.College.Name;
+                        exportProject.createdDate = $scope.projectsData[projectObj].createdDate;
+                        exportProject.creationYear = $scope.projectsData[projectObj].Year.Name;
+                        exportProject.semester = $scope.projectsData[projectObj].Semester.Name;
+                        for (var index in  $scope.projectsData[projectObj].lecturers) {
+                            exportProject.lecturers += $scope.projectsData[projectObj].lecturers[index].name + ' ,';
+                        }
+                        exportProject.lecturers = exportProject.lecturers.substring(0, exportProject.lecturers.length - 1);
+
+                        for (var index in  $scope.projectsData[projectObj].students) {
+                            exportProject.students += $scope.projectsData[projectObj].students[index].name + ' ,';
+                        }
+                        exportProject.students = exportProject.students.substring(0, exportProject.students.length - 1);
+
+                        exportCSV.push(exportProject);
+                    }
+
+                    var data = Papa.unparse(exportCSV);
+
+                    data = data.replace("nameHeb", "שם בעברית");
+                    data = data.replace("nameEng", "שם באנגלית");
+                    data = data.replace("shortDescription", "תקציר");
+                    data = data.replace("projDescrip", "תיאור הפרויקט");
+                    data = data.replace("neededKnowledge", "ידע נדרש");
+                    data = data.replace("literatureSources", "מקורות ספרות");
+                    data = data.replace("isPaired", "מצוות");
+                    data = data.replace("waitingApproval", "ממתין לאישור");
+                    data = data.replace("isInProcess", "בתהליך");
+                    data = data.replace("curState", "שלב נוכחי");
+                    data = data.replace("type", "סוג הפרויקט");
+                    data = data.replace("college", "קמפוס");
+                    data = data.replace("createdDate", "תאריך יצירה");
+                    data = data.replace("creationYear", "שנה אקדמאית");
+                    data = data.replace("lecturers", "מרצים");
+                    data = data.replace("students", "סטודנטים");
+                    data = data.replace("semester", "סמסטר");
+
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1; //January is 0!
+
+                    var yyyy = today.getFullYear();
+                    if (dd < 10) {
+                        dd = '0' + dd
+                    }
+                    if (mm < 10) {
+                        mm = '0' + mm
+                    }
+
+                    //console.log(data);
+
+                    var hiddenElement = document.createElement('a');
+                    hiddenElement.setAttribute("href", "data:text/csv;charset=utf-8,%EF%BB%BF" + encodeURI(data));
+
+                    hiddenElement.target = '_blank';
+                    hiddenElement.download = 'דוח פרויקטים ' + dd + '-' + mm + '-' + yyyy + ' ' + today.getHours() + today.getMinutes() + '.csv';
+                    hiddenElement.click();
+
+                }
+
+            },
+            {
+                text: 'יצא הכל (Excel)',
+                key: '2',
+                action: function (e, dt, node, config) {
+
+                    var exportExcel = [];
+
+                    for (var projectObj in $scope.projectsData) {
+                        var exportProject = {
+                            nameHeb: "",
+                            nameEng: "",
+                            shortDescription: "",
+                            projDescrip: "",
+                            professionalGuide: "",
+                            neededKnowledge: "",
+                            literatureSources: "",
+                            lecturers: "",
+                            students: "",
+                            type: "",
+                            college: "",
+                            isPaired: "",
+                            waitingApproval: "",
+                            isInProcess: "",
+                            curState: "",
+                            createdDate: "",
+                            creationYear: "",
+                            semester:""
+
+                        };
+
+                        exportProject.nameHeb = projectsData[projectObj].nameHeb;
+                        exportProject.nameEng = projectsData[projectObj].nameEng;
+                        exportProject.shortDescription = projectsData[projectObj].shortDescription;
+                        exportProject.projDescrip = projectsData[projectObj].projDescrip;
+                        exportProject.neededKnowledge = projectsData[projectObj].neededKnowledge;
+                        exportProject.literatureSources = projectsData[projectObj].literatureSources;
+                        exportProject.professionalGuide = projectsData[projectObj].professionalGuide;
+                        exportProject.isPaired = projectsData[projectObj].isPaired;
+                        exportProject.waitingApproval = projectsData[projectObj].waitingApproval;
+                        exportProject.isInProcess = projectsData[projectObj].isInProcess;
+                        exportProject.curState = projectsData[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
+                        exportProject.type = projectsData[projectObj].flow.Type.Name;
+                        exportProject.college = projectsData[projectObj].flow.College.Name;
+                        exportProject.createdDate = projectsData[projectObj].createdDate;
+                        exportProject.creationYear = projectsData[projectObj].Year.Name;
+                        for (var index in  projectsData[projectObj].lecturers) {
+                            exportProject.lecturers += projectsData[projectObj].lecturers[index].name + ' ,';
+                        }
+                        exportProject.lecturers = exportProject.lecturers.substring(0, exportProject.lecturers.length - 1);
+
+                        for (var index in  projectsData[projectObj].students) {
+                            exportProject.students += projectsData[projectObj].students[index].name + ' ,';
+                        }
+                        exportProject.students = exportProject.students.substring(0, exportProject.students.length - 1);
+
+                        exportExcel.push(exportProject);
+                    }
+
+                    var data = Papa.unparse(exportExcel);
+
+                    data = data.replace("nameHeb", "שם בעברית");
+                    data = data.replace("nameEng", "שם באנגלית");
+                    data = data.replace("shortDescription", "תקציר");
+                    data = data.replace("projDescrip", "תיאור הפרויקט");
+                    data = data.replace("neededKnowledge", "ידע נדרש");
+                    data = data.replace("literatureSources", "מקורות ספרות");
+                    data = data.replace("isPaired", "מצוות");
+                    data = data.replace("waitingApproval", "ממתין לאישור");
+                    data = data.replace("isInProcess", "בתהליך");
+                    data = data.replace("curState", "שלב נוכחי");
+                    data = data.replace("type", "סוג הפרויקט");
+                    data = data.replace("college", "קמפוס");
+                    data = data.replace("createdDate", "תאריך יצירה");
+                    data = data.replace("creationYear", "שנה אקדמאית");
+                    data = data.replace("lecturers", "מרצים");
+                    data = data.replace("students", "סטודנטים");
+                    data = data.replace("semester", "סמסטר");
+
+                    var today = new Date();
+                    var dd = today.getDate();
+                    var mm = today.getMonth() + 1; //January is 0!
+
+                    var yyyy = today.getFullYear();
+                    if (dd < 10) {
+                        dd = '0' + dd
+                    }
+                    if (mm < 10) {
+                        mm = '0' + mm
+                    }
+
+                    //console.log(data);
+
+                    var hiddenElement = document.createElement('a');
+                    hiddenElement.setAttribute("href", "data:text/excel;charset=utf-8,%EF%BB%BF" + encodeURI(data));
+
+                    hiddenElement.target = '_blank';
+                    hiddenElement.download = 'דוח פרויקטים ' + dd + '-' + mm + '-' + yyyy + ' ' + today.getHours() + today.getMinutes() + '.xls';
+                    hiddenElement.click();
+
+                }
+            }])
+        .withLanguage(translation)
+        .withOption('scrollX', '100%');
 
             $scope.dtOptionsManagerProjects = options;
 

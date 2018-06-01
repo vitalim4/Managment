@@ -86,7 +86,6 @@ angular.module("FPM").controller('dashboardArchiveAllStudentProjectsController',
             $scope.projectsData[key].selected = false;
             $scope.projectsData[key].selected = 'N'; 
           }
-       
       }
     }
 
@@ -266,6 +265,9 @@ angular.module("FPM").controller('dashboardArchiveAllStudentProjectsController',
      */
 
     $scope.$watch('filterApply', function (newValue) {
+
+        $scope.checkall = true;
+        $scope.toggleAll();
 
         options = DTOptionsBuilder.newOptions()
         .withPaginationType('full_numbers')
