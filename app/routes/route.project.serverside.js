@@ -6,6 +6,7 @@ var User = require('../models/model.user.serverside');
 var Role = require('../models/model.role.serverside');
 var ApproveRequest = require('../models/model.approve-request.serverside');
 var Notification = require('../models/model.notification.serverside');
+var Key = require('../models/model.keys.serverside');
 var mongoose = require('mongoose');                     // mongoose for mongodb
 
 
@@ -1482,9 +1483,27 @@ module.exports = {
         var inGroup = req.body.inGroup;
         var inDepartment = req.body.inDepartment;
 
-
         Project.find({
             "lecturers": {$elemMatch: { id: {$in: filtersData} }},
+            "isPaired": inGroup,
+            "flow.Department.Name": inDepartment
+        }, function (err, projects) {
+
+            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+            if (err)
+                res.send(err)
+            res.json(projects); // return all projects in JSON format
+        });
+
+    }
+    ,
+    filterProjectsKey: function (req, res) {
+        var filtersData = req.body.filters;
+        var inGroup = req.body.inGroup;
+        var inDepartment = req.body.inDepartment;
+
+        Project.find({
+            "Key.Name":  {$in: filtersData} ,
             "isPaired": inGroup,
             "flow.Department.Name": inDepartment
         }, function (err, projects) {
@@ -1716,6 +1735,18 @@ module.exports = {
     }
     ,
 
+    getProjectKeys: function (req, res) {
+        Key.find({},{_id:false},function (err, keys) {
+
+            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+            if (err)
+                res.send(err);
+
+            res.status(200).send(keys); // return all users in JSON format
+        });
+    }
+    ,
+
     getAllStatuses: function (req, res) {
         var inDepartment = req.user.Department.Slug;
 
@@ -1817,7 +1848,8 @@ module.exports = {
                             'createdDate': inProject.createdDate,
                             'lastModified': lastModifiedX,
                             'Year': inProject.Year,
-                            'Semester': inProject.Semester
+                            'Semester': inProject.Semester,
+                             'Key' : inProject.Key
                         }
                     },
                     {upsert: true},

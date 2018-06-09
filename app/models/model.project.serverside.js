@@ -130,6 +130,15 @@ var projectSchema = new Schema({
             type: String
         }
     },
+    Key: {
+        Name: {
+            type: String
+        }
+        ,
+        Slug: {
+            type: String
+        }
+    },
     Documentation:{
         type: String
     }

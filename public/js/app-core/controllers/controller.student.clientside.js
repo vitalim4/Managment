@@ -1,5 +1,8 @@
 angular.module("FPM").controller('studentController', function ($scope, $http, Projects, localStorageService) {
+    console.log("studentController entered");
+
     $scope.filterLecturers = [];
+    $scope.filterKeys = [];
     $scope.filterTags = [];
     $scope.filter = {
         lecturers: [],
@@ -38,8 +41,7 @@ angular.module("FPM").controller('studentController', function ($scope, $http, P
     $http({
         method: 'GET',
         url: '/api/student/projects',
-    }).success(function (result) {
-        console.log(result)
+    }).success(function (result) {       
         $scope.studentProjects = result;
     });
 
@@ -69,6 +71,71 @@ angular.module("FPM").controller('studentController', function ($scope, $http, P
                 $scope.projects = projData;
             });
 
+        else {
+            $http({
+                method: 'GET',
+                url: '/api/projects/filter',
+            }).success(function (result) {
+                $scope.projects = result;
+            });
+        }
+    };
+
+          /*
+     * Loading all existing keys to form to form
+     */
+    $http({
+        method: 'GET',
+        url: '/api/projects/keys'
+    }).success(function (result) {
+        $scope.projectkeys = result;
+    });
+
+
+
+    var filterKey = function (action, key) {
+        if (action === 'add' && $scope.filterKeys.indexOf(key.Name) === -1) {
+            $scope.filterKeys.push(key.Name);
+        }
+        if (action === 'remove' && $scope.filterKeys.indexOf(key.Name) !== -1) {
+            $scope.filterKeys.splice($scope.filterKeys.indexOf(key.Name), 1);
+        }
+
+        filterNowKey($scope.filterKeys);
+    };
+
+    $scope.updateSelectionKey = function ($event, key) {
+        var checkbox = $event.target;
+        var action = (checkbox.checked ? 'add' : 'remove');
+        filterKey(action, key);
+    };
+
+    var arrKeys = [];
+    var filterNowKey = function (keyVal) {
+        if ($scope.filterKeys.length != 0){ 
+            Projects.filterProjectsKey($scope.filterKeys, inGroup, curUserDepartment).success(function (projData) {
+                $scope.projects = projData;
+            });
+        }
+        else if($scope.filterLecturers.length != 0 && $scope.filterKeys.length != 0){
+            for(var j = 0; j<keyVal.length;j++){
+                for(var i = 0;i<$scope.projects.length;i++){
+                    if(typeof $scope.projects[i].Key !== 'undefined'){
+                        if($scope.projects[i].Key.Name == keyVal[j]){
+                            arrKeys.push($scope.projects[i])
+                        }
+                    }
+                }
+            }
+          
+            $scope.projects = arrKeys;
+            arrKeys = [];
+        }
+        else if ($scope.filterLecturers.length != 0){
+            Projects.filterProjects($scope.filterLecturers, inGroup, curUserDepartment).success(function (projData) {
+                $scope.projects = projData;
+            });
+        }
         else {
             $http({
                 method: 'GET',

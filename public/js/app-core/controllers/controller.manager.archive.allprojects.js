@@ -188,6 +188,7 @@ angular.module("FPM").controller('projectManagerAllArchive', function ($scope, $
                 $scope.filterApply.projectDepartments = "";
                 $scope.filterApply.projectColleges = "";
                 $scope.filterApply.projectYears = "";
+                $scope.filterApply.projectKeys = "";
             });
     };
 
@@ -369,7 +370,8 @@ angular.module("FPM").controller('projectManagerAllArchive', function ($scope, $
                             curState: "",
                             createdDate: "",
                             creationYear: "",
-                            semester:""
+                            semester:"",
+                            creationKey:""
 
                         };
 
@@ -383,11 +385,12 @@ angular.module("FPM").controller('projectManagerAllArchive', function ($scope, $
                         exportProject.isPaired = $scope.projectsData[projectObj].isPaired== true ? "כן" : "לא";;
                         exportProject.waitingApproval = $scope.projectsData[projectObj].waitingApproval== true ? "כן" : "לא";;
                         exportProject.isInProcess = $scope.projectsData[projectObj].isInProcess== true ? "כן" : "לא";;
-                        exportProject.curState = $scope.projectsData[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
+                        exportProject.curState = $scope.projectsData[projectObj].curState.curStage + ' ' + $scope.projectsData[projectObj].curState.curStatus;
                         exportProject.type = $scope.projectsData[projectObj].flow.Type.Name;
                         exportProject.college = $scope.projectsData[projectObj].flow.College.Name;
                         exportProject.createdDate = $scope.projectsData[projectObj].createdDate;
                         exportProject.creationYear = $scope.projectsData[projectObj].Year.Name;
+                        exportProject.creationKey = typeof $scope.projectsData[projectObj].Key !== "undefined" ?  $scope.projectsData[projectObj].Key.Name : "";
                         exportProject.semester = $scope.projectsData[projectObj].Semester.Name;
                         for (var index in  $scope.projectsData[projectObj].lecturers) {
                             exportProject.lecturers += $scope.projectsData[projectObj].lecturers[index].name + ' ,';
@@ -421,6 +424,7 @@ angular.module("FPM").controller('projectManagerAllArchive', function ($scope, $
                     data = data.replace("lecturers", "מרצים");
                     data = data.replace("students", "סטודנטים");
                     data = data.replace("semester", "סמסטר");
+                    data = data.replace("creationKey", "מפתח");
 
                     var today = new Date();
                     var dd = today.getDate();
@@ -472,32 +476,35 @@ angular.module("FPM").controller('projectManagerAllArchive', function ($scope, $
                             curState: "",
                             createdDate: "",
                             creationYear: "",
-                            semester:""
+                            semester:"",
+                            creationKey:""
 
                         };
 
-                        exportProject.nameHeb = projectsData[projectObj].nameHeb;
-                        exportProject.nameEng = projectsData[projectObj].nameEng;
-                        exportProject.shortDescription = projectsData[projectObj].shortDescription;
-                        exportProject.projDescrip = projectsData[projectObj].projDescrip;
-                        exportProject.neededKnowledge = projectsData[projectObj].neededKnowledge;
-                        exportProject.literatureSources = projectsData[projectObj].literatureSources;
-                        exportProject.professionalGuide = projectsData[projectObj].professionalGuide;
-                        exportProject.isPaired = projectsData[projectObj].isPaired;
-                        exportProject.waitingApproval = projectsData[projectObj].waitingApproval;
-                        exportProject.isInProcess = projectsData[projectObj].isInProcess;
-                        exportProject.curState = projectsData[projectObj].curState.curStage + ' ' + sortedProjects[projectObj].curState.curStatus;
-                        exportProject.type = projectsData[projectObj].flow.Type.Name;
-                        exportProject.college = projectsData[projectObj].flow.College.Name;
-                        exportProject.createdDate = projectsData[projectObj].createdDate;
-                        exportProject.creationYear = projectsData[projectObj].Year.Name;
-                        for (var index in  projectsData[projectObj].lecturers) {
-                            exportProject.lecturers += projectsData[projectObj].lecturers[index].name + ' ,';
+                        exportProject.nameHeb = $scope.projectsData[projectObj].nameHeb;
+                        exportProject.nameEng = $scope.projectsData[projectObj].nameEng;
+                        exportProject.shortDescription = $scope.projectsData[projectObj].shortDescription;
+                        exportProject.projDescrip = $scope.projectsData[projectObj].projDescrip;
+                        exportProject.neededKnowledge = $scope.projectsData[projectObj].neededKnowledge;
+                        exportProject.literatureSources = $scope.projectsData[projectObj].literatureSources;
+                        exportProject.professionalGuide = $scope.projectsData[projectObj].professionalGuide;
+                        exportProject.isPaired = $scope.projectsData[projectObj].isPaired;
+                        exportProject.waitingApproval = $scope.projectsData[projectObj].waitingApproval;
+                        exportProject.isInProcess = $scope.projectsData[projectObj].isInProcess;
+                        exportProject.curState = $scope.projectsData[projectObj].curState.curStage + ' ' + $scope.projectsData[projectObj].curState.curStatus;
+                        exportProject.type = $scope.projectsData[projectObj].flow.Type.Name;
+                        exportProject.college = $scope.projectsData[projectObj].flow.College.Name;
+                        exportProject.createdDate = $scope.projectsData[projectObj].createdDate;
+                        exportProject.creationYear = $scope.projectsData[projectObj].Year.Name;
+                        exportProject.creationKey = typeof $scope.projectsData[projectObj].Key !== "undefined" ?  $scope.projectsData[projectObj].Key.Name : "";
+                        exportProject.semester = $scope.projectsData[projectObj].Semester.Name;
+                        for (var index in  $scope.projectsData[projectObj].lecturers) {
+                            exportProject.lecturers += $scope.projectsData[projectObj].lecturers[index].name + ' ,';
                         }
                         exportProject.lecturers = exportProject.lecturers.substring(0, exportProject.lecturers.length - 1);
 
-                        for (var index in  projectsData[projectObj].students) {
-                            exportProject.students += projectsData[projectObj].students[index].name + ' ,';
+                        for (var index in  $scope.projectsData[projectObj].students) {
+                            exportProject.students += $scope.projectsData[projectObj].students[index].name + ' ,';
                         }
                         exportProject.students = exportProject.students.substring(0, exportProject.students.length - 1);
 
@@ -523,6 +530,7 @@ angular.module("FPM").controller('projectManagerAllArchive', function ($scope, $
                     data = data.replace("lecturers", "מרצים");
                     data = data.replace("students", "סטודנטים");
                     data = data.replace("semester", "סמסטר");
+                    data = data.replace("creationKey", "מפתח");
 
                     var today = new Date();
                     var dd = today.getDate();
@@ -718,6 +726,18 @@ angular.module("FPM").controller('projectManagerAllArchive', function ($scope, $
                         try{
                             if ($scope.filterApply.projectYears.length !== 0) {
                                 if (sortedProjects[i].Year.Name !== $scope.filterApply.projectYears) {
+                                    if (filteredProjects.indexOf(sortedProjects[i]) < 0) {
+                                        filteredProjects.push(sortedProjects[i]);
+                                    }
+                                }
+                            }
+                        }
+                        catch(e){console.log(e)}
+
+                        try{
+                             /* Project key Filter */
+                             if ($scope.filterApply.projectKeys.length !== 0) {
+                                if (typeof sortedProjects[i].Key === "undefined" || sortedProjects[i].Key.Name !== $scope.filterApply.projectKeys) {
                                     if (filteredProjects.indexOf(sortedProjects[i]) < 0) {
                                         filteredProjects.push(sortedProjects[i]);
                                     }

@@ -22,7 +22,31 @@
 
             </div>
 
+  
+
         </div>
+
+        <div class="panel panel-gradient" data-collapsed="0">
+             <!-- panel head -->
+             <div class="panel-heading">
+                    <div class="panel-title">סינון מפתחות</div>
+                    <div class="panel-options">
+                        <a href="#" data-rel="collapse"><i class="entypo-down-open"></i></a>
+                    </div>
+                </div>
+
+                <div class="panel-body">
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-8">
+                                <div class="checkbox" ng-repeat="key in projectkeys" ng-click="updateSelectionKey($event,key)"><label> <input type="checkbox" value=" {{key.Slug}}">{{key.Name}}
+                                </label></div>
+                            </div>
+                        </div>
+        
+                    </div>
+        </div>
+
     </div>
     <div class="col-md-9">
         <div class="row equal">

@@ -121,6 +121,7 @@ module.exports = function (app) {
     app.post('/api/project/addstudent', authenticate, projectRoute.addStudent);
     app.post('/api/project/removestudent', authenticate, projectRoute.removeStudent);
     app.post('/api/project/filter', authenticate, projectRoute.filterProjects);
+    app.post('/api/project/filter/keys', authenticate, projectRoute.filterProjectsKey);
     app.post('/api/project/advanced-filter', authenticate, projectRoute.advancedFilterProjects);
     app.get('/api/projects/get-stages', authenticate, projectRoute.getAllStages); 
     //app.get('/api/projects/get-statuses', authenticate, projectRoute.getAllStatuses); //not used
@@ -128,6 +129,7 @@ module.exports = function (app) {
     app.get('/api/project/archive/:projId/:doc', authenticate, projectRoute.uploadDocPdf);
     app.get('/api/manager/project-filters/:projtype', authenticate, userRoute.getFiltersBymangerAndProjType);
     app.get('/api/manager/project-filters/:projtype/:dep/:collegeSlug', authenticate, userRoute.getFiltersBymangerAndProjTypeAndDep);
+    app.get('/api/projects/keys', authenticate, projectRoute.getProjectKeys); 
 
     /******************************************************************/
     /************************Project Flow******************************/

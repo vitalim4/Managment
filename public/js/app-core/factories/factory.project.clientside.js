@@ -16,8 +16,14 @@ angular.module("FPM").factory('Projects', function ($http, localStorageService) 
             return $http.delete('/api/manager/project/' + projId);
         },
         filterProjects: function (filters, inGroup, inDepartment) {
-            console.log(filters)
             return $http.post('/api/project/filter', {
+                filters: filters,
+                inGroup: inGroup,
+                inDepartment: inDepartment
+            });
+        },
+        filterProjectsKey: function (filters, inGroup, inDepartment) {
+            return $http.post('/api/project/filter/keys', {
                 filters: filters,
                 inGroup: inGroup,
                 inDepartment: inDepartment

@@ -192,6 +192,7 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
                 $scope.filterApply.projectDepartments = "";
                 $scope.filterApply.projectColleges = "";
                 $scope.filterApply.projectYears = "";
+                $scope.filterApply.projectKeys = "";
             });
     };
 
@@ -373,7 +374,8 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
                             curState: "",
                             createdDate: "",
                             creationYear: "",
-                            semester:""
+                            semester:"",
+                            creationKey:""
 
                         };
 
@@ -392,6 +394,7 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
                         exportProject.college = $scope.projectsData[projectObj].flow.College.Name;
                         exportProject.createdDate = $scope.projectsData[projectObj].createdDate;
                         exportProject.creationYear = $scope.projectsData[projectObj].Year.Name;
+                        exportProject.creationKey = typeof $scope.projectsData[projectObj].Key !== "undefined" ?  $scope.projectsData[projectObj].Key.Name : "";
                         exportProject.semester = $scope.projectsData[projectObj].Semester.Name;
                         for (var index in  $scope.projectsData[projectObj].lecturers) {
                             exportProject.lecturers += $scope.projectsData[projectObj].lecturers[index].name + ' ,';
@@ -425,6 +428,7 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
                     data = data.replace("lecturers", "מרצים");
                     data = data.replace("students", "סטודנטים");
                     data = data.replace("semester", "סמסטר");
+                    data = data.replace("creationKey", "מפתח");
 
                     var today = new Date();
                     var dd = today.getDate();
@@ -476,7 +480,8 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
                             curState: "",
                             createdDate: "",
                             creationYear: "",
-                            semester:""
+                            semester:"",
+                            creationKey:""
 
                         };
 
@@ -495,6 +500,7 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
                         exportProject.college = $scope.projectsData[projectObj].flow.College.Name;
                         exportProject.createdDate = $scope.projectsData[projectObj].createdDate;
                         exportProject.creationYear = $scope.projectsData[projectObj].Year.Name;
+                        exportProject.creationKey = typeof $scope.projectsData[projectObj].Key !== "undefined" ?  $scope.projectsData[projectObj].Key.Name : "";
                         exportProject.semester = $scope.projectsData[projectObj].Semester.Name;
                         for (var index in  $scope.projectsData[projectObj].lecturers) {
                             exportProject.lecturers += $scope.projectsData[projectObj].lecturers[index].name + ' ,';
@@ -528,6 +534,7 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
                     data = data.replace("lecturers", "מרצים");
                     data = data.replace("students", "סטודנטים");
                     data = data.replace("semester", "סמסטר");
+                    data = data.replace("creationKey", "מפתח");
 
                     var today = new Date();
                     var dd = today.getDate();
@@ -730,6 +737,18 @@ angular.module("FPM").controller('dashboardArchiveController', function ($scope,
                                     }
                                 }
                             }
+                        }
+                        catch(e){console.log(e)}
+
+                        try{
+                         /* Project key Filter */
+                         if ($scope.filterApply.projectKeys.length !== 0) {
+                            if (typeof sortedProjects[i].Key === "undefined" || sortedProjects[i].Key.Name !== $scope.filterApply.projectKeys) {
+                                if (filteredProjects.indexOf(sortedProjects[i]) < 0) {
+                                    filteredProjects.push(sortedProjects[i]);
+                                }
+                            }
+                        }
                         }
                         catch(e){console.log(e)}
                     }

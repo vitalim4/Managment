@@ -61,14 +61,14 @@
                         <label class="col-sm-3 control-label">סמסטר<span>*</span></label>
 
                         <div class="col-sm-9">
-                            <select class="form-control" ng-model="projectData.Semester" ng-options="semester as semester.Name for semester in semesters" required></select>
+                            <select class="form-control" id="projectSemester" ng-model="projectData.Semester" ng-options="semester as semester.Name for semester in semesters" required></select>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">שנה<span>*</span></label>
 
                         <div class="col-sm-9">
-                            <select class="form-control" ng-model="projectData.Year" ng-options="year as year.Name for year in years" required></select>
+                            <select class="form-control" id="projectYear" ng-model="projectData.Year" ng-options="year as year.Name for year in years" required></select>
                         </div>
                     </div>
                     <div class="form-group">
@@ -153,6 +153,17 @@
                                     {{type.Type.Name}}
                                 </option>
                             </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                            <label class="col-sm-3 control-label"><span></span>סוג מפתח<span>*</span></label>
+                            <div class="col-sm-9">
+                                    <select class="form-control" ng-change="chooseProjectKey()" ng-model="selectedProjectKey" id="selectedProjectKey" required>
+                                        <option ng-selected="{{key.Slug == selectedProjectKey}}" ng-repeat="key in projectkeys" 
+                                                    value="{{key.Slug}}">{{key.Name}}
+                                            </option>
+                                           
+                                    </select>
                         </div>
                     </div>
                     <div class="form-group">

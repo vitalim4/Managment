@@ -1,6 +1,7 @@
 angular.module("FPM").controller('projectController', function ($scope, $http, $location, $window, $rootScope, Projects, localStorageService, $routeParams, $filter, Upload, $timeout, globalSettings) {
 
 
+    console.log("projectController entered")
     //check user permissions
     var curUserAuth = localStorageService.get('userRoleSlug');
     if(curUserAuth === 'student'){
@@ -22,6 +23,7 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
     $scope.lecturers = [];
     $scope.selectedLecturer = [];
     $scope.selectedDepartment = [];
+    $scope.selectedProjectKey = "AI";
     $scope.selectedStudent1 = "";
     $scope.colleges = [];
     $scope.myFiles = [];
@@ -42,6 +44,7 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
     $scope.projectData.literatureSources = [];
     $scope.types = [];
 
+    $scope.projectData.Key = {"Slug":"AI", "Name" : "AI"};
 
     $scope.selectedLecturer = [];
     $scope.colleges = [];
@@ -130,6 +133,15 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
     }).success(function (result) {
         $scope.semesters = result;
     });
+        /*
+     * Loading all existing keys to form to form
+     */
+    $http({
+        method: 'GET',
+        url: '/api/projects/keys'
+    }).success(function (result) {
+        $scope.projectkeys = result;
+    });
     /*
      * Loading all existing years to form to form
      */
@@ -159,6 +171,15 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
         $scope.departments = result;
     });
 
+    $scope.chooseProjectKey = function(key){
+        for(var i=0;i<$scope.projectkeys.length;i++){
+            if($scope.selectedProjectKey == $scope.projectkeys[i].Slug){
+                $scope.projectData.Key = $scope.projectkeys[i];
+            }
+        }
+    }
+
+
     /*
      * Project data loading into a local object
      * Also we loading project types out of another
@@ -180,6 +201,16 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
                 $scope.projectData.Year = $scope.years.filter(function (year) {
                     return year.Name == projData.Year.Name;
                 })[0];
+
+                if(typeof projData.Key !== "undefined"){
+                    $scope.selectedProjectKey = projData.Key.Slug;
+                    $scope.projectData.Key = $scope.projectkeys.filter(function (key) {           
+                        return key.Name == projData.Key.Name;
+                    });
+                }
+                else{
+                    $scope.projectData.Key = {"Slug":"AI", "Name" : "AI"};
+                }             
 
                 $scope.PageMode = 'edit';
                 if (projData.picUrl != "")
@@ -408,8 +439,6 @@ angular.module("FPM").controller('projectController', function ($scope, $http, $
                 //$scope.projectData = {}; // clear the form so our project is ready to enter another
                 //console.log(data)
                 if ($scope.projectData._id != $scope.newProject._id) {
-
-
                     toastr.success("הפרויקט נוצר בהצלחה", globalSettings.toastrOpts);
                     //$location.path("account/lecturer/project/" + data._id);
                     $timeout(function() {

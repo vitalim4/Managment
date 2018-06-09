@@ -59,21 +59,27 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
     lecturerProjects();
    
     $scope.checkedItems  = function(event,proj){
-        if(event.currentTarget.checked == true){
-            Projects.updateProjectsStatus(proj._id)
-            .success(function(data){
-                toastr.success("הבקשה נשלחה בהצלחה", globalSettings.toastrOpts);      
-            }).then(function(){
-                lecturerProjects();               
-            });
+        if(proj.isInProcess == false){
+            $('#projInProcess').modal('show');
+            event.currentTarget.checked = false;
         }
         else{
-            Projects.uncheckProjectsStatus(proj._id)
-            .success(function(data){
-                toastr.success(" סטטוס עודכן בהצלחה", globalSettings.toastrOpts);      
-            }).then(function(){
-                lecturerProjects();               
-            });
+            if(event.currentTarget.checked == true){
+                Projects.updateProjectsStatus(proj._id)
+                .success(function(data){
+                    toastr.success("הבקשה נשלחה בהצלחה", globalSettings.toastrOpts);      
+                }).then(function(){
+                    lecturerProjects();               
+                });
+            }
+            else{
+                Projects.uncheckProjectsStatus(proj._id)
+                .success(function(data){
+                    toastr.success(" סטטוס עודכן בהצלחה", globalSettings.toastrOpts);      
+                }).then(function(){
+                    lecturerProjects();               
+                });
+            }
         }
     }
 
@@ -224,6 +230,7 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
                     $scope.filterApply.projectDepartments = "";
                     $scope.filterApply.projectColleges = "";
                     $scope.filterApply.projectYears = "";
+                    $scope.filterApply.projectKeys = "";
 
                     var localObject = localStorage.getItem('filtersLecturer');
                     var retrievedObject = JSON.parse(localObject);
@@ -240,6 +247,7 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
                         $scope.filterApply.projectDepartments = retrievedObject.projectDepartments;
                         $scope.filterApply.projectColleges = retrievedObject.projectColleges;
                         $scope.filterApply.projectYears = retrievedObject.projectYears;
+                        $scope.filterApply.projectKeys = retrievedObject.projectKeys;
                         $scope.filterApply.isPaired = retrievedObject.isPaired;
                         $scope.projectsData = retrievedObject.projectsData;
                     if($scope.filterApply.projectStatus == "בביצוע"){
@@ -263,6 +271,7 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
                     "projectDepartments":$scope.filterApply.projectDepartments,
                     "projectColleges":$scope.filterApply.projectColleges,
                     "projectYears":$scope.filterApply.projectYears,
+                    "projectKeys":$scope.filterApply.projectKeys,
                     "isPaired":$scope.filterApply.isPaired,
                     "projectsData":$scope.projectsData
                 }     
@@ -877,6 +886,14 @@ angular.module("FPM").controller('dashboardController', function ($scope, $windo
                     /* Project year Filter */
                     if ($scope.filterApply.projectYears.length !== 0) {
                         if (sortedProjects[i].Year.Name !== $scope.filterApply.projectYears) {
+                            if (filteredProjects.indexOf(sortedProjects[i]) < 0) {
+                                filteredProjects.push(sortedProjects[i]);
+                            }
+                        }
+                    }
+                    /* Project key Filter */
+                    if ($scope.filterApply.projectKeys.length !== 0) {
+                        if (typeof sortedProjects[i].Key === "undefined" || sortedProjects[i].Key.Name !== $scope.filterApply.projectKeys) {
                             if (filteredProjects.indexOf(sortedProjects[i]) < 0) {
                                 filteredProjects.push(sortedProjects[i]);
                             }

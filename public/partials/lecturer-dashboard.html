@@ -163,6 +163,18 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div class="form-group">
+                                <label class="col-sm-4 control-label" for="filterApply.projectKeys">מפתח</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" ng-model="filterApply.projectKeys" id="filterApply.projectKeys">
+                                        <option value="">בחר מפתח</option>
+                                        <option ng-repeat="key in filtersSet.keys"
+                                                value="{{key.Name}}">{{key.Name}}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
         
                     </div>
                     <div class="col-md-4">
@@ -359,7 +371,7 @@
                 <tbody >
                   <tr >
                     <td ng-repeat="stage in proj.flow.Stage" ng-style="setStageColor($index,proj.curState.curOrder)">
-                        <input id="selectProj" type="checkbox"  ng-disabled="disableStatus($index,proj.curState.curOrder)" ng-checked="setCheckedProjStatus($index,proj.curState.curOrder)" ng-model="checked" ng-true-value="'{{stage.Name}}'" ng-false-value="''"
+                        <input type="checkbox"  ng-disabled="disableStatus($index,proj.curState.curOrder)" ng-checked="setCheckedProjStatus($index,proj.curState.curOrder)" ng-model="checked" ng-true-value="'{{stage.Name}}'" ng-false-value="''"
                          ng-click="checkedItems($event, proj);">
                         {{stage.Name}}
                     </td>
@@ -387,6 +399,21 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="projInProcess">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">שינוי סטטוס</h4></div>
+                <div class="modal-body">
+                    יש לצרף לפחות סטודנט אחד
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div class="row" ng-if="!projectsData.length && !c">
 

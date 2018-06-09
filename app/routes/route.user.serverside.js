@@ -9,6 +9,7 @@ var Semester = require('../models/model.semester.serverside');
 var Department = require('../models/model.department.serverside');
 var College = require('../models/model.college.serverside');
 var Year = require('../models/model.year.serverside');
+var Key =  require('../models/model.keys.serverside');
 var mongoose = require('mongoose');
 var crypto = require('crypto');
 var async = require('async');
@@ -216,6 +217,8 @@ module.exports = {
                                             //years
                                             Year.find({},{_id:false},function (err, years) {
 
+                                                Key.find({},{_id:false},function (err, keys) {
+
                                                 // if there is an error retrieving, send the error. nothing after res.send(err) will execute
                                                 if (err)
                                                     res.send(err);
@@ -231,10 +234,12 @@ module.exports = {
                                                     approvalOpts: ["true", "false"],
                                                     departments: departments,
                                                     colleges: colleges,
-                                                    years: years
+                                                    years: years,
+                                                    keys:keys
                                                 };
 
                                                 res.status(200).send(allFilters);
+                                               });
                                             });
                                         });
                                     });
@@ -1132,6 +1137,8 @@ module.exports = {
                                             //years
                                             Year.find({},{_id:false},function (err, years) {
 
+                                                Key.find({},{_id:false},function (err, keys) {
+
                                                 // if there is an error retrieving, send the error. nothing after res.send(err) will execute
                                                 if (err)
                                                     res.send(err);
@@ -1147,10 +1154,12 @@ module.exports = {
                                                     approvalOpts: ["true", "false"],
                                                     departments: departments,
                                                     colleges: colleges,
-                                                    years: years
+                                                    years: years,
+                                                    keys: keys
                                                 };
 
                                                 res.status(200).send(allFilters);
+                                              });
                                             });
                                         });
                                     });

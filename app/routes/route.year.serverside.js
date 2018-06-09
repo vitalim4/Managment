@@ -17,7 +17,8 @@ module.exports = {
         years.push(currentTime.getFullYear()+3765);
         years.push(currentTime.getFullYear()+3766);
         //console.log(years);
-        Year.find({Slug:{$in:years}},{},function (err, years) {
+        //Year.find({Slug:{$in:years}},{},function (err, years) {
+        Year.find({},{_id:false},function (err, years) {
 
             // if there is an error retrieving, send the error. nothing after res.send(err) will execute
             if (err)
