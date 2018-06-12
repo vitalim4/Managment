@@ -1,0 +1,104 @@
+<style>
+.notIE {
+  position: relative;
+  display: inline-block;
+}
+
+select {
+  display: inline-block;
+  height:30px;
+  width: 150px;
+  padding: 2px 10px 2px 2px;
+  outline: none;
+  color: #74646e;
+  border: 1px solid #C8BFC4;
+  border-radius: 4px;
+  box-shadow: inset 1px 1px 2px #ddd8dc;
+  background: #fff; 
+}
+
+/* Select arrow styling */
+.notIE .fancyArrow {
+  width: 23px;
+  height: 28px;
+  position: absolute;
+  display: inline-block;
+  top: 1px;
+  right: 3px;
+
+  pointer-events: none;
+  
+}
+/*target Internet Explorer 9 and Internet Explorer 10:*/
+@media screen and (min-width:0\0) { 
+  .notIE .fancyArrow
+  {
+      display:none;
+  }
+}
+.button-success,
+        .button-error,
+        .button-warning,
+        .button-secondary {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-success {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+
+        .button-error {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
+
+        .button-warning {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+
+        .button-secondary {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }
+
+
+</style>
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Hebrew</th>
+        <th scope="col">Gregorian</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="year in years">
+            <th scope="row">{{$index+1}}</th>
+            <td>{{year.Name}}</td>
+            <td>{{year.Slug - 3760}}</td>
+      </tr>
+    </tbody>
+  </table> 
+  <button class="button-secondary" ng-click="addNewYear()">הוסף שנה</button>
+  <select  class="fancyArrow" ng-model="selectedYear" id="selectedYear">
+    <option value="">בחר שנה</option>
+    <option ng-repeat="year in yearMeataData"
+                value="{{year.Name}}">{{year.Slug}}
+        </option>
+</select>
+
+<div class="modal fade" id="existYear">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title">שנה חדשה</h4></div>
+          <div class="modal-body">
+            יש לבחור את השנה המתאימה שאינה קיימת במערכת          
+          </div>
+          <div class="modal-footer">
+          </div>
+      </div>
+  </div>
+</div>

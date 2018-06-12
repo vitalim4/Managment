@@ -21,9 +21,21 @@ app.config(function ($routeProvider, localStorageServiceProvider) {
                 templateUrl: 'partials/lecturer-dashboard-archive-allprojects.html',
                 controller: 'dashboardArchiveAllProjectsController'
             })
+            .when('/account/admin/key/project', {
+                templateUrl: 'partials/admin-key-projects.html',
+                controller: 'addKeyProjectController'
+            })
+            .when('/account/admin/key/project/edit', {
+                templateUrl: 'partials/admin-key-edit-projects.html',
+                controller: 'editKeyProjectController'
+            })
             .when('/account/student/archive/allprojects', {
                 templateUrl: 'partials/student-dashboard-archive-allprojects.html',
                 controller: 'dashboardArchiveAllStudentProjectsController'
+            })
+            .when('/account/admin/years/management', {
+                templateUrl: 'partials/year-dashboard.html',
+                controller: 'dashboardYear'
             })
             .when('/account/lecturer/project', {
                 templateUrl: 'partials/lecturer-project.html',

@@ -1558,6 +1558,52 @@ module.exports = {
 
     }
     ,
+    
+    addProjectKey: function (req, res) {
+        var slugName = req.body.Slug;
+        var keyName = req.body.Name;
+
+        Key.create({Name: keyName, Slug: slugName}, function (err, doc) {
+            res.send("Record added as "+doc);
+        });
+        
+    }
+    ,
+      
+    updateProjectKey: function (req, res) {
+        var slugName = req.body.Slug;
+        var keyName = req.body.Name;
+        var keyRef = req.body.Ref;
+        Key.findOneAndUpdate(
+            {Slug: keyRef},
+            {
+                $set: {
+                    'Slug': slugName,
+                    'Name': keyName
+                }
+            },
+            function (err, keyUpdated) {
+                // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+                if (err)
+                    return res.send(err);
+
+                res.status(200);
+                res.send(keyUpdated);
+            });
+
+       
+        
+    },
+    deleteProjectKey: function (req, res) {
+        var keyRef = req.body.Ref;
+        Key.remove({"Slug":keyRef},function(err){
+            if(err){
+                return res.send(err)
+            }
+            res.status(200);
+            res.end();
+        });
+    },
 
     addStudent: function (req, res) {
         var projID = req.body.projectId;

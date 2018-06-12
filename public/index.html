@@ -226,6 +226,43 @@
                         </li>
                     </ul>
                 </li>
+                                
+                <li class="has-sub root-level" ng-show="isAdmin" ng-class="{ active: isActive('/account/manager/')}">
+                    <a><i
+                        class="entypo-newspaper"></i><span class="title">ניהול שנים</span></a>
+                    <ul>
+                        <li><a href="/#/account/admin/years/management"><span class="title">הוסף שנה</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="has-sub root-level" ng-show="isManager" ng-class="{ active: isActive('/account/manager/')}">
+                    <a><i
+                        class="entypo-newspaper"></i><span class="title">ניהול שנים</span></a>
+                    <ul>
+                        <li><a href="/#/account/admin/years/management"><span class="title">הוסף שנה</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="has-sub root-level" ng-show="isAdmin" ng-class="{ active: isActive('/account/manager/')}">
+                    <a><i
+                        class="entypo-newspaper"></i><span class="title">ניהול מפתחות</span></a>
+                    <ul>
+                        <li><a href="/#/account/admin/key/project"><span class="title">מפתח חדש</span></a>
+                        </li>
+                        <li><a href="/#/account/admin/key/project/edit"><span class="title">פעולות</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="has-sub root-level" ng-show="isManager" ng-class="{ active: isActive('/account/manager/')}">
+                    <a><i
+                        class="entypo-newspaper"></i><span class="title">ניהול מפתחות</span></a>
+                    <ul>
+                            <li><a href="/#/account/admin/key/project"><span class="title">מפתח חדש</span></a>
+                            </li>
+                            <li><a href="/#/account/admin/key/project/edit"><span class="title">פעולות</span></a>
+                            </li>
+                    </ul>
+                </li>
                 <li class="has-sub root-level" ng-show="isLecturer"
                 ng-class="{ active: isActive('account/lecturer/reports/projects')}"><a href="/#/account/lecturer/reports/projects"><i
                     class="entypo-newspaper"></i><span class="title">דוחות</span></a>
@@ -433,6 +470,9 @@
 <script src="js/app-core/controllers/controller.menu.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.manager.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/controllers/controller.stage.clientside.js" type="text/javascript"></script>
+<script src="js/app-core/controllers/controller.admin.dashboard.year.js" type="text/javascript"></script>
+<script src="js/app-core/controllers/controller.admin.addkey.projects.js" type="text/javascript"></script>
+<script src="js/app-core/controllers/controller.admin.editkey.projects.js" type="text/javascript"></script>
 
 <script src="js/app-core/factories/factory.project.clientside.js" type="text/javascript"></script>
 <script src="js/app-core/factories/factory.datatable.clientside.js" type="text/javascript"></script>

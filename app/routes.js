@@ -119,6 +119,9 @@ module.exports = function (app) {
     app.post('/api/projects/save', authenticate, projectRoute.save);
     app.post('/api/projects/end-of-proj', authenticate, projectRoute.save_end_proj);
     app.post('/api/project/addstudent', authenticate, projectRoute.addStudent);
+    app.post('/api/add/project/keys', authenticate, projectRoute.addProjectKey);
+    app.post('/api/update/project/keys', authenticate, projectRoute.updateProjectKey);
+    app.post('/api/delete/project/keys', authenticate, projectRoute.deleteProjectKey);
     app.post('/api/project/removestudent', authenticate, projectRoute.removeStudent);
     app.post('/api/project/filter', authenticate, projectRoute.filterProjects);
     app.post('/api/project/filter/keys', authenticate, projectRoute.filterProjectsKey);
@@ -421,4 +424,5 @@ module.exports = function (app) {
     app.get('/api/years', authenticate, yearRoute.getAll);
     app.get('/api/colleges', authenticate, collegeRoute.getAll);
     app.get('/api/colleges/archive', authenticate, collegeRoute.getAllForArchive);
+    app.post('/api/add/years', authenticate, yearRoute.addYear);
 };

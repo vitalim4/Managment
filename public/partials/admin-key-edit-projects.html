@@ -1,0 +1,115 @@
+
+<style>
+    .notIE {
+      position: relative;
+      display: inline-block;
+    }
+    
+    select {
+      display: inline-block;
+      height:30px;
+      width: 150px;
+      padding: 2px 10px 2px 2px;
+      outline: none;
+      color: #74646e;
+      border: 1px solid #C8BFC4;
+      border-radius: 4px;
+      box-shadow: inset 1px 1px 2px #ddd8dc;
+      background: #fff; 
+    }
+    
+    /* Select arrow styling */
+    .notIE .fancyArrow {
+      width: 23px;
+      height: 28px;
+      position: absolute;
+      display: inline-block;
+      top: 1px;
+      right: 3px;
+    
+      pointer-events: none;
+      
+    }
+    /*target Internet Explorer 9 and Internet Explorer 10:*/
+    @media screen and (min-width:0\0) { 
+      .notIE .fancyArrow
+      {
+          display:none;
+      }
+    }
+    .button-success,
+            .button-error,
+            .button-warning,
+            .button-secondary {
+                color: white;
+                border-radius: 4px;
+                text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+            }
+    
+            .button-success {
+                background: rgb(28, 184, 65); /* this is a green */
+            }
+    
+            .button-error {
+                background: rgb(202, 60, 60); /* this is a maroon */
+            }
+    
+            .button-warning {
+                background: rgb(223, 117, 20); /* this is an orange */
+            }
+    
+            .button-secondary {
+                background: rgb(66, 184, 221); /* this is a light blue */
+            }
+    
+    
+    </style>
+
+
+<fieldset>
+        <select  class="fancyArrow" ng-model="selectedKey" id="selectedYear" ng-change="getKeys()">
+                <option value="">בחר מפתח</option>
+                <option ng-repeat="key in projectkeys"
+                            value="{{key.Slug}}">{{key.Name}}
+                    </option>
+            </select>
+    <legend>מפתחות</legend>
+    <label for="Name">Name</label>
+    <br>
+    <input id="inpName" ng-model="keyName" name="keyName" /><br>
+  
+    <label for="Slug">Slug</label><br>
+    <input id="inpSlug" ng-model="slugName" name="slugName" /><br>
+    <button class="button-secondary" ng-click="submitKey()">עדכן</button>
+    <button class="button-error" ng-click="showDeleteModalKey()">מחק</button>
+  </fieldset>
+  <div class="modal fade" id="existKey">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">פעולות משתמש</h4></div>
+                <div class="modal-body">
+                  הנתון אינו יכול להיות ריק        
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal fade" id="deleteKey">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">פעולות משתמש</h4></div>
+                    <div class="modal-body">
+                     האם ברצונך למחוק את המפתח?        
+                    </div>
+                    <button class="button-secondary" ng-click="closeModal()">סגור</button>
+                    <button class="button-error" ng-click="deleteKey()">מחק</button>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+          </div>

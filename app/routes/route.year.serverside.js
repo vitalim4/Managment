@@ -26,5 +26,14 @@ module.exports = {
 
             res.status(200).send(years); // return all users in JSON format
         });
+    },
+    addYear:function(req,res){
+        var yearSlug = req.body.Slug;
+        var yearName = req.body.Name;
+        yearSlug = parseInt(yearSlug)+ 3760;
+            Year.create({Name: yearName, Slug: yearSlug}, function (err, doc) {
+                res.send("Record added as "+doc);
+
+            });
     }
 };
