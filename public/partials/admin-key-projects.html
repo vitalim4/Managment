@@ -76,7 +76,7 @@
     <button class="button-secondary" ng-click="addNewKey()">הוסף</button>
   </fieldset>
 
-  <div class="modal fade" id="existKey">
+  <div class="modal fade" id="emptyKey">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -84,6 +84,34 @@
                 <h4 class="modal-title">מפתח חדש</h4></div>
             <div class="modal-body">
               הנתון אינו יכול להיות ריק        
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="modal fade" id="existKeyName">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">מפתח חדש</h4></div>
+            <div class="modal-body">
+              The Name is already in the database 
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="modal fade" id="existKeySlug">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">מפתח חדש</h4></div>
+            <div class="modal-body">
+              The Slug is already in the database 
             </div>
             <div class="modal-footer">
             </div>

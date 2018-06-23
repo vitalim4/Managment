@@ -17,21 +17,36 @@ angular.module("FPM").controller('editKeyProjectController', function ($scope, $
     $scope.selectedKey;
     var keys = {};
     $scope.submitKey = function(){
+        var found = false;
+        var foundObj = {};
         if($("#inpName").val() !== "" && $("#inpSlug").val() !== ""){
-            keys["Slug"] = $("#inpSlug").val();
-            keys["Name"] =  $("#inpName").val();        
-            $http.post('/api/update/project/keys', keys)
-            .then(function mySuccess(data) {
-                toastr.success("המפתח עודכן בהצלחה", globalSettings.toastrOpts); 
-                $("#inpName").val("");
-                $("#inpSlug").val("");
-                getKeysData();
-            }, function myError(data) {
-                console.log("an error occured: "+data);
-            });
+
+            for(var i = 0; i < $scope.projectkeys.length; i++) {
+                if ($scope.projectkeys[i].Name == $("#inpName").val() || $scope.projectkeys[i].Slug ==  $("#inpSlug").val()) {
+                    found = true;
+                    foundObj = $scope.projectkeys[i];
+                    break;
+                }
+            }
+            if(found){  
+                foundObj.Name == $("#inpName").val() ? $('#existKeyName').modal('show') : $('#existKeySlug').modal('show')  
+            }
+            else{
+                keys["Slug"] = $("#inpSlug").val();
+                keys["Name"] =  $("#inpName").val();        
+                $http.post('/api/update/project/keys', keys)
+                .then(function mySuccess(data) {
+                    toastr.success("המפתח עודכן בהצלחה", globalSettings.toastrOpts); 
+                    $("#inpName").val("");
+                    $("#inpSlug").val("");
+                    getKeysData();
+                }, function myError(data) {
+                    console.log("an error occured: "+data);
+                });
+            }
         }
         else{
-            $('#existKey').modal('show');            
+            $('#emptyKey').modal('show');            
         }    
     }
 
