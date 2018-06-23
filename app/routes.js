@@ -162,6 +162,7 @@ module.exports = function (app) {
         var Explanation = req.body.Eexplain;
         var AdditionalStudents = req.body.EmoreStudents;
         var projectId = req.body.projectId;
+        var lecturerMail;
 
         var lecturersDetailsForStudent = [];
         projectModel.findById
@@ -208,6 +209,7 @@ module.exports = function (app) {
                                         "name": resUsers[i].firstName + ' ' + resUsers[i].lastName,
                                         "email": resUsers[i].Email
                                     });
+                                    lecturerMail = resUsers[i].Email;
 
                                     emailObject.lecturerFirstName = resUsers[i].firstName;
 
@@ -218,7 +220,7 @@ module.exports = function (app) {
                                     interestHTML.render(emailObject, function (err, result) {
                                         var mailOptions = {
                                             from: '"SCE ניהול פרוייקטים הנדסיים" <sce.fpm@gmail.com>', // sender address
-                                            to: studentEmail, // list of receivers
+                                            to: lecturerMail,// list of receivers
                                             subject: 'הבעת התעניינות ' + emailObject.projectName, // Subject line
                                             html: result.html
                                         };
