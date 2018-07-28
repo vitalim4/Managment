@@ -55,6 +55,7 @@ angular.module("FPM").controller('managerSingleUserController', function ($scope
     $scope.newUser = {};
 
     var userNames = [];
+    var userEmails = [];
 
 
     var initProcess = false;
@@ -156,12 +157,20 @@ $http({
         userNames = result;
     });
 
+    $http({
+        method: 'GET',
+        url: '/api/user/useremails'
+    }).success(function (result) {
+        userEmails = result;
+    });
+
     /*
      * User data loading into a local object
      * Also we loading user types out of another
      * collection in case we will need to change users type.
      * */
     var localUserName;
+    var localUserEmail;
     $scope.userData.creation = false;
     if ($scope.userData._id !== null && typeof($scope.userData._id) !== "undefined") {
         $scope.userData.creation = false;
@@ -172,6 +181,7 @@ $http({
 
                 $scope.userData = userDataDB;
                 localUserName = $scope.userData.Username;
+                localUserEmail = $scope.userData.Email;
                 $scope.userData.Birthday = new Date(userDataDB.Birthday);
                 $scope.userData.Role = $scope.roles.filter(function (role) {
                     return role.Slug === userDataDB.Role.Slug;
@@ -227,6 +237,20 @@ $http({
             }
             else if ($scope.userExistName) {
                 $scope.userExistName = false;
+            }
+        }
+    }
+    , true);
+
+    $scope.$watch('userData.Email', function (newValue, oldValue) { 
+        if (typeof newValue !== 'undefined' && /*typeof $scope.data !== 'undefined'*/ typeof oldValue !== 'undefined') {
+            if (userEmails.indexOf(newValue) !== -1) {
+                if(localUserEmail !== newValue){
+                    $scope.userExistEmail = true;
+                }                   
+            }
+            else if ($scope.userExistEmail) {
+                $scope.userExistEmail = false;
             }
         }
     }

@@ -78,6 +78,7 @@ module.exports = function (app) {
     app.get('/api/lecturers/for-project/', authenticate, userRoute.getLecturersInProjects);
     app.get('/api/lecturers/for-charts/', authenticate, userRoute.getAllLecturers);
     app.get('/api/user/usernames/', authenticate, userRoute.getUsernames);
+    app.get('/api/user/useremails/', authenticate, userRoute.getUseremails);
     app.post('/forgot', userRoute.resendPasswordToken);
     app.get('/api/user/get-current', authenticate, userRoute.getCurrentUser);
     app.get('/api/users/for-project/:role', authenticate, userRoute.getByDepartmentRole);

@@ -1006,6 +1006,20 @@ module.exports = {
             return res.json(usernameStringArray); // return user in JSON format
         });
     },
+    getUseremails: function (req, res) {
+        User.find({}, {Email: 1}, function (err, useremails) {
+
+            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+            if (err)
+                return res.send(err);
+
+            var useremailsStringArray = useremails.map(function (item) {
+                return item.Email;
+            });
+
+            return res.json(useremailsStringArray); // return user in JSON format
+        });
+    },
 
     resendPasswordToken: resendPasswordToken,
 

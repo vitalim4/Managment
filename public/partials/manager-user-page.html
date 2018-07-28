@@ -32,7 +32,8 @@
 
                     <div class="col-sm-9">
                         <input type="email" class="form-control" id="Email" placeholder="אי-מייל"
-                               ng-model="userData.Email" required>
+                               ng-model="userData.Email" required autocomplete="off">
+                               <div class="error-field" ng-model="userExistEmail" ng-init="false" ng-show="userExistEmail">מייל זה קיים במערכת</div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -119,7 +120,7 @@
 
                     </div>
                     <div class="col-sm-4 col-xs-4">
-                        <button type="submit" ng-disabled="userExistName" class="btn btn-blue btn-icon" style="float:left;">
+                        <button type="submit" ng-disabled="userExistName || userExistEmail" class="btn btn-blue btn-icon" style="float:left;">
                             שמור
                             <i class="entypo-floppy"></i>
                         </button>
